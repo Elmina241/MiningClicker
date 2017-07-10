@@ -11,10 +11,15 @@ class Computer : MonoBehaviour
     public Text progressText;
     public Text bonusText;
     public Text expText;
+    public Text upgradePointsText;
+    public Text levelText;
     public Image p1;
     public Image p2;
     public GameObject improvementWin;
     public Button bonusButton;
+    public Button autoMinerButton;
+    public Button upgradeTimeButton;
+    public Button upgradeProfitButton;
     private float money = 0;
     int progressCounter1 = 0;
     int progressCounter2 = 0;
@@ -41,21 +46,40 @@ class Computer : MonoBehaviour
     int upgradePoints=0; // кол-во очков улучшений (ОУ)
 
     /*-- появляется после покупки автомайна --*/
-    float timeUpgrade; // Ускорение майна. Начинается с 30% и падает на 2,5% каждое улучшение
-    float profiteUpgrade; // Увеличение доходности майнинга. Начинается с 35% и падает на 2.5% каждое улучшение
-                          /*!-- появляется после покупки автомайна --*/
+    float timeUpgrade = 30; // Ускорение майна. Начинается с 30% и падает на 2,5% каждое улучшение
+    float timeUpgradeD = 2.5f; 
+    float profiteUpgrade = 35; // Увеличение доходности майнинга. Начинается с 35% и падает на 2.5% каждое улучшение
+    float profiteUpgradeD = 2.5f;
+    /*!-- появляется после покупки автомайна --*/
 
     int clickCounter = 0; // Счетчик кликов по кнопке
     int level = 0; // Уровень развития компьютера. Повышается на +1 каждые 50 кликов. Не зависит от EXP 
-    int levelCost; // Цена уровня (кол-во кликов)
+    int levelCost; // Цена уровня (кол-во кликов) УДАЛИТЬ
 
-    AutoMiner autoMiner;
+    public AutoMiner autoMiner;
     string jsonParts;
+
+    void Start()
+    {
+        autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
+    }
 
     public void Update()
     {
         currencyText.text = currency.ToString("#0.###0");
         bonusButton.interactable = (money >= bonusCost);
+        if (!autoMiner.isBoughtAuto)
+        {
+            autoMinerButton.interactable = (money >= autoMiner.autoCost);
+        }
+        else
+        {
+            upgradeTimeButton.interactable = (upgradePoints > 0); ;
+            upgradeProfitButton.interactable = (upgradePoints > 0); ;
+        }
+        p1.fillAmount = (float)progressCounter1 / (float)maxClick;
+        progressText.text = ((int)(((float)progressCounter1 / (float)maxClick) * 100)).ToString() + "%";
+        upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
     }
 
     public void OnClick()
@@ -72,15 +96,14 @@ class Computer : MonoBehaviour
         if (progressCounter2 > upgradeCost)
         {
             level++;
+            levelText.text = "Уровень: " + level.ToString();
             if (maxClick > 1) maxClick--;
             progressCounter2 = progressCounter2 % upgradeCost;
             upgradePoints++;
             upgradeCost = (int)(upgradeCost * upgradeCoef);
         }
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString()+"xp";
-        p1.fillAmount = (float)progressCounter1 / (float)maxClick;
         p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
-        progressText.text = ((int)(((float)progressCounter1 / (float)maxClick) * 100)).ToString() + "%";
     }
     public void GetBonus()
     {
@@ -102,15 +125,59 @@ class Computer : MonoBehaviour
         currency = 0;
         moneyText.text = money.ToString() + "$";
     }
+    public void BuyAutoMiner()
+    {
+        money = money - autoMiner.autoCost;
+        autoMiner.isBoughtAuto = true;
+        autoMinerButton.interactable = false;
+        StartCoroutine(BonusPerSec());
+    }
+    IEnumerator BonusPerSec()
+    {
+        while (true)
+        {
+            clickCounter++;
+            progressCounter1++;
+            if (progressCounter1 > maxClick)
+            {
+                progressCounter1 = 0;
+                currency = currency + bonus + autoMiner.autoProfit;
+                p1.fillAmount = (float)progressCounter1 / (float)maxClick;
+                progressText.text = ((int)(((float)progressCounter1 / (float)maxClick) * 100)).ToString() + "%";
+            }
+            yield return new WaitForSeconds(autoMiner.autoTime / (float)maxClick);
+        }
+    }
+    public void BuyTimeUpgrade()
+    {
+        upgradePoints--;
+        autoMiner.autoTime = autoMiner.autoTime + (autoMiner.autoTime / 100) * timeUpgrade;
+        timeUpgrade = timeUpgrade - timeUpgradeD;
+    }
+    public void BuyProfitUpgrade()
+    {
+        upgradePoints--;
+        autoMiner.autoProfit = autoMiner.autoProfit + (autoMiner.autoProfit / 100) * profiteUpgrade;
+        profiteUpgrade = profiteUpgrade - profiteUpgradeD;
+    }
 }
 
 class AutoMiner
 {
-    int autoCost; // Цена покупки автомайнера
-    string autoName; // Имя автомайнера
-    bool isBoughtAuto; // Куплен ли автомайнер?
-    float autoTime; // Время заполенения прогресс-бара. Уменьшается за счет timeUpgrade
-    float autoProfit; // Доход автомайнера. Изначально = bonus. В дальнейшем autoProfit = bonus + profitUpgrade
+    public int autoCost; // Цена покупки автомайнера
+    public string autoName; // Имя автомайнера
+    public bool isBoughtAuto; // Куплен ли автомайнер?
+    public float autoTime; // Время заполенения прогресс-бара. Уменьшается за счет timeUpgrade
+    public float autoProfit; // Доход автомайнера. Изначально = bonus. В дальнейшем autoProfit = bonus + profitUpgrade
+
+    public AutoMiner(int cost, string name, float time, float profit)
+    {
+        this.autoCost = cost;
+        this.autoName = name;
+        this.autoTime = time;
+        this.autoProfit = profit;
+        this.isBoughtAuto = false;
+    }
 }
 
 class PartsOfComputer
