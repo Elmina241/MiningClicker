@@ -6,20 +6,20 @@ using System.Collections;
 class Computer : MonoBehaviour
 {
 
-    public Text moneyText;
-    public Text currencyText;
-    public Text progressText;
-    public Text bonusText;
-    public Text expText;
-    public Text upgradePointsText;
-    public Text levelText;
-    public Image p1;
-    public Image p2;
-    public GameObject improvementWin;
-    public Button bonusButton;
-    public Button autoMinerButton;
-    public Button upgradeTimeButton;
-    public Button upgradeProfitButton;
+    public Text moneyText; //Деньги в $
+    public Text currencyText; //Деньги в валюте
+    public Text progressText; //Текст процентного заполнения кликов
+    public Text bonusText; //Текст стоимость улучшения
+    public Text expText; //Текст количества опыта
+    public Text upgradePointsText; //Текст очки улучшения
+    public Text levelText; //Текст номер уровня
+    public Image p1; //полоса прогресса заполнения кликов
+    public Image p2; //полоса прогресса заполнения опыта
+    public GameObject improvementWin; //окно улучшений и запчастей
+    public Button bonusButton; //кнопка покупки улучшения
+    public Button autoMinerButton; //кнопка покупки автомайнера
+    public Button upgradeTimeButton; //кнопка покупки улучшения времени
+    public Button upgradeProfitButton; //кнопка покупки улучшения дохода
     private float money = 0;
     int progressCounter1 = 0;
     int progressCounter2 = 0;
@@ -59,8 +59,32 @@ class Computer : MonoBehaviour
     public AutoMiner autoMiner;
     string jsonParts;
 
+    public Computer()
+    {
+        
+    }
+
     void Start()
     {
+        Text t = transform.Find("ProgressPanel/currencyName").gameObject.GetComponent<Text>();
+        t.text = currencyName;
+        this.currencyText = transform.Find("ProgressPanel/currencyText").gameObject.GetComponent<Text>();
+        this.progressText = transform.Find("ProgressPanel/clickProgressbar/clickText").gameObject.GetComponent<Text>();
+        this.bonusText = transform.Find("BonusPanel/BonusCost").gameObject.GetComponent<Text>();
+        this.expText = transform.Find("ProgressPanel/xpProgressbar/xpText").gameObject.GetComponent<Text>();
+        this.improvementWin = transform.Find("ImprovementWin").gameObject;
+        this.upgradePointsText = improvementWin.transform.Find("UpgradePoints").gameObject.GetComponent<Text>();
+        this.levelText = improvementWin.transform.Find("LevelText").gameObject.GetComponent<Text>();
+        this.p1 = transform.Find("ProgressPanel/clickProgressbar/Foreground").gameObject.GetComponent<Image>();
+        this.p2 = transform.Find("ProgressPanel/xpProgressbar/Foreground").gameObject.GetComponent<Image>();
+        this.bonusButton = transform.Find("BonusPanel/BonusButton").gameObject.GetComponent<Button>();
+        this.autoMinerButton = improvementWin.transform.Find("AutoMiner/BuyAuto").gameObject.GetComponent<Button>();
+        this.upgradeTimeButton = improvementWin.transform.Find("TimeUpgrade").gameObject.GetComponent<Button>();
+        this.upgradeProfitButton = improvementWin.transform.Find("ProfitUpgrade").gameObject.GetComponent<Button>();
+        bonusButton.onClick.AddListener(GetBonus);
+        autoMinerButton.onClick.AddListener(BuyAutoMiner);
+        upgradeTimeButton.onClick.AddListener(BuyTimeUpgrade);
+        upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
         autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
     }
 
@@ -192,4 +216,23 @@ class PartsOfComputer
     int costUsed; // Цена Б/У компонента
 
     /*!-- JSON-сериализация --*/
+}
+
+class Currency
+{
+    private string name;
+    private float exchRate;
+    public Currency(string name, float exchRate)
+    {
+        this.name = name;
+        this.exchRate = exchRate;
+    }
+    public string getName()
+    {
+        return this.name;
+    }
+    public float getExchRate()
+    {
+        return this.exchRate;
+    }
 }
