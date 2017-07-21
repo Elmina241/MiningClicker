@@ -1,35 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class Game : MonoBehaviour {
 
-    private int money = 0;
-    private int score = 0;
-    private int bonus = 1;
-    public Text scoreText;
-    public int maxScore = 10;
-    public Text bonusText;
-    public Image p;
-    // Use this for initialization
+    public Text moneyText; //Деньги в $
+    public float money = 0;
+    public GameObject improvementWin; //окно улучшений и запчастей
+    public Button autoMinerButton; //кнопка покупки автомайнера
+    public Button upgradeTimeButton; //кнопка покупки улучшения времени
+    public Button upgradeProfitButton; //кнопка покупки улучшения дохода
+    public Text upgradePointsText; //Текст очки улучшения
+    public Text levelText; //Текст номер уровня
 
-    public void OnClick () {
-        money += bonus;
-        score ++;
-        scoreText.text = money.ToString() + "$";
-        if (score > maxScore)
-        {
-            score = 0;
-        }
-        p.fillAmount = (float)score/(float)maxScore;
-    }
-    public void GetBonus()
+    void Start()
     {
-        money = money - bonus;
-        bonus = bonus + 2;
-        scoreText.text = money.ToString() + "$";
-        bonusText.text = bonus.ToString() + "$";
+        this.autoMinerButton = improvementWin.transform.Find("AutoMiner/BuyAuto").gameObject.GetComponent<Button>();
+        this.upgradeTimeButton = improvementWin.transform.Find("TimeUpgrade").gameObject.GetComponent<Button>();
+        this.upgradeProfitButton = improvementWin.transform.Find("ProfitUpgrade").gameObject.GetComponent<Button>();
+        this.upgradePointsText = improvementWin.transform.Find("UpgradePoints").gameObject.GetComponent<Text>();
+        this.levelText = improvementWin.transform.Find("LevelText").gameObject.GetComponent<Text>();
     }
-	
-	
+
+    public void openCloseImprovementWin()
+    {
+        improvementWin.SetActive(!improvementWin.activeSelf);
+    }
+
 }

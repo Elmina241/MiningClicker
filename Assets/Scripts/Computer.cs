@@ -5,34 +5,29 @@ using System.Collections;
 
 class Computer : MonoBehaviour
 {
-
-    public Text moneyText; //Деньги в $
     public Text currencyText; //Деньги в валюте
     public Text progressText; //Текст процентного заполнения кликов
     public Text bonusText; //Текст стоимость улучшения
     public Text expText; //Текст количества опыта
-    public Text upgradePointsText; //Текст очки улучшения
-    public Text levelText; //Текст номер уровня
+    
     public Image p1; //полоса прогресса заполнения кликов
     public Image p2; //полоса прогресса заполнения опыта
-    public GameObject improvementWin; //окно улучшений и запчастей
+    public GameObject progressPanel; //панель для кликов
     public Button bonusButton; //кнопка покупки улучшения
-    public Button autoMinerButton; //кнопка покупки автомайнера
-    public Button upgradeTimeButton; //кнопка покупки улучшения времени
-    public Button upgradeProfitButton; //кнопка покупки улучшения дохода
-    private float money = 0;
+    
+    public Game g;
+    
     int progressCounter1 = 0;
     int progressCounter2 = 0;
 
+    Currency cur;
     float currency = 0;
-    float exchRate = 200;
-    string currencyName = "ETH";
 
 
-    int cost; // цена компьютера
+    public int cost = 1; // цена компьютера
     string nameComp; // Имя компьютера
     bool isReady; // готов ли компьютер к работе (все ли компоненты куплены)
-    bool isResearched; // открыт ли компьютер
+    public bool isResearched = true; // открыт ли компьютер
     float bonus = 0.001f; // доход за заполнение прогресс-бара
     float bonusCost = 2; // цена улучшения (на которую поднимаем доход)
     float bonusD = 1.32f;
@@ -54,56 +49,50 @@ class Computer : MonoBehaviour
 
     int clickCounter = 0; // Счетчик кликов по кнопке
     int level = 0; // Уровень развития компьютера. Повышается на +1 каждые 50 кликов. Не зависит от EXP 
-    int levelCost; // Цена уровня (кол-во кликов) УДАЛИТЬ
 
     public AutoMiner autoMiner;
     string jsonParts;
 
-    public Computer()
+    /*public Computer(string name, int cost, float startBonus, float bonusCost, int maxClick, float upgradeCoef, Currency cur)
     {
-        
-    }
+        nameComp = name;
+        this.cost = cost;
+        bonus = startBonus;
+        this.bonusCost = bonusCost;
+        this.maxClick = maxClick;
+        this.upgradeCoef = upgradeCoef;
+        this.cur = cur;
+    }*/
 
     void Start()
     {
+        Currency c = new Currency("ETH", 200f);
+        this.cur = c;
+
         Text t = transform.Find("ProgressPanel/currencyName").gameObject.GetComponent<Text>();
-        t.text = currencyName;
+        t.text = cur.getName();
         this.currencyText = transform.Find("ProgressPanel/currencyText").gameObject.GetComponent<Text>();
         this.progressText = transform.Find("ProgressPanel/clickProgressbar/clickText").gameObject.GetComponent<Text>();
         this.bonusText = transform.Find("BonusPanel/BonusCost").gameObject.GetComponent<Text>();
         this.expText = transform.Find("ProgressPanel/xpProgressbar/xpText").gameObject.GetComponent<Text>();
-        this.improvementWin = transform.Find("ImprovementWin").gameObject;
-        this.upgradePointsText = improvementWin.transform.Find("UpgradePoints").gameObject.GetComponent<Text>();
-        this.levelText = improvementWin.transform.Find("LevelText").gameObject.GetComponent<Text>();
+        //this.improvementWin = transform.Find("ImprovementWin").gameObject;
+        this.progressPanel = transform.Find("ProgressPanel").gameObject;
         this.p1 = transform.Find("ProgressPanel/clickProgressbar/Foreground").gameObject.GetComponent<Image>();
         this.p2 = transform.Find("ProgressPanel/xpProgressbar/Foreground").gameObject.GetComponent<Image>();
         this.bonusButton = transform.Find("BonusPanel/BonusButton").gameObject.GetComponent<Button>();
-        this.autoMinerButton = improvementWin.transform.Find("AutoMiner/BuyAuto").gameObject.GetComponent<Button>();
-        this.upgradeTimeButton = improvementWin.transform.Find("TimeUpgrade").gameObject.GetComponent<Button>();
-        this.upgradeProfitButton = improvementWin.transform.Find("ProfitUpgrade").gameObject.GetComponent<Button>();
         bonusButton.onClick.AddListener(GetBonus);
-        autoMinerButton.onClick.AddListener(BuyAutoMiner);
-        upgradeTimeButton.onClick.AddListener(BuyTimeUpgrade);
-        upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
+        
         autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
     }
 
     public void Update()
     {
         currencyText.text = currency.ToString("#0.###0");
-        bonusButton.interactable = (money >= bonusCost);
-        if (!autoMiner.isBoughtAuto)
-        {
-            autoMinerButton.interactable = (money >= autoMiner.autoCost);
-        }
-        else
-        {
-            upgradeTimeButton.interactable = (upgradePoints > 0); ;
-            upgradeProfitButton.interactable = (upgradePoints > 0); ;
-        }
+        bonusButton.interactable = (g.money >= bonusCost);
+        
         p1.fillAmount = (float)progressCounter1 / (float)maxClick;
         progressText.text = ((int)(((float)progressCounter1 / (float)maxClick) * 100)).ToString() + "%";
-        upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
+        
     }
 
     public void OnClick()
@@ -120,7 +109,7 @@ class Computer : MonoBehaviour
         if (progressCounter2 > upgradeCost)
         {
             level++;
-            levelText.text = "Уровень: " + level.ToString();
+            
             if (maxClick > 1) maxClick--;
             progressCounter2 = progressCounter2 % upgradeCost;
             upgradePoints++;
@@ -133,28 +122,27 @@ class Computer : MonoBehaviour
     {
         exp += expU;
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString();
-        money = money - bonusCost;
-        moneyText.text = money.ToString() + "$";
+        g.money = g.money - bonusCost;
+        g.moneyText.text = g.money.ToString() + "$";
         bonusCost = bonusCost * bonusCostD;
         bonus = bonus * bonusD;
         bonusText.text = (bonusCost).ToString("0.#0") + "$";
     }
-    public void openCloseImprovementWin()
-    {
-        improvementWin.SetActive(!improvementWin.activeSelf);
-    }
     public void Exchange()
     {
-        money = (money + currency * exchRate);
+        g.money = (g.money + currency * cur.getExchRate());
         currency = 0;
-        moneyText.text = money.ToString() + "$";
+        g.moneyText.text = g.money.ToString() + "$";
     }
     public void BuyAutoMiner()
     {
-        money = money - autoMiner.autoCost;
+        g.money = g.money - autoMiner.autoCost;
         autoMiner.isBoughtAuto = true;
-        autoMinerButton.interactable = false;
+        g.autoMinerButton.interactable = false;
         StartCoroutine(BonusPerSec());
+        g.upgradeTimeButton.interactable = (upgradePoints > 0);
+        g.upgradeProfitButton.interactable = (upgradePoints > 0);
+        g.moneyText.text = g.money.ToString() + "$";
     }
     IEnumerator BonusPerSec()
     {
@@ -175,14 +163,41 @@ class Computer : MonoBehaviour
     public void BuyTimeUpgrade()
     {
         upgradePoints--;
-        autoMiner.autoTime = autoMiner.autoTime + (autoMiner.autoTime / 100) * timeUpgrade;
+        autoMiner.autoTime = autoMiner.autoTime - (autoMiner.autoTime / 100) * timeUpgrade;
         timeUpgrade = timeUpgrade - timeUpgradeD;
+        g.upgradeTimeButton.interactable = (upgradePoints > 0);
+        g.upgradeProfitButton.interactable = (upgradePoints > 0);
+        g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
     }
     public void BuyProfitUpgrade()
     {
         upgradePoints--;
         autoMiner.autoProfit = autoMiner.autoProfit + (autoMiner.autoProfit / 100) * profiteUpgrade;
         profiteUpgrade = profiteUpgrade - profiteUpgradeD;
+        g.upgradeProfitButton.interactable = (upgradePoints > 0);
+        g.upgradeTimeButton.interactable = (upgradePoints > 0);
+        g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
+    }
+    public void openCloseImprovementWin()
+    {
+        if (!autoMiner.isBoughtAuto)
+        {
+            g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
+        }
+        else
+        {
+            g.upgradeTimeButton.interactable = (upgradePoints > 0);
+            g.upgradeProfitButton.interactable = (upgradePoints > 0);
+        }
+        g.levelText.text = "Уровень: " + level.ToString();
+        g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
+        g.autoMinerButton.onClick.RemoveAllListeners();
+        g.autoMinerButton.onClick.AddListener(BuyAutoMiner);
+        g.upgradeTimeButton.onClick.RemoveAllListeners();
+        g.upgradeProfitButton.onClick.RemoveAllListeners();
+        g.upgradeTimeButton.onClick.AddListener(BuyTimeUpgrade);
+        g.upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
+        g.improvementWin.SetActive(!g.improvementWin.activeSelf);
     }
 }
 
@@ -218,6 +233,7 @@ class PartsOfComputer
     /*!-- JSON-сериализация --*/
 }
 
+//Класс Криптовалюты
 class Currency
 {
     private string name;
