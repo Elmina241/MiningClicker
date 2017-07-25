@@ -9,12 +9,15 @@ class Computer : MonoBehaviour
     public Text progressText; //Текст процентного заполнения кликов
     public Text bonusText; //Текст стоимость улучшения
     public Text expText; //Текст количества опыта
-    
+    public GameObject partsContainer;
+    public GameObject partPrefab;
+
     public Image p1; //полоса прогресса заполнения кликов
     public Image p2; //полоса прогресса заполнения опыта
     public GameObject progressPanel; //панель для кликов
     public Button bonusButton; //кнопка покупки улучшения
-    
+    public Button buyComp; //кнопка покупки компьютера
+
     public Game g;
     
     int progressCounter1 = 0;
@@ -25,8 +28,9 @@ class Computer : MonoBehaviour
 
 
     public int cost = 1; // цена компьютера
-    string nameComp; // Имя компьютера
+    public string nameComp = "Ноутбук"; // Имя компьютера
     bool isReady; // готов ли компьютер к работе (все ли компоненты куплены)
+    bool isFarm; // ферма?
     public bool isResearched = true; // открыт ли компьютер
     float bonus = 0.001f; // доход за заполнение прогресс-бара
     float bonusCost = 2; // цена улучшения (на которую поднимаем доход)
@@ -52,6 +56,7 @@ class Computer : MonoBehaviour
 
     public AutoMiner autoMiner;
     string jsonParts;
+    public PartsOfComputer[] compParts;
 
     /*public Computer(string name, int cost, float startBonus, float bonusCost, int maxClick, float upgradeCoef, Currency cur)
     {
@@ -80,8 +85,13 @@ class Computer : MonoBehaviour
         this.p1 = transform.Find("ProgressPanel/clickProgressbar/Foreground").gameObject.GetComponent<Image>();
         this.p2 = transform.Find("ProgressPanel/xpProgressbar/Foreground").gameObject.GetComponent<Image>();
         this.bonusButton = transform.Find("BonusPanel/BonusButton").gameObject.GetComponent<Button>();
+        this.buyComp = transform.Find("BuyComp").gameObject.GetComponent<Button>();
+        this.partsContainer = g.improvementWin.transform.Find("Parts").gameObject;
+        buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = cost + "$";
         bonusButton.onClick.AddListener(GetBonus);
-        
+        buyComp.gameObject.SetActive(!isResearched);
+        buyComp.onClick.AddListener(ResearchComp);
+        transform.Find("ProgressPanel/nameText").gameObject.GetComponent<Text>().text = nameComp;
         autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
     }
 
@@ -89,7 +99,7 @@ class Computer : MonoBehaviour
     {
         currencyText.text = currency.ToString("#0.###0");
         bonusButton.interactable = (g.money >= bonusCost);
-        
+        buyComp.interactable = (g.money >= cost);
         p1.fillAmount = (float)progressCounter1 / (float)maxClick;
         progressText.text = ((int)(((float)progressCounter1 / (float)maxClick) * 100)).ToString() + "%";
         
@@ -189,7 +199,7 @@ class Computer : MonoBehaviour
             g.upgradeTimeButton.interactable = (upgradePoints > 0);
             g.upgradeProfitButton.interactable = (upgradePoints > 0);
         }
-        g.levelText.text = "Уровень: " + level.ToString();
+        //g.levelText.text = "Уровень: " + level.ToString();
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
         g.autoMinerButton.onClick.RemoveAllListeners();
         g.autoMinerButton.onClick.AddListener(BuyAutoMiner);
@@ -197,10 +207,58 @@ class Computer : MonoBehaviour
         g.upgradeProfitButton.onClick.RemoveAllListeners();
         g.upgradeTimeButton.onClick.AddListener(BuyTimeUpgrade);
         g.upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
+
+        //удаление компонентов
+        int childs = partsContainer.transform.childCount;
+        for (int i = childs - 1; i >= 0; i--)
+        {
+            GameObject.Destroy(partsContainer.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < compParts.Length; i++)
+        {
+            int temp = i;
+            GameObject A = Instantiate(partPrefab, partPrefab.transform.position = new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+            A.transform.SetParent(partsContainer.transform, false);
+            A.transform.Find("nameText").GetComponent<Text>().text = g.parts[compParts[i].id].partName;
+            A.transform.Find("BuyNew/Text").GetComponent<Text>().text = "$" + g.parts[compParts[i].id].costNew + " | " + g.parts[compParts[i].id].reliabilityNew + "%";
+            A.transform.Find("BuyUsed/Text").GetComponent<Text>().text = "$" + g.parts[compParts[i].id].costUsed + " | " + g.parts[compParts[i].id].reliabilityUsed + "%";
+            A.transform.Find("BuyNew").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, true, A); });
+            A.transform.Find("BuyUsed").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, false, A); });
+        }
+        
         g.improvementWin.SetActive(!g.improvementWin.activeSelf);
+    }
+
+    public void ResearchComp()
+    {
+        g.money -= cost; 
+        buyComp.gameObject.SetActive(false);
+        g.moneyText.text = g.money.ToString() + "$";
+    }
+
+    //id - индекс в массиве компонентов данного компьютера, а не id компонента
+    public void BuyPart(int id, bool isNew, GameObject part)
+    {
+        if (isNew)
+        {
+            g.money -= g.parts[compParts[id].id].costNew;
+            compParts[id].curReliability = g.parts[compParts[id].id].reliabilityNew;
+        }
+        else
+        {
+            g.money -= g.parts[compParts[id].id].costUsed;
+            compParts[id].curReliability = g.parts[compParts[id].id].reliabilityUsed;
+        }
+        compParts[id].isBought = true;
+        compParts[id].isBroken = false;
+        part.transform.Find("BuyNew").gameObject.GetComponent<Button>().interactable = false;
+        part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
+        g.moneyText.text = g.money.ToString() + "$";
     }
 }
 
+[System.Serializable]
 class AutoMiner
 {
     public int autoCost; // Цена покупки автомайнера
@@ -219,17 +277,14 @@ class AutoMiner
     }
 }
 
+[System.Serializable]
 class PartsOfComputer
 {
     /*-- JSON-сериализация --*/
-    int id; // Номер компонента в списке улучшений
-    string partsName; // Имя компонента (AMD RADEON RX480 4GB)
-    bool isBought; // Куплен ли компонент?
-    bool isBroken; // Сломан ли компонент?
-    float reliability; // Вероятность поломки каждые 100 заполнений прогресс-бара. 0-10% для Новых, 0-25% для Б/У
-    int costNew; // Цена нового компонента
-    int costUsed; // Цена Б/У компонента
-
+    public int id; // Номер компонента в списке улучшений
+    public bool isBought; // Куплен ли компонент?
+    public bool isBroken; // Сломан ли компонент?
+    public float curReliability; // Вероятность поломки компонента в зависимости от новизны
     /*!-- JSON-сериализация --*/
 }
 
