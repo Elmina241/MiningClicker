@@ -11,20 +11,29 @@ public class Game : MonoBehaviour {
     public Button upgradeProfitButton; //кнопка покупки улучшения дохода
     public Text upgradePointsText; //Текст очки улучшения
     public Text levelText; //Текст номер уровня
+    public Text nameText; //Текст названия компьютера
+    public Text pribyl; //Прибыль на данный момент
+    public Text time; //Время заполнения автомайнером 
+    public Text sr_pr; //средняя прибыль
+    public Text prBarText; //количество опыта 
+    public Image fill; //заполнение прогрессбара
+
     public Part[] parts;
     public typeOfPart[] typesOfParts;
 
     void Start()
     {
         /*Объявление типов компонентов*/
-        typesOfParts = new typeOfPart[2];
+        typesOfParts = new typeOfPart[3];
         typesOfParts[0] = new typeOfPart(0, "CPU");
         typesOfParts[1] = new typeOfPart(1, "GPU");
+        typesOfParts[2] = new typeOfPart(2, "Power");
 
         /*Объявление компонентов*/
-        parts = new Part[2];
+        parts = new Part[3];
         parts[0] = new Part(0, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 386, 245);
         parts[1] = new Part(1, "Intel Core i5-6600K 3.5 GHz", typesOfParts[0], 8, 15, 215, 167);
+        parts[2] = new Part(2, "Электропитание", typesOfParts[2], 25, 35, 847, 540);
 
         this.autoMinerButton = improvementWin.transform.Find("AutoMiner/BuyAuto").gameObject.GetComponent<Button>();
         this.upgradeTimeButton = improvementWin.transform.Find("TimeUpgrade").gameObject.GetComponent<Button>();

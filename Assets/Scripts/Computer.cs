@@ -193,13 +193,22 @@ class Computer : MonoBehaviour
         if (!autoMiner.isBoughtAuto)
         {
             g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
+            g.time.text = "0" + " СЕК";
+            g.sr_pr.text = "0 " + cur.getName() + " / СЕК";
         }
         else
         {
             g.upgradeTimeButton.interactable = (upgradePoints > 0);
             g.upgradeProfitButton.interactable = (upgradePoints > 0);
+            g.time.text = autoMiner.autoTime.ToString() + " СЕК";
+            g.sr_pr.text = (bonus / autoMiner.autoTime).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
         }
-        //g.levelText.text = "Уровень: " + level.ToString();
+        g.levelText.text = "Уровень: " + level.ToString();
+        g.nameText.text = nameComp;
+        g.pribyl.text = cur.getName() + " " + bonus.ToString("#0.###0");
+        g.fill.fillAmount = (float)progressCounter2 / (float)upgradeCost;
+        g.prBarText.text = "XP " + progressCounter2.ToString() + " / " + upgradeCost.ToString();
+
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
         g.autoMinerButton.onClick.RemoveAllListeners();
         g.autoMinerButton.onClick.AddListener(BuyAutoMiner);
