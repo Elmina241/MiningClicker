@@ -9,7 +9,7 @@ class Computer : MonoBehaviour
     public Text progressText; //Текст процентного заполнения кликов
     public Text bonusText; //Текст стоимость улучшения
     public Text expText; //Текст количества опыта
-    public GameObject partsContainer;
+    public GameObject partsContainer; //Контейнер, содержащий части компьютера
     public GameObject partPrefab;
 
     public Image p1; //полоса прогресса заполнения кликов
@@ -86,7 +86,7 @@ class Computer : MonoBehaviour
         this.p2 = transform.Find("ProgressPanel/xpProgressbar/Foreground").gameObject.GetComponent<Image>();
         this.bonusButton = transform.Find("BonusPanel/BonusButton").gameObject.GetComponent<Button>();
         this.buyComp = transform.Find("BuyComp").gameObject.GetComponent<Button>();
-        this.partsContainer = g.improvementWin.transform.Find("Parts").gameObject;
+        this.partsContainer = g.improvementWin.transform.Find("ScrollContent/Parts").gameObject;
         buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = cost + "$";
         bonusButton.onClick.AddListener(GetBonus);
         buyComp.gameObject.SetActive(!isResearched);
@@ -235,7 +235,7 @@ class Computer : MonoBehaviour
             A.transform.Find("BuyNew").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, true, A); });
             A.transform.Find("BuyUsed").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, false, A); });
         }
-        
+        changeBuyButtons();
         g.improvementWin.SetActive(!g.improvementWin.activeSelf);
     }
 
@@ -264,6 +264,20 @@ class Computer : MonoBehaviour
         part.transform.Find("BuyNew").gameObject.GetComponent<Button>().interactable = false;
         part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
         g.moneyText.text = g.money.ToString() + "$";
+        changeBuyButtons();
+    }
+
+    public void changeBuyButtons()
+    {
+        int childs = compParts.Length;
+        for (int i = 0; i < childs; i++)
+        {
+            if (!compParts[i].isBought)
+            {
+                partsContainer.transform.GetChild(i).Find("BuyNew").gameObject.GetComponent<Button>().interactable = (g.parts[compParts[i].id].costNew <= g.money);
+                partsContainer.transform.GetChild(i).Find("BuyUsed").gameObject.GetComponent<Button>().interactable = (g.parts[compParts[i].id].costUsed <= g.money);
+            }
+        }
     }
 }
 

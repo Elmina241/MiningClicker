@@ -31,15 +31,15 @@ public class Game : MonoBehaviour {
 
         /*Объявление компонентов*/
         parts = new Part[3];
-        parts[0] = new Part(0, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 386, 245);
+        parts[0] = new Part(0, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
         parts[1] = new Part(1, "Intel Core i5-6600K 3.5 GHz", typesOfParts[0], 8, 15, 215, 167);
         parts[2] = new Part(2, "Электропитание", typesOfParts[2], 25, 35, 847, 540);
 
-        this.autoMinerButton = improvementWin.transform.Find("AutoMiner/BuyAuto").gameObject.GetComponent<Button>();
-        this.upgradeTimeButton = improvementWin.transform.Find("TimeUpgrade").gameObject.GetComponent<Button>();
-        this.upgradeProfitButton = improvementWin.transform.Find("ProfitUpgrade").gameObject.GetComponent<Button>();
-        this.upgradePointsText = improvementWin.transform.Find("UpgradePoints").gameObject.GetComponent<Text>();
-        //this.levelText = improvementWin.transform.Find("LevelText").gameObject.GetComponent<Text>();
+        this.autoMinerButton = improvementWin.transform.Find("ScrollContent/AutoMiner/BuyAuto").gameObject.GetComponent<Button>();
+        this.upgradeTimeButton = improvementWin.transform.Find("ScrollContent/TimeUpgrade").gameObject.GetComponent<Button>();
+        this.upgradeProfitButton = improvementWin.transform.Find("ScrollContent/ProfitUpgrade").gameObject.GetComponent<Button>();
+        this.upgradePointsText = improvementWin.transform.Find("ScrollContent/UpgradePoints").gameObject.GetComponent<Text>();
+        this.levelText = improvementWin.transform.Find("Header/LevelText").gameObject.GetComponent<Text>();
     }
 
     public void openCloseImprovementWin()
