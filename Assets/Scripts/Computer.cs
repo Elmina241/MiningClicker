@@ -218,11 +218,11 @@ class Computer : MonoBehaviour
         g.upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
 
         //удаление компонентов
-        int childs = partsContainer.transform.childCount;
+        /*int childs = partsContainer.transform.childCount;
         for (int i = childs - 1; i >= 0; i--)
         {
             GameObject.Destroy(partsContainer.transform.GetChild(i).gameObject);
-        }
+        }*/
 
         for (int i = 0; i < compParts.Length; i++)
         {
@@ -238,6 +238,7 @@ class Computer : MonoBehaviour
         changeBuyButtons();
         g.improvementWin.SetActive(!g.improvementWin.activeSelf);
     }
+
 
     public void ResearchComp()
     {
@@ -276,6 +277,11 @@ class Computer : MonoBehaviour
             {
                 partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costNew <= g.money);
                 partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costUsed <= g.money);
+            }
+            else
+            {
+                partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = false;
+                partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = false;
             }
         }
     }

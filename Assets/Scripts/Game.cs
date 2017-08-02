@@ -44,6 +44,12 @@ public class Game : MonoBehaviour {
 
     public void openCloseImprovementWin()
     {
+        GameObject partsContainer = improvementWin.transform.Find("ScrollContent/Parts").gameObject;
+        int childs = partsContainer.transform.childCount;
+        for (int i = childs - 1; i >= 0; i--)
+        {
+            GameObject.Destroy(partsContainer.transform.GetChild(i).gameObject);
+        }
         improvementWin.SetActive(!improvementWin.activeSelf);
     }
 
