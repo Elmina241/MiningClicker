@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
 
+    
     public Text moneyText; //Деньги в $
     public float money = 0;
     public GameObject improvementWin; //окно улучшений и запчастей
@@ -35,15 +36,16 @@ public class Game : MonoBehaviour {
         parts[1] = new Part(1, "Intel Core i5-6600K 3.5 GHz", typesOfParts[0], 8, 15, 215, 167);
         parts[2] = new Part(2, "Электропитание", typesOfParts[2], 25, 35, 847, 540);
 
-        this.autoMinerButton = improvementWin.transform.Find("ScrollContent/AutoMiner/BuyAuto").gameObject.GetComponent<Button>();
-        this.upgradeTimeButton = improvementWin.transform.Find("ScrollContent/TimeUpgrade").gameObject.GetComponent<Button>();
-        this.upgradeProfitButton = improvementWin.transform.Find("ScrollContent/ProfitUpgrade").gameObject.GetComponent<Button>();
-        this.upgradePointsText = improvementWin.transform.Find("ScrollContent/UpgradePoints").gameObject.GetComponent<Text>();
-        this.levelText = improvementWin.transform.Find("Header/LevelText").gameObject.GetComponent<Text>();
+        this.autoMinerButton = improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto").gameObject.GetComponent<Button>();
+        this.upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
+        this.upgradeProfitButton = improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade").gameObject.GetComponent<Button>();
+        //this.upgradePointsText = improvementWin.transform.Find("ScrollContent/UpgradePoints").gameObject.GetComponent<Text>();
+        this.upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
+        this.levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
     }
 
     public void openCloseImprovementWin()
-    {
+    {        
         improvementWin.SetActive(!improvementWin.activeSelf);
     }
 

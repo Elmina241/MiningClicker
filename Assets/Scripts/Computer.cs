@@ -71,7 +71,7 @@ class Computer : MonoBehaviour
 
     void Start()
     {
-        Currency c = new Currency("ETH", 10000f);
+        Currency c = new Currency("ETH", 30000f);
         this.cur = c;
 
         Text t = transform.Find("ProgressPanel/currencyName").gameObject.GetComponent<Text>();
@@ -86,7 +86,7 @@ class Computer : MonoBehaviour
         this.p2 = transform.Find("ProgressPanel/xpProgressbar/Foreground").gameObject.GetComponent<Image>();
         this.bonusButton = transform.Find("BonusPanel/BonusButton").gameObject.GetComponent<Button>();
         this.buyComp = transform.Find("BuyComp").gameObject.GetComponent<Button>();
-        this.partsContainer = g.improvementWin.transform.Find("ScrollContent/Parts").gameObject;
+        this.partsContainer = g.improvementWin.transform.Find("Background/Parts").gameObject;
         buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = cost + "$";
         bonusButton.onClick.AddListener(GetBonus);
         buyComp.gameObject.SetActive(!isResearched);
@@ -223,7 +223,7 @@ class Computer : MonoBehaviour
         {
             GameObject.Destroy(partsContainer.transform.GetChild(i).gameObject);
         }
-
+        //
         for (int i = 0; i < compParts.Length; i++)
         {
             int temp = i;

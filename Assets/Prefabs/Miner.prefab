@@ -967,7 +967,7 @@ MonoBehaviour:
   bonusText: {fileID: 114000013215146860}
   expText: {fileID: 114000012664825924}
   partsContainer: {fileID: 0}
-  partPrefab: {fileID: 1000010096176506, guid: ce7277c1ac6244a40b22db36a4bd1c8b, type: 2}
+  partPrefab: {fileID: 1000012124659564, guid: fcab319a26a333e4191c14800ec9d6ee, type: 2}
   p1: {fileID: 114000012297910024}
   p2: {fileID: 114000011102523066}
   progressPanel: {fileID: 0}
