@@ -11,6 +11,7 @@ class Computer : MonoBehaviour
     public Text expText; //Текст количества опыта
     public GameObject partsContainer; //Контейнер, содержащий части компьютера
     public GameObject partPrefab;
+    public GameObject block; //болкировка майнинга, если не куплены все необходимые части
 
     public Image p1; //полоса прогресса заполнения кликов
     public Image p2; //полоса прогресса заполнения опыта
@@ -26,6 +27,8 @@ class Computer : MonoBehaviour
     Currency cur;
     float currency = 0;
 
+    //процент от времени заполнения автомайнера при полном наборе видеокарт
+    public int fullGPU=40;
 
     public int cost = 1; // цена компьютера
     public string nameComp = "Ноутбук"; // Имя компьютера
@@ -43,6 +46,8 @@ class Computer : MonoBehaviour
     int upgradeCost=200; //максимальное число EXP. Начало с 200
     float upgradeCoef = 1.16f; // коеф. сложности upgradeCost, для ноута - 1,12. 
     int upgradePoints=0; // кол-во очков улучшений (ОУ)
+    //удалить 
+    public int efficiency = 100;
 
     /*-- появляется после покупки автомайна --*/
     float timeUpgrade = 30; // Ускорение майна. Начинается с 30% и падает на 2,5% каждое улучшение
@@ -93,6 +98,7 @@ class Computer : MonoBehaviour
         buyComp.onClick.AddListener(ResearchComp);
         transform.Find("ProgressPanel/nameText").gameObject.GetComponent<Text>().text = nameComp;
         autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
+        autoMiner.autoTime = ((200-getEfficiency())/100)* autoMiner.maxTime;
     }
 
     public void Update()
@@ -167,13 +173,13 @@ class Computer : MonoBehaviour
                 p1.fillAmount = (float)progressCounter1 / (float)maxClick;
                 progressText.text = ((int)(((float)progressCounter1 / (float)maxClick) * 100)).ToString() + "%";
             }
-            yield return new WaitForSeconds(autoMiner.autoTime / (float)maxClick);
+            yield return new WaitForSeconds((autoMiner.autoTime - autoMiner.timeBonus) / (float)maxClick);
         }
     }
     public void BuyTimeUpgrade()
     {
         upgradePoints--;
-        autoMiner.autoTime = autoMiner.autoTime - (autoMiner.autoTime / 100) * timeUpgrade;
+        autoMiner.timeBonus = autoMiner.timeBonus + ((autoMiner.autoTime - autoMiner.timeBonus) / 100) * timeUpgrade;
         timeUpgrade = timeUpgrade - timeUpgradeD;
         g.upgradeTimeButton.interactable = (upgradePoints > 0);
         g.upgradeProfitButton.interactable = (upgradePoints > 0);
@@ -203,6 +209,10 @@ class Computer : MonoBehaviour
             g.time.text = autoMiner.autoTime.ToString() + " СЕК";
             g.sr_pr.text = (bonus / autoMiner.autoTime).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
         }
+        if (!isReady)
+        {
+            g.autoMinerButton.interactable = false;
+        }
         g.levelText.text = "Уровень: " + level.ToString();
         g.nameText.text = nameComp;
         g.pribyl.text = cur.getName() + " " + bonus.ToString("#0.###0");
@@ -217,13 +227,6 @@ class Computer : MonoBehaviour
         g.upgradeTimeButton.onClick.AddListener(BuyTimeUpgrade);
         g.upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
 
-        //удаление компонентов
-        /*int childs = partsContainer.transform.childCount;
-        for (int i = childs - 1; i >= 0; i--)
-        {
-            GameObject.Destroy(partsContainer.transform.GetChild(i).gameObject);
-        }*/
-
         for (int i = 0; i < compParts.Length; i++)
         {
             int temp = i;
@@ -237,6 +240,40 @@ class Computer : MonoBehaviour
         }
         changeBuyButtons();
         g.improvementWin.SetActive(!g.improvementWin.activeSelf);
+    }
+
+    //мощность компьютера в процентах
+    public int getEfficiency()
+    {
+        int eff = 100;
+        int[] masIsBought;
+        int[] masAmount;
+        masIsBought = new int[g.typesOfParts.Length];
+        masAmount = new int[g.typesOfParts.Length];
+        for (int i = 0; i < masIsBought.Length; i++)
+        {
+            masIsBought[i] = 0;
+            masAmount[i] = 0;
+        }
+        foreach (PartsOfComputer p in compParts)
+        {
+            int tId = g.parts[p.id].type.id;
+            masIsBought[tId] = p.isBought ? (masIsBought[tId] + 1) : masIsBought[tId];
+            masAmount[tId]++;
+        }
+        for (int i = 0; i < masIsBought.Length; i++)
+        {
+            if (i == 1)
+            {
+                int delta = (int)((((float)masIsBought[1] / (float)masAmount[1]) * 100) * fullGPU / 100);
+                eff = eff - (fullGPU - delta);
+            }
+            else
+            {
+                eff -= (5 - (int)(((masIsBought[i] / masAmount[i]) * 100) * 0.05f));
+            }
+        }
+        return eff;
     }
 
 
@@ -266,6 +303,41 @@ class Computer : MonoBehaviour
         part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
         g.moneyText.text = g.money.ToString() + "$";
         changeBuyButtons();
+        isReady = checkIsReady();
+        block.SetActive(!isReady);
+        efficiency = getEfficiency();
+        autoMiner.autoTime = autoMiner.maxTime * (200 - getEfficiency()) / 100;
+        if (!isReady)
+        {
+            g.autoMinerButton.interactable = false;
+            StopCoroutine(BonusPerSec());
+        }
+        else
+        {
+            if (!autoMiner.isBoughtAuto) g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
+        }
+    }
+
+    //Проверка, куплены ли все необходимые части
+    public bool checkIsReady()
+    {
+        bool res = true;
+        bool[] masIsBought;
+        masIsBought = new bool[g.typesOfParts.Length];
+        for (int i=0; i < masIsBought.Length; i++)
+        {
+            masIsBought[i] = false;
+        }
+        foreach (PartsOfComputer p in compParts)
+        {
+            int tId = g.parts[p.id].type.id;
+            masIsBought[tId] = masIsBought[tId] || (p.isBought && !p.isBroken);
+        }
+        for (int i = 0; i < masIsBought.Length; i++)
+        {
+            res = res && masIsBought[i];
+        }
+        return res;
     }
 
     public void changeBuyButtons()
@@ -294,15 +366,18 @@ class AutoMiner
     public string autoName; // Имя автомайнера
     public bool isBoughtAuto; // Куплен ли автомайнер?
     public float autoTime; // Время заполенения прогресс-бара. Уменьшается за счет timeUpgrade
+    public float maxTime; // Время заполнения прогресс бара при полном комполекте зачастей
     public float autoProfit; // Доход автомайнера. Изначально = bonus. В дальнейшем autoProfit = bonus + profitUpgrade
+    public float timeBonus;
 
     public AutoMiner(int cost, string name, float time, float profit)
     {
         this.autoCost = cost;
         this.autoName = name;
-        this.autoTime = time;
+        this.maxTime = time;
         this.autoProfit = profit;
         this.isBoughtAuto = false;
+        timeBonus = 0;
     }
 }
 

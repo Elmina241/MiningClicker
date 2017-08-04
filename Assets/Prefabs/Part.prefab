@@ -23,7 +23,7 @@ GameObject:
   - 114: {fileID: 114000013904789928}
   - 114: {fileID: 114000011715427000}
   m_Layer: 5
-  m_Name: BuyNew
+  m_Name: BuyUsed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ GameObject:
   - 114: {fileID: 114000012610578662}
   - 114: {fileID: 114000011189602498}
   m_Layer: 5
-  m_Name: BuyUsed
+  m_Name: BuyNew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

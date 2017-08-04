@@ -24,15 +24,16 @@ public class Game : MonoBehaviour {
 
     void Start()
     {
-        /*Объявление типов компонентов*/
+        /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/
         typesOfParts = new typeOfPart[3];
         typesOfParts[0] = new typeOfPart(0, "CPU");
         typesOfParts[1] = new typeOfPart(1, "GPU");
         typesOfParts[2] = new typeOfPart(2, "Power");
 
         /*Объявление компонентов*/
-        parts = new Part[3];
+        parts = new Part[4];
         parts[0] = new Part(0, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
+        parts[3] = new Part(3, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
         parts[1] = new Part(1, "Intel Core i5-6600K 3.5 GHz", typesOfParts[0], 8, 15, 215, 167);
         parts[2] = new Part(2, "Электропитание", typesOfParts[2], 25, 35, 847, 540);
 
@@ -46,7 +47,7 @@ public class Game : MonoBehaviour {
 
     public void openCloseImprovementWin()
     {
-        GameObject partsContainer = improvementWin.transform.Find("ScrollContent/Parts").gameObject;
+        GameObject partsContainer = improvementWin.transform.Find("Background/Parts").gameObject;
         int childs = partsContainer.transform.childCount;
         for (int i = childs - 1; i >= 0; i--)
         {
