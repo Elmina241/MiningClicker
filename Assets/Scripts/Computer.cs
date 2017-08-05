@@ -92,7 +92,7 @@ class Computer : MonoBehaviour
         this.bonusButton = transform.Find("BonusPanel/BonusButton").gameObject.GetComponent<Button>();
         this.buyComp = transform.Find("BuyComp").gameObject.GetComponent<Button>();
         this.partsContainer = g.improvementWin.transform.Find("Background/Parts").gameObject;
-        buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = cost + "$";
+        buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = "$"+cost;
         bonusButton.onClick.AddListener(GetBonus);
         buyComp.gameObject.SetActive(!isResearched);
         buyComp.onClick.AddListener(ResearchComp);
@@ -139,16 +139,16 @@ class Computer : MonoBehaviour
         exp += expU;
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString();
         g.money = g.money - bonusCost;
-        g.moneyText.text = g.money.ToString() + "$";
+        g.moneyText.text = "$"+g.money.ToString();
         bonusCost = bonusCost * bonusCostD;
         bonus = bonus * bonusD;
-        bonusText.text = (bonusCost).ToString("0.#0") + "$";
+        bonusText.text = "$"+(bonusCost).ToString("0.#0");
     }
     public void Exchange()
     {
         g.money = (g.money + currency * cur.getExchRate());
         currency = 0;
-        g.moneyText.text = g.money.ToString() + "$";
+        g.moneyText.text = "$"+ g.money.ToString();
     }
     public void BuyAutoMiner()
     {
@@ -158,7 +158,7 @@ class Computer : MonoBehaviour
         StartCoroutine(BonusPerSec());
         g.upgradeTimeButton.interactable = (upgradePoints > 0);
         g.upgradeProfitButton.interactable = (upgradePoints > 0);
-        g.moneyText.text = g.money.ToString() + "$";
+        g.moneyText.text = "$" + g.money.ToString();
     }
     IEnumerator BonusPerSec()
     {
@@ -281,7 +281,7 @@ class Computer : MonoBehaviour
     {
         g.money -= cost; 
         buyComp.gameObject.SetActive(false);
-        g.moneyText.text = g.money.ToString() + "$";
+        g.moneyText.text = "$" + g.money.ToString();
     }
 
     //id - индекс в массиве компонентов данного компьютера, а не id компонента
@@ -301,7 +301,7 @@ class Computer : MonoBehaviour
         compParts[id].isBroken = false;
         part.transform.Find("BuyNew").gameObject.GetComponent<Button>().interactable = false;
         part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
-        g.moneyText.text = g.money.ToString() + "$";
+        g.moneyText.text = "$" + g.money.ToString();
         changeBuyButtons();
         isReady = checkIsReady();
         block.SetActive(!isReady);
