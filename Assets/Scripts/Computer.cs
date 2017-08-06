@@ -148,7 +148,7 @@ class Computer : MonoBehaviour
     {
         g.money = (g.money + currency * cur.getExchRate());
         currency = 0;
-        g.moneyText.text = "$"+ g.money.ToString();
+        g.moneyText.text = "$"+ g.money.ToString("0.#0");
     }
     public void BuyAutoMiner()
     {
@@ -158,7 +158,7 @@ class Computer : MonoBehaviour
         StartCoroutine(BonusPerSec());
         g.upgradeTimeButton.interactable = (upgradePoints > 0);
         g.upgradeProfitButton.interactable = (upgradePoints > 0);
-        g.moneyText.text = "$" + g.money.ToString();
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
     }
     IEnumerator BonusPerSec()
     {
@@ -281,7 +281,7 @@ class Computer : MonoBehaviour
     {
         g.money -= cost; 
         buyComp.gameObject.SetActive(false);
-        g.moneyText.text = "$" + g.money.ToString();
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
     }
 
     //id - индекс в массиве компонентов данного компьютера, а не id компонента
@@ -301,7 +301,7 @@ class Computer : MonoBehaviour
         compParts[id].isBroken = false;
         part.transform.Find("BuyNew").gameObject.GetComponent<Button>().interactable = false;
         part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
-        g.moneyText.text = "$" + g.money.ToString();
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
         changeBuyButtons();
         isReady = checkIsReady();
         block.SetActive(!isReady);
