@@ -57,7 +57,7 @@ class Computer : MonoBehaviour
     /*!-- появляется после покупки автомайна --*/
 
     int clickCounter = 0; // Счетчик кликов по кнопке
-    int level = 0; // Уровень развития компьютера. Повышается на +1 каждые 50 кликов. Не зависит от EXP 
+    int level = 1; // Уровень развития компьютера. Повышается на +1 каждые 50 кликов. Не зависит от EXP 
 
     public AutoMiner autoMiner;
     string jsonParts;
@@ -162,7 +162,7 @@ class Computer : MonoBehaviour
     }
     IEnumerator BonusPerSec()
     {
-        while (true)
+        while (isReady)
         {
             //clickCounter++;
             progressCounter1++;
@@ -305,6 +305,12 @@ class Computer : MonoBehaviour
         changeBuyButtons();
         isReady = checkIsReady();
         block.SetActive(!isReady);
+        if (isReady)
+        {
+            GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
+            prevComp.transform.Find("BlockMining").gameObject.SetActive(true);
+            prevComp.GetComponent<Computer>().isReady = false;
+        }
         efficiency = getEfficiency();
         autoMiner.autoTime = autoMiner.maxTime * (200 - getEfficiency()) / 100;
         if (!isReady)
