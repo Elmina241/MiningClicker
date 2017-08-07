@@ -8601,13 +8601,13 @@ MonoBehaviour:
   upgradeTimeButton: {fileID: 0}
   upgradeProfitButton: {fileID: 0}
   upgradePointsText: {fileID: 0}
-  levelText: {fileID: 1843518924}
-  nameText: {fileID: 1372524452}
-  pribyl: {fileID: 541330569}
-  time: {fileID: 590169128}
-  sr_pr: {fileID: 805689229}
-  prBarText: {fileID: 793275549}
-  fill: {fileID: 31447325}
+  levelText: {fileID: 867073056}
+  nameText: {fileID: 1612966227}
+  pribyl: {fileID: 854199309}
+  time: {fileID: 1776694950}
+  sr_pr: {fileID: 1614459758}
+  prBarText: {fileID: 1027207076}
+  fill: {fileID: 457159128}
   parts:
   - id: 0
     type:
