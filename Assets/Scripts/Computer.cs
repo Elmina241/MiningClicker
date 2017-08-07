@@ -137,7 +137,7 @@ class Computer : MonoBehaviour
     public void GetBonus()
     {
         exp += expU;
-        expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString();
+        expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString() + "xp";
         g.money = g.money - bonusCost;
         g.moneyText.text = "$"+g.money.ToString();
         bonusCost = bonusCost * bonusCostD;
