@@ -255,22 +255,25 @@ class Computer : MonoBehaviour
             masIsBought[i] = 0;
             masAmount[i] = 0;
         }
-        foreach (PartsOfComputer p in compParts)
+        if (g.typesOfParts.Length != 0)
         {
-            int tId = g.parts[p.id].type.id;
-            masIsBought[tId] = p.isBought ? (masIsBought[tId] + 1) : masIsBought[tId];
-            masAmount[tId]++;
-        }
-        for (int i = 0; i < masIsBought.Length; i++)
-        {
-            if (i == 1)
+            foreach (PartsOfComputer p in compParts)
             {
-                int delta = (int)((((float)masIsBought[1] / (float)masAmount[1]) * 100) * fullGPU / 100);
-                eff = eff - (fullGPU - delta);
+                int tId = g.parts[p.id].type.id;
+                masIsBought[tId] = p.isBought ? (masIsBought[tId] + 1) : masIsBought[tId];
+                masAmount[tId]++;
             }
-            else
+            for (int i = 0; i < masIsBought.Length; i++)
             {
-                eff -= (5 - (int)(((masIsBought[i] / masAmount[i]) * 100) * 0.05f));
+                if (i == 1)
+                {
+                    int delta = (int)((((float)masIsBought[1] / (float)masAmount[1]) * 100) * fullGPU / 100);
+                    eff = eff - (fullGPU - delta);
+                }
+                else
+                {
+                    eff -= (5 - (int)(((masIsBought[i] / masAmount[i]) * 100) * 0.05f));
+                }
             }
         }
         return eff;
