@@ -32,7 +32,7 @@ class Computer : MonoBehaviour
 
     public int cost = 1; // цена компьютера
     public string nameComp = "Ноутбук"; // Имя компьютера
-    bool isReady; // готов ли компьютер к работе (все ли компоненты куплены)
+    public bool isReady; // готов ли компьютер к работе (все ли компоненты куплены)
     bool isFarm; // ферма?
     public bool isResearched = true; // открыт ли компьютер
     float bonus = 0.001f; // доход за заполнение прогресс-бара
@@ -106,8 +106,8 @@ class Computer : MonoBehaviour
         currencyText.text = currency.ToString("#0.###0");
         bonusButton.interactable = (g.money >= bonusCost);
         buyComp.interactable = (g.money >= cost);
-        p1.fillAmount = (float)progressCounter1 / (float)maxClick;
-        progressText.text = ((int)(((float)progressCounter1 / (float)maxClick) * 100)).ToString() + "%";
+        p1.fillAmount = (float)progressCounter1 / 100;
+        progressText.text = progressCounter1.ToString() + "%";
         
     }
 
@@ -115,9 +115,9 @@ class Computer : MonoBehaviour
     {
         clickCounter++;
         exp += expD;
-        progressCounter1 ++;
+        progressCounter1 = progressCounter1 + (100/maxClick);
         progressCounter2+= expD;
-        if (progressCounter1 > maxClick)
+        if (progressCounter1 > 100)
         {
             progressCounter1 = 0;
             currency += bonus;
@@ -164,16 +164,16 @@ class Computer : MonoBehaviour
     {
         while (true)
         {
-            clickCounter++;
+            //clickCounter++;
             progressCounter1++;
-            if (progressCounter1 > maxClick)
+            if (progressCounter1 > 100)
             {
                 progressCounter1 = 0;
                 currency = currency + bonus + autoMiner.autoProfit;
-                p1.fillAmount = (float)progressCounter1 / (float)maxClick;
-                progressText.text = ((int)(((float)progressCounter1 / (float)maxClick) * 100)).ToString() + "%";
+                p1.fillAmount = (float)progressCounter1 / 100;
+                progressText.text = progressCounter1.ToString() + "%";
             }
-            yield return new WaitForSeconds((autoMiner.autoTime - autoMiner.timeBonus) / (float)maxClick);
+            yield return new WaitForSeconds((autoMiner.autoTime - autoMiner.timeBonus) / 100);
         }
     }
     public void BuyTimeUpgrade()
