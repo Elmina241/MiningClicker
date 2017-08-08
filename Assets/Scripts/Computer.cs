@@ -41,7 +41,7 @@ class Computer : MonoBehaviour
     float bonusCostD = 1.44f;
     int maxClick=10; // кол-во дробей прогресс-бара
     int exp = 0;
-    int expD = 2; // кол-во опыта за клик по кнопке
+    int expD = 50; // кол-во опыта за клик по кнопке
     int expU = 15; // кол-во опыта за улучшение доходности
     int upgradeCost=200; //максимальное число EXP. Начало с 200
     float upgradeCoef = 1.16f; // коеф. сложности upgradeCost, для ноута - 1,12. 
@@ -97,7 +97,7 @@ class Computer : MonoBehaviour
         buyComp.gameObject.SetActive(!isResearched);
         buyComp.onClick.AddListener(ResearchComp);
         transform.Find("ProgressPanel/nameText").gameObject.GetComponent<Text>().text = nameComp;
-        autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
+        //autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
         autoMiner.autoTime = ((200-getEfficiency())/100)* autoMiner.maxTime;
     }
 
@@ -139,7 +139,7 @@ class Computer : MonoBehaviour
         exp += expU;
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString() + "xp";
         g.money = g.money - bonusCost;
-        g.moneyText.text = "$"+g.money.ToString();
+        g.moneyText.text = "$"+g.money.ToString("0.#0");
         bonusCost = bonusCost * bonusCostD;
         bonus = bonus * bonusD;
         bonusText.text = "$"+(bonusCost).ToString("0.#0");
@@ -159,6 +159,10 @@ class Computer : MonoBehaviour
         g.upgradeTimeButton.interactable = (upgradePoints > 0);
         g.upgradeProfitButton.interactable = (upgradePoints > 0);
         g.moneyText.text = "$" + g.money.ToString("0.#0");
+        g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString() + " СЕК";
+        g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
+        g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
+        autoMiner.autoProfit = bonus;
     }
     IEnumerator BonusPerSec()
     {
@@ -169,7 +173,7 @@ class Computer : MonoBehaviour
             if (progressCounter1 > 100)
             {
                 progressCounter1 = 0;
-                currency = currency + bonus + autoMiner.autoProfit;
+                currency = currency + autoMiner.autoProfit;
                 p1.fillAmount = (float)progressCounter1 / 100;
                 progressText.text = progressCounter1.ToString() + "%";
             }
@@ -184,6 +188,9 @@ class Computer : MonoBehaviour
         g.upgradeTimeButton.interactable = (upgradePoints > 0);
         g.upgradeProfitButton.interactable = (upgradePoints > 0);
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
+        g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
+        g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString() + " СЕК";
+        g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
     }
     public void BuyProfitUpgrade()
     {
@@ -193,6 +200,9 @@ class Computer : MonoBehaviour
         g.upgradeProfitButton.interactable = (upgradePoints > 0);
         g.upgradeTimeButton.interactable = (upgradePoints > 0);
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
+        g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
+        g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
+        g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
     }
     public void openCloseImprovementWin()
     {
@@ -201,13 +211,15 @@ class Computer : MonoBehaviour
             g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
             g.time.text = "0" + " СЕК";
             g.sr_pr.text = "0 " + cur.getName() + " / СЕК";
+            g.pribyl.text = cur.getName() + " " + bonus.ToString("#0.###0");
         }
         else
         {
             g.upgradeTimeButton.interactable = (upgradePoints > 0);
             g.upgradeProfitButton.interactable = (upgradePoints > 0);
-            g.time.text = autoMiner.autoTime.ToString() + " СЕК";
-            g.sr_pr.text = (bonus / autoMiner.autoTime).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
+            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString() + " СЕК";
+            g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
+            g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         }
         if (!isReady)
         {
@@ -215,9 +227,11 @@ class Computer : MonoBehaviour
         }
         g.levelText.text = "Уровень: " + level.ToString();
         g.nameText.text = nameComp;
-        g.pribyl.text = cur.getName() + " " + bonus.ToString("#0.###0");
+        
         g.fill.fillAmount = (float)progressCounter2 / (float)upgradeCost;
         g.prBarText.text = "XP " + progressCounter2.ToString() + " / " + upgradeCost.ToString();
+        g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
+        g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
 
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
         g.autoMinerButton.onClick.RemoveAllListeners();
@@ -227,6 +241,20 @@ class Computer : MonoBehaviour
         g.upgradeTimeButton.onClick.AddListener(BuyTimeUpgrade);
         g.upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
 
+
+        g.improvementWin.transform.Find("Background/AutoMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + autoMiner.autoCost.ToString();
+
+        g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = transform.Find("MenuButton").GetComponent<Image>().sprite;
+        g.improvementWin.transform.Find("Background/Header/icon/Image").GetComponent<Image>().sprite = transform.Find("MenuButton/Icon").GetComponent<Image>().sprite;
+
+        if (compParts.Length == 0)
+        {
+            g.improvementWin.transform.Find("Background/Description_parts/Text").GetComponent<Text>().text = "";
+        }
+        else
+        {
+            g.improvementWin.transform.Find("Background/Description_parts/Text").GetComponent<Text>().text = "Компоненты компьютера";
+        }
         for (int i = 0; i < compParts.Length; i++)
         {
             int temp = i;
