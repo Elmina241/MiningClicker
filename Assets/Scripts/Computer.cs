@@ -5,6 +5,9 @@ using System.Collections;
 
 class Computer : MonoBehaviour
 {
+    [Header("Фон")]
+    public Sprite backgr;
+
     public Text currencyText; //Деньги в валюте
     public Text progressText; //Текст процентного заполнения кликов
     public Text bonusText; //Текст стоимость улучшения
@@ -76,6 +79,7 @@ class Computer : MonoBehaviour
 
     void Start()
     {
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
         Currency c = new Currency("ETH", 30000f);
         this.cur = c;
 
@@ -220,7 +224,7 @@ class Computer : MonoBehaviour
         {
             g.upgradeTimeButton.interactable = (upgradePoints > 0);
             g.upgradeProfitButton.interactable = (upgradePoints > 0);
-            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString() + " СЕК";
+            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
             g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
             g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         }
@@ -247,7 +251,8 @@ class Computer : MonoBehaviour
 
         g.improvementWin.transform.Find("Background/AutoMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + autoMiner.autoCost.ToString();
 
-        g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = transform.Find("MenuButton").GetComponent<Image>().sprite;
+        g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = backgr;
+        // g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = transform.Find("MenuButton").GetComponent<Image>().sprite;
         g.improvementWin.transform.Find("Background/Header/icon/Image").GetComponent<Image>().sprite = transform.Find("MenuButton/Icon").GetComponent<Image>().sprite;
 
         if (compParts.Length == 0)

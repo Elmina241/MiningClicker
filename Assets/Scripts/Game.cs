@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
 
+    public Sprite[] background;
     
     public Text moneyText; //Деньги в $
     public float money = 0;
@@ -24,6 +25,7 @@ public class Game : MonoBehaviour {
 
     void Start()
     {
+        money = 50f;
         /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/
         typesOfParts = new typeOfPart[3];
         typesOfParts[0] = new typeOfPart(0, "CPU");
