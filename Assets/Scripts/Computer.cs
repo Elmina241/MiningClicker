@@ -141,8 +141,11 @@ class Computer : MonoBehaviour
         g.money = g.money - bonusCost;
         g.moneyText.text = "$"+g.money.ToString("0.#0");
         bonusCost = bonusCost * bonusCostD;
+        autoMiner.autoProfit = autoMiner.autoProfit - bonus;
         bonus = bonus * bonusD;
+        autoMiner.autoProfit = autoMiner.autoProfit + bonus;
         bonusText.text = "$"+(bonusCost).ToString("0.#0");
+        
     }
     public void Exchange()
     {
