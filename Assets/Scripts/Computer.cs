@@ -7,6 +7,9 @@ class Computer : MonoBehaviour
 {
     [Header("Фон")]
     public Sprite backgr;
+    [Header("ОУ на майнере")]
+    public GameObject PU;
+    public Text PU_text;
 
     public Text currencyText; //Деньги в валюте
     public Text progressText; //Текст процентного заполнения кликов
@@ -14,7 +17,7 @@ class Computer : MonoBehaviour
     public Text expText; //Текст количества опыта
     public GameObject partsContainer; //Контейнер, содержащий части компьютера
     public GameObject partPrefab;
-    public GameObject block; //болкировка майнинга, если не куплены все необходимые части
+    public GameObject block; //блокировка майнинга, если не куплены все необходимые части
 
     public Image p1; //полоса прогресса заполнения кликов
     public Image p2; //полоса прогресса заполнения опыта
@@ -113,7 +116,20 @@ class Computer : MonoBehaviour
         p1.fillAmount = (float)progressCounter1 / 100;
         progressText.text = progressCounter1.ToString() + "%";
         
+        
     }
+    //void updateUp()
+    //{
+    //    if (upgradePoints > 0)
+    //    {
+    //        PU.SetActive(true);
+    //        PU_text.text = "ОУ: " + upgradePoints.ToString();
+    //    }
+    //    else
+    //    {
+    //        PU.SetActive(false);
+    //    }
+    //}
 
     public void OnClick()
     {
@@ -135,9 +151,12 @@ class Computer : MonoBehaviour
             upgradePoints++;
             upgradeCost = (int)(upgradeCost * upgradeCoef);
         }
-        expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString()+"xp";
+        expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString()+"xp";       
         p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
+        //Отображение очков улучшений на главной панели
+        //updateUp();
     }
+
     public void GetBonus()
     {
         exp += expU;
@@ -196,8 +215,9 @@ class Computer : MonoBehaviour
         g.upgradeProfitButton.interactable = (upgradePoints > 0);
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
         g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
-        g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString() + " СЕК";
+        g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
         g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
+        //updateUp();
     }
     public void BuyProfitUpgrade()
     {
@@ -210,6 +230,7 @@ class Computer : MonoBehaviour
         g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
         g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
+        //updateUp();
     }
     public void openCloseImprovementWin()
     {
@@ -224,7 +245,7 @@ class Computer : MonoBehaviour
         {
             g.upgradeTimeButton.interactable = (upgradePoints > 0);
             g.upgradeProfitButton.interactable = (upgradePoints > 0);
-            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
+            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК"; //это надо вызвать в реалтайме, а то цифры форматируются только после ребута окна
             g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
             g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         }
@@ -274,6 +295,7 @@ class Computer : MonoBehaviour
             A.transform.Find("BuyNew").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, true, A); });
             A.transform.Find("BuyUsed").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, false, A); });
         }
+        //updateUp();//обновление очков улучшений
         changeBuyButtons();
         g.improvementWin.SetActive(!g.improvementWin.activeSelf);
     }
