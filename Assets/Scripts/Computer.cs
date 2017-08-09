@@ -118,18 +118,18 @@ class Computer : MonoBehaviour
         
         
     }
-    //void updateUp()
-    //{
-    //    if (upgradePoints > 0)
-    //    {
-    //        PU.SetActive(true);
-    //        PU_text.text = "ОУ: " + upgradePoints.ToString();
-    //    }
-    //    else
-    //    {
-    //        PU.SetActive(false);
-    //    }
-    //}
+    void updateUp()
+    {
+        if (upgradePoints > 0)
+       {
+            PU.SetActive(true);
+            PU_text.text = "ОУ: " + upgradePoints.ToString();
+        }
+        else
+        {
+            PU.SetActive(false);
+        }
+    }
 
     public void OnClick()
     {
@@ -150,11 +150,10 @@ class Computer : MonoBehaviour
             progressCounter2 = progressCounter2 % upgradeCost;
             upgradePoints++;
             upgradeCost = (int)(upgradeCost * upgradeCoef);
+            updateUp();
         }
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString()+"xp";       
         p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
-        //Отображение очков улучшений на главной панели
-        //updateUp();
     }
 
     public void GetBonus()
@@ -217,7 +216,7 @@ class Computer : MonoBehaviour
         g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
         g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
         g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
-        //updateUp();
+        updateUp();
     }
     public void BuyProfitUpgrade()
     {
@@ -230,7 +229,7 @@ class Computer : MonoBehaviour
         g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
         g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
-        //updateUp();
+        updateUp();
     }
     public void openCloseImprovementWin()
     {
@@ -240,12 +239,14 @@ class Computer : MonoBehaviour
             g.time.text = "0" + " СЕК";
             g.sr_pr.text = "0 " + cur.getName() + " / СЕК";
             g.pribyl.text = cur.getName() + " " + bonus.ToString("#0.###0");
+            g.upgradeTimeButton.interactable = false;
+            g.upgradeProfitButton.interactable = false;
         }
         else
         {
             g.upgradeTimeButton.interactable = (upgradePoints > 0);
             g.upgradeProfitButton.interactable = (upgradePoints > 0);
-            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК"; //это надо вызвать в реалтайме, а то цифры форматируются только после ребута окна
+            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК"; //это надо вызвать в реалтайме, а то цифры форматируются только после ребута окна 
             g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
             g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         }
