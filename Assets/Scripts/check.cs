@@ -6,18 +6,14 @@ public class check : MonoBehaviour {
 
     public Color grey, green;
     public Image checkmark;
-    void Start()
+    public void setOn()
     {
-        checkmark.color = grey;
-    }
-    public void click()
-    {
-        if (checkmark.color != green)
             checkmark.color = green;
-        else
+    }
+    public void setOff()
+    {
             checkmark.color = grey;
-
     }
 
-	
+
 }

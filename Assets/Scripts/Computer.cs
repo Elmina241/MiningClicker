@@ -54,6 +54,7 @@ class Computer : MonoBehaviour
     int upgradePoints=0; // кол-во очков улучшений (ОУ)
     //удалить 
     public int efficiency = 100;
+    int progressCounter = 0; // счётчик заполнения прогрессбара
 
     /*-- появляется после покупки автомайна --*/
     float timeUpgrade = 30; // Ускорение майна. Начинается с 30% и падает на 2,5% каждое улучшение
@@ -69,16 +70,6 @@ class Computer : MonoBehaviour
     string jsonParts;
     public PartsOfComputer[] compParts;
 
-    /*public Computer(string name, int cost, float startBonus, float bonusCost, int maxClick, float upgradeCoef, Currency cur)
-    {
-        nameComp = name;
-        this.cost = cost;
-        bonus = startBonus;
-        this.bonusCost = bonusCost;
-        this.maxClick = maxClick;
-        this.upgradeCoef = upgradeCoef;
-        this.cur = cur;
-    }*/
 
     void Start()
     {
@@ -141,6 +132,7 @@ class Computer : MonoBehaviour
         {
             progressCounter1 = 0;
             currency += bonus;
+            progressCounter++;
         }
         if (progressCounter2 > upgradeCost)
         {
@@ -154,6 +146,19 @@ class Computer : MonoBehaviour
         }
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString()+"xp";       
         p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
+        if (progressCounter > 5)
+        {
+            progressCounter = 0;
+            foreach (PartsOfComputer p in compParts)
+            {
+                if (p.isBought)
+                {
+                    System.Random rnd = new System.Random();
+                    p.isBought = rnd.Next(1, 100) > p.curReliability;
+                }
+            }
+            isReady = checkIsReady();
+        }
     }
 
     public void GetBonus()
@@ -201,6 +206,20 @@ class Computer : MonoBehaviour
                 currency = currency + autoMiner.autoProfit;
                 p1.fillAmount = (float)progressCounter1 / 100;
                 progressText.text = progressCounter1.ToString() + "%";
+                progressCounter++;
+            }
+            if (progressCounter > 5)
+            {
+                progressCounter = 0;
+                foreach (PartsOfComputer p in compParts)
+                {
+                    if (p.isBought)
+                    {
+                        System.Random rnd = new System.Random();
+                        p.isBought = rnd.Next(1, 100) > p.curReliability;
+                    }
+                }
+                isReady = checkIsReady();
             }
             yield return new WaitForSeconds((autoMiner.autoTime - autoMiner.timeBonus) / 100);
         }
@@ -378,11 +397,20 @@ class Computer : MonoBehaviour
         if (!isReady)
         {
             g.autoMinerButton.interactable = false;
-            StopCoroutine(BonusPerSec());
+            //StopCoroutine(BonusPerSec());
         }
         else
         {
-            if (!autoMiner.isBoughtAuto) g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
+            if (!autoMiner.isBoughtAuto)
+            {
+                g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
+            }
+            else
+            {
+                StopCoroutine(BonusPerSec());
+                StartCoroutine(BonusPerSec());
+            }
+
         }
     }
 
@@ -392,18 +420,21 @@ class Computer : MonoBehaviour
         bool res = true;
         bool[] masIsBought;
         masIsBought = new bool[g.typesOfParts.Length];
-        for (int i=0; i < masIsBought.Length; i++)
+        if (compParts.Length != 0)
         {
-            masIsBought[i] = false;
-        }
-        foreach (PartsOfComputer p in compParts)
-        {
-            int tId = g.parts[p.id].type.id;
-            masIsBought[tId] = masIsBought[tId] || (p.isBought && !p.isBroken);
-        }
-        for (int i = 0; i < masIsBought.Length; i++)
-        {
-            res = res && masIsBought[i];
+            for (int i=0; i < masIsBought.Length; i++)
+            {
+                masIsBought[i] = false;
+            }
+            foreach (PartsOfComputer p in compParts)
+            {
+                int tId = g.parts[p.id].type.id;
+                masIsBought[tId] = masIsBought[tId] || (p.isBought && !p.isBroken);
+            }
+            for (int i = 0; i < masIsBought.Length; i++)
+            {
+                res = res && masIsBought[i];
+            }
         }
         return res;
     }
@@ -417,11 +448,13 @@ class Computer : MonoBehaviour
             {
                 partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costNew <= g.money);
                 partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costUsed <= g.money);
+                partsContainer.transform.GetChild(i).Find("Ckecmark").GetComponent<check>().setOff();
             }
             else
             {
                 partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = false;
                 partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = false;
+                partsContainer.transform.GetChild(i).Find("Ckecmark").GetComponent<check>().setOn();
             }
         }
     }
