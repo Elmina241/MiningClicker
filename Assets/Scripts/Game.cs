@@ -25,7 +25,7 @@ public class Game : MonoBehaviour {
 
     void Start()
     {
-        money = 50f;
+        money = 80f;
         /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/
         typesOfParts = new typeOfPart[3];
         typesOfParts[0] = new typeOfPart(0, "CPU");
