@@ -8,6 +8,7 @@ public class Game : MonoBehaviour {
     public Text moneyText; //Деньги в $
     public float money = 0;
     public GameObject improvementWin; //окно улучшений и запчастей
+    public GameObject push; //панель уведомлений
     public Button autoMinerButton; //кнопка покупки автомайнера
     public Button upgradeTimeButton; //кнопка покупки улучшения времени
     public Button upgradeProfitButton; //кнопка покупки улучшения дохода
