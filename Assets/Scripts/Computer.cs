@@ -158,6 +158,27 @@ class Computer : MonoBehaviour
                 }
             }
             isReady = checkIsReady();
+            block.SetActive(!isReady);
+            if (!isReady)
+            {
+                GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
+                prevComp.transform.Find("BlockMining").gameObject.SetActive(false);
+                Computer pr = prevComp.GetComponent<Computer>();
+                pr.isReady = true;
+                if (!pr.autoMiner.isBoughtAuto)
+                {
+                    g.autoMinerButton.interactable = (g.money >= pr.autoMiner.autoCost);
+                }
+                else
+                {
+                    StopCoroutine(pr.BonusPerSec());
+                    StartCoroutine(pr.BonusPerSec());
+                }
+            }
+            if (g.improvementWin.activeSelf)
+            {
+                changeBuyButtons();
+            }
         }
     }
 
@@ -220,6 +241,27 @@ class Computer : MonoBehaviour
                     }
                 }
                 isReady = checkIsReady();
+                block.SetActive(!isReady);
+                if (!isReady)
+                {
+                    GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
+                    prevComp.transform.Find("BlockMining").gameObject.SetActive(false);
+                    Computer pr = prevComp.GetComponent<Computer>();
+                    pr.isReady = true;
+                    if (!pr.autoMiner.isBoughtAuto)
+                    {
+                        g.autoMinerButton.interactable = (g.money >= pr.autoMiner.autoCost);
+                    }
+                    else
+                    {
+                        StopCoroutine(pr.BonusPerSec());
+                        StartCoroutine(pr.BonusPerSec());
+                    }
+                }
+                if (g.improvementWin.activeSelf)
+                {
+                    changeBuyButtons();
+                }
             }
             yield return new WaitForSeconds((autoMiner.autoTime - autoMiner.timeBonus) / 100);
         }
@@ -229,8 +271,8 @@ class Computer : MonoBehaviour
         upgradePoints--;
         autoMiner.timeBonus = autoMiner.timeBonus + ((autoMiner.autoTime - autoMiner.timeBonus) / 100) * timeUpgrade;
         timeUpgrade = timeUpgrade - timeUpgradeD;
-        g.upgradeTimeButton.interactable = (upgradePoints > 0);
-        g.upgradeProfitButton.interactable = (upgradePoints > 0);
+        g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0));
+        g.upgradeProfitButton.interactable = ((upgradePoints > 0) && (profiteUpgrade > 0));
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
         g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
         g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
@@ -242,8 +284,8 @@ class Computer : MonoBehaviour
         upgradePoints--;
         autoMiner.autoProfit = autoMiner.autoProfit + (autoMiner.autoProfit / 100) * profiteUpgrade;
         profiteUpgrade = profiteUpgrade - profiteUpgradeD;
-        g.upgradeProfitButton.interactable = (upgradePoints > 0);
-        g.upgradeTimeButton.interactable = (upgradePoints > 0);
+        g.upgradeProfitButton.interactable = ((upgradePoints > 0) && (profiteUpgrade > 0));
+        g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0));
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
         g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
         g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
@@ -263,9 +305,9 @@ class Computer : MonoBehaviour
         }
         else
         {
-            g.upgradeTimeButton.interactable = (upgradePoints > 0);
-            g.upgradeProfitButton.interactable = (upgradePoints > 0);
-            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК"; //это надо вызвать в реалтайме, а то цифры форматируются только после ребута окна 
+            g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0));
+            g.upgradeProfitButton.interactable = ((upgradePoints > 0) && (profiteUpgrade > 0));
+            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК"; 
             g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
             g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         }

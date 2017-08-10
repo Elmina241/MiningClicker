@@ -3651,6 +3651,11 @@ Prefab:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: block
+      value: 
+      objectReference: {fileID: 1456898055}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
   m_IsPrefabParent: 0
@@ -14313,6 +14318,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1456436016}
+--- !u!1 &1456898055 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010661256152, guid: 9fa28a018428f184f95d3b9c974854e4,
+    type: 2}
+  m_PrefabInternal: {fileID: 291961369}
 --- !u!224 &1462942393 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224000014278755138, guid: 9fa28a018428f184f95d3b9c974854e4,
