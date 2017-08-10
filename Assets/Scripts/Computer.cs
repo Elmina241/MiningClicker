@@ -124,6 +124,7 @@ class Computer : MonoBehaviour
 
     public void OnClick()
     {
+        
         clickCounter++;
         exp += expD;
         progressCounter1 = progressCounter1 + (100/maxClick);
@@ -174,6 +175,7 @@ class Computer : MonoBehaviour
                     StopCoroutine(pr.BonusPerSec());
                     StartCoroutine(pr.BonusPerSec());
                 }
+                pushBroken();
             }
             if (g.improvementWin.activeSelf)
             {
@@ -257,6 +259,7 @@ class Computer : MonoBehaviour
                         StopCoroutine(pr.BonusPerSec());
                         StartCoroutine(pr.BonusPerSec());
                     }
+                    pushBroken();
                 }
                 if (g.improvementWin.activeSelf)
                 {
@@ -292,6 +295,15 @@ class Computer : MonoBehaviour
         g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
         updateUp();
     }
+
+    public void pushBroken()
+    {
+        g.push.transform.Find("Icon").GetComponent<Image>().sprite = transform.Find("MenuButton/Icon").GetComponent<Image>().sprite;
+        g.push.transform.Find("Header").GetComponent<Text>().text = nameComp;
+        g.push.transform.Find("Description").GetComponent<Text>().text = "Компьютер сломался! Необходимо заменить компоненты.";
+        g.push.GetComponent<Animator>().SetTrigger("isShown");
+    }
+
     public void openCloseImprovementWin()
     {
         if (!autoMiner.isBoughtAuto)
