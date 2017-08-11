@@ -6,13 +6,28 @@ public class check : MonoBehaviour {
 
     public Color grey, green;
     public Image checkmark;
+    Color transparent;
     public void setOn()
     {
-            checkmark.color = green;
+        transparent = checkmark.color;
+        transparent.a = 1f;
+        checkmark.color = transparent;
+        checkmark.color = green;       
+            
     }
     public void setOff()
     {
-            checkmark.color = grey;
+        transparent = checkmark.color;
+        transparent.a = 1f;
+        checkmark.color = transparent;       
+        checkmark.color = grey;  
+       
+    }
+    public void Disable()
+    {
+        transparent = checkmark.color;
+        transparent.a = 0f;
+        checkmark.color = transparent;
     }
 
 

@@ -545,7 +545,8 @@ class Computer : MonoBehaviour
                 partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = false;
                 partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = false;
                 partsContainer.transform.GetChild(i).Find("Ckecmark").GetComponent<check>().setOn();
-                partsContainer.transform.GetChild(i).Find("Burned").GetComponent<check>().setOff();
+                //partsContainer.transform.GetChild(i).Find("Burned").GetComponent<check>().setOff();
+                partsContainer.transform.GetChild(i).Find("Burned").GetComponent<check>().Disable();
             }
         }
     }
