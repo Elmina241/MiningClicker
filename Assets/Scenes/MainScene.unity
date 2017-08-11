@@ -5334,6 +5334,7 @@ GameObject:
   - 224: {fileID: 488905193}
   - 222: {fileID: 488905195}
   - 114: {fileID: 488905194}
+  - 114: {fileID: 488905196}
   m_Layer: 5
   m_Name: checkmark
   m_TagString: Untagged
@@ -5392,6 +5393,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 488905192}
+--- !u!114 &488905196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 488905192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d509841ee2bac43b8d810cc8f127fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grey: {r: 0.8901961, g: 0.8901961, b: 0.8901961, a: 1}
+  green: {r: 0.41568628, g: 0.85490197, b: 0.05882353, a: 1}
+  checkmark: {fileID: 488905194}
 --- !u!114 &489848101 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
@@ -13583,6 +13598,11 @@ Prefab:
         type: 2}
       propertyPath: isReady
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: autoMiner.autoProfit
+      value: 0.001
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012509147228, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}

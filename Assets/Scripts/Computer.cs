@@ -96,7 +96,7 @@ class Computer : MonoBehaviour
         buyComp.onClick.AddListener(ResearchComp);
         transform.Find("ProgressPanel/nameText").gameObject.GetComponent<Text>().text = nameComp;
         //autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
-        autoMiner.autoTime = ((200-getEfficiency())/100)* autoMiner.maxTime;
+        
     }
 
     public void Update()
@@ -156,6 +156,7 @@ class Computer : MonoBehaviour
                 {
                     System.Random rnd = new System.Random();
                     p.isBought = rnd.Next(1, 100) > p.curReliability;
+                    p.isBroken = !p.isBought;
                 }
             }
             isReady = checkIsReady();
@@ -208,6 +209,8 @@ class Computer : MonoBehaviour
         g.money = g.money - autoMiner.autoCost;
         autoMiner.isBoughtAuto = true;
         g.autoMinerButton.interactable = false;
+        autoMiner.autoTime = ((float)(200 - getEfficiency()) / 100) * autoMiner.maxTime;
+        autoMiner.autoProfit = bonus;
         StartCoroutine(BonusPerSec());
         g.upgradeTimeButton.interactable = (upgradePoints > 0);
         g.upgradeProfitButton.interactable = (upgradePoints > 0);
@@ -215,7 +218,8 @@ class Computer : MonoBehaviour
         g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString() + " СЕК";
         g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
         g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
-        autoMiner.autoProfit = bonus;
+        g.improvementWin.transform.Find("Background/AutoMiner/GameObject/checkmark").GetComponent<check>().setOn();
+        g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
     }
     IEnumerator BonusPerSec()
     {
@@ -240,6 +244,7 @@ class Computer : MonoBehaviour
                     {
                         System.Random rnd = new System.Random();
                         p.isBought = rnd.Next(1, 100) > p.curReliability;
+                        p.isBroken = !p.isBought;
                     }
                 }
                 isReady = checkIsReady();
@@ -314,6 +319,8 @@ class Computer : MonoBehaviour
             g.pribyl.text = cur.getName() + " " + bonus.ToString("#0.###0");
             g.upgradeTimeButton.interactable = false;
             g.upgradeProfitButton.interactable = false;
+            g.improvementWin.transform.Find("Background/AutoMiner/GameObject/checkmark").GetComponent<check>().setOff();
+            g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "НАЖМИТЕ, ЧТОБЫ КУПИТЬ";
         }
         else
         {
@@ -322,6 +329,8 @@ class Computer : MonoBehaviour
             g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК"; 
             g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
             g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
+            g.improvementWin.transform.Find("Background/AutoMiner/GameObject/checkmark").GetComponent<check>().setOn();
+            g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
         }
         if (!isReady)
         {
@@ -387,7 +396,7 @@ class Computer : MonoBehaviour
             masIsBought[i] = 0;
             masAmount[i] = 0;
         }
-        if (g.typesOfParts.Length != 0)
+        if (compParts.Length != 0)
         {
             foreach (PartsOfComputer p in compParts)
             {
@@ -414,9 +423,32 @@ class Computer : MonoBehaviour
 
     public void ResearchComp()
     {
-        g.money -= cost; 
-        buyComp.gameObject.SetActive(false);
-        g.moneyText.text = "$" + g.money.ToString("0.#0");
+        if (gameObject.transform.GetSiblingIndex() != 0)
+        {
+            GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
+            Computer pr = prevComp.GetComponent<Computer>();
+            if (pr.isReady)
+            {
+                g.money -= cost;
+                buyComp.gameObject.SetActive(false);
+                g.moneyText.text = "$" + g.money.ToString("0.#0");
+                isResearched = true;
+            }
+            else
+            {
+                g.push.transform.Find("Icon").GetComponent<Image>().sprite = transform.Find("MenuButton/Icon").GetComponent<Image>().sprite;
+                g.push.transform.Find("Header").GetComponent<Text>().text = nameComp;
+                g.push.transform.Find("Description").GetComponent<Text>().text = "Не работает предыдущий компьютер.";
+                g.push.GetComponent<Animator>().SetTrigger("isShown");
+            }
+        }
+        else
+        {
+            g.money -= cost;
+            buyComp.gameObject.SetActive(false);
+            g.moneyText.text = "$" + g.money.ToString("0.#0");
+            isResearched = true;
+        }
     }
 
     //id - индекс в массиве компонентов данного компьютера, а не id компонента
@@ -503,12 +535,17 @@ class Computer : MonoBehaviour
                 partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costNew <= g.money);
                 partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costUsed <= g.money);
                 partsContainer.transform.GetChild(i).Find("Ckecmark").GetComponent<check>().setOff();
+                if (compParts[i].isBroken)
+                {
+                    partsContainer.transform.GetChild(i).Find("Burned").GetComponent<check>().setOn();
+                }
             }
             else
             {
                 partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = false;
                 partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = false;
                 partsContainer.transform.GetChild(i).Find("Ckecmark").GetComponent<check>().setOn();
+                partsContainer.transform.GetChild(i).Find("Burned").GetComponent<check>().setOff();
             }
         }
     }
