@@ -438,7 +438,7 @@ class Computer : MonoBehaviour
             {
                 g.push.transform.Find("Icon").GetComponent<Image>().sprite = transform.Find("MenuButton/Icon").GetComponent<Image>().sprite;
                 g.push.transform.Find("Header").GetComponent<Text>().text = nameComp;
-                g.push.transform.Find("Description").GetComponent<Text>().text = "Не работает предыдущий компьютер.";
+                g.push.transform.Find("Description").GetComponent<Text>().text = "Компьютер " + pr.nameComp + " не работает.";
                 g.push.GetComponent<Animator>().SetTrigger("isShown");
             }
         }
