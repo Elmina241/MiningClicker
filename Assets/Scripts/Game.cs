@@ -20,6 +20,8 @@ public class Game : MonoBehaviour {
     public Text sr_pr; //средняя прибыль
     public Text prBarText; //количество опыта 
     public Image fill; //заполнение прогрессбара
+    public bool screenPressed;
+    public GameObject expPref; //префаб вылетающих очков опыта
 
     public Part[] parts;
     public typeOfPart[] typesOfParts;
@@ -47,6 +49,31 @@ public class Game : MonoBehaviour {
         //this.upgradePointsText = improvementWin.transform.Find("ScrollContent/UpgradePoints").gameObject.GetComponent<Text>();
         this.upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
         this.levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
+    }
+
+    public void Update()
+    {
+        if (screenPressed)
+        {
+            foreach (Touch touch in Input.touches)
+            {
+                Vector3 curPos2 = Camera.main.ScreenToWorldPoint(touch.position);
+                GameObject expPr2 = (GameObject)Instantiate(expPref, curPos2, Quaternion.identity);
+                expPr2.GetComponentInChildren<Text>().text = "+ 2xp";
+            }
+            
+            screenPressed = false;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (screenPressed) {
+                Vector3 curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                curPos.z = 0;
+                GameObject expPr = (GameObject)Instantiate(expPref, curPos, Quaternion.identity);
+                expPr.GetComponentInChildren<Text>().text = "+ 2xp";
+            }
+        }
+
     }
 
     public void openCloseImprovementWin()

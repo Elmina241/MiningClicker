@@ -25,6 +25,8 @@ class Computer : MonoBehaviour
     public Button bonusButton; //кнопка покупки улучшения
     public Button buyComp; //кнопка покупки компьютера
 
+    
+
     public Game g;
     
     int progressCounter1 = 0;
@@ -70,6 +72,9 @@ class Computer : MonoBehaviour
     string jsonParts;
     public PartsOfComputer[] compParts;
 
+    
+
+
 
     void Start()
     {
@@ -106,8 +111,6 @@ class Computer : MonoBehaviour
         buyComp.interactable = (g.money >= cost);
         p1.fillAmount = (float)progressCounter1 / 100;
         progressText.text = progressCounter1.ToString() + "%";
-        
-        
     }
     void updateUp()
     {
@@ -126,6 +129,13 @@ class Computer : MonoBehaviour
     {
         
         clickCounter++;
+        g.screenPressed = true;
+
+        /*Vector3 curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        curPos.z = 0;
+        GameObject expPr = Instantiate(g.expPref, curPos, Quaternion.identity) as GameObject;
+        expPr.GetComponentInChildren<Text>().text = "+ 2xp";*/
+
         exp += expD;
         progressCounter1 = progressCounter1 + (100/maxClick);
         progressCounter2+= expD;
