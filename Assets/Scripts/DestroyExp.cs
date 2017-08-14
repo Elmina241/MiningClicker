@@ -7,7 +7,7 @@ public class DestroyExp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Destroy(this.gameObject, timeToDestroy);
+        Destroy(gameObject, timeToDestroy);
 	}
 	
 }

@@ -11,6 +11,9 @@ class Computer : MonoBehaviour
     public GameObject PU;
     public Text PU_text;
 
+    Vector2 pointSt;
+    public GameObject plusXP;
+
     public Text currencyText; //Деньги в валюте
     public Text progressText; //Текст процентного заполнения кликов
     public Text bonusText; //Текст стоимость улучшения
@@ -82,6 +85,8 @@ class Computer : MonoBehaviour
         Currency c = new Currency("ETH", 30000f);
         this.cur = c;
 
+        
+
         Text t = transform.Find("ProgressPanel/currencyName").gameObject.GetComponent<Text>();
         t.text = cur.getName();
         this.currencyText = transform.Find("ProgressPanel/currencyText").gameObject.GetComponent<Text>();
@@ -131,12 +136,14 @@ class Computer : MonoBehaviour
         clickCounter++;
         g.screenPressed = true;
 
-        /*Vector3 curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        curPos.z = 0;
-        GameObject expPr = Instantiate(g.expPref, curPos, Quaternion.identity) as GameObject;
-        expPr.GetComponentInChildren<Text>().text = "+ 2xp";*/
+       
 
-        exp += expD;
+         /*Vector3 curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+         curPos.z = 0;
+         GameObject expPr = Instantiate(g.expPref, curPos, Quaternion.identity) as GameObject;
+         expPr.GetComponentInChildren<Text>().text = "+ 2xp";*/
+
+         exp += expD;
         progressCounter1 = progressCounter1 + (100/maxClick);
         progressCounter2+= expD;
         if (progressCounter1 > 100)
@@ -193,6 +200,12 @@ class Computer : MonoBehaviour
                 changeBuyButtons();
             }
         }
+        //Вылетающие клики
+        pointSt = transform.GetChild(0).transform.GetChild(Random.Range(0, 3)).position;
+        Debug.Log(pointSt);
+        GameObject expPr = (GameObject)Instantiate(plusXP, pointSt, Quaternion.identity);
+        expPr.GetComponentInChildren<Text>().text = "+"+ expD.ToString()+ "xp";
+
     }
 
     public void GetBonus()
