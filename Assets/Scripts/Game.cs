@@ -23,6 +23,8 @@ public class Game : MonoBehaviour {
     public bool screenPressed;
     public GameObject expPref; //префаб вылетающих очков опыта
 
+    Save sv = new Save();
+
     public Part[] parts;
     public typeOfPart[] typesOfParts;
 
@@ -87,6 +89,11 @@ public class Game : MonoBehaviour {
         improvementWin.SetActive(!improvementWin.activeSelf);
     }
 
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetString("SV", JsonUtility.ToJson(sv));
+    }
+
 }
 
 [System.Serializable]
@@ -126,4 +133,32 @@ public class typeOfPart
         this.id = id;
         this.name = name;
     }
+}
+
+[System.Serializable]
+public class Save
+{
+    public float money;
+    public float[] currency;
+    public bool[] isReady;
+    public bool[] isResearched;
+    public float[] bonus;
+    public float[] bonusCost;
+    public int[] maxClick;
+    public int[] exp;
+    public int[] upgradeCost;
+    public int[] upgradePoints;
+    public float[] timeUpgrade;
+    public float[] profiteUpgrade;
+    public int[] clickCounter;
+    public int[] level;
+    public bool[] isBoughtAuto;
+    public float[] autoTime; 
+    public float[] autoProfit; 
+    public float[] timeBonus;
+
+    public bool[][] partIsBought;
+    public bool[][] partIsBroken;
+    public float[][] curReliability;
+
 }
