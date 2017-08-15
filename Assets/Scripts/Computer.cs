@@ -121,7 +121,7 @@ class Computer : MonoBehaviour
             block.SetActive(true);
         }
         //autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
-
+        updateUp();
     }
 
     public void Update()
@@ -344,7 +344,7 @@ class Computer : MonoBehaviour
         {
             g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
             g.time.text = "0" + " СЕК";
-            g.sr_pr.text = "0 " + cur.getName() + " / СЕК";
+            g.sr_pr.text = "0.0000 " + cur.getName() + " / СЕК";
             g.pribyl.text = cur.getName() + " " + bonus.ToString("#0.###0");
             g.upgradeTimeButton.interactable = false;
             g.upgradeProfitButton.interactable = false;
