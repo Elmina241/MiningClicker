@@ -31,12 +31,12 @@ class Computer : MonoBehaviour
     
 
     public Game g;
-    
-    int progressCounter1 = 0;
-    int progressCounter2 = 0;
+
+    public int progressCounter1 = 0;
+    public int progressCounter2 = 0;
 
     Currency cur;
-    float currency = 0;
+    public float currency = 0;
 
     //процент от времени заполнения автомайнера при полном наборе видеокарт
     public int fullGPU=40;
@@ -46,30 +46,30 @@ class Computer : MonoBehaviour
     public bool isReady; // готов ли компьютер к работе (все ли компоненты куплены)
     bool isFarm; // ферма?
     public bool isResearched = true; // открыт ли компьютер
-    float bonus = 0.001f; // доход за заполнение прогресс-бара
-    float bonusCost = 2; // цена улучшения (на которую поднимаем доход)
+    public float bonus = 0.001f; // доход за заполнение прогресс-бара
+    public float bonusCost = 2; // цена улучшения (на которую поднимаем доход)
     float bonusD = 1.32f;
     float bonusCostD = 1.44f;
-    int maxClick=10; // кол-во дробей прогресс-бара
-    int exp = 0;
+    public int maxClick =10; // кол-во дробей прогресс-бара
+    public int exp = 0;
     int expD = 50; // кол-во опыта за клик по кнопке
     int expU = 15; // кол-во опыта за улучшение доходности
-    int upgradeCost=200; //максимальное число EXP. Начало с 200
+    public int upgradeCost =200; //максимальное число EXP. Начало с 200
     float upgradeCoef = 1.16f; // коеф. сложности upgradeCost, для ноута - 1,12. 
-    int upgradePoints=0; // кол-во очков улучшений (ОУ)
+    public int upgradePoints =0; // кол-во очков улучшений (ОУ)
     //удалить 
     public int efficiency = 100;
-    int progressCounter = 0; // счётчик заполнения прогрессбара
+    public int progressCounter = 0; // счётчик заполнения прогрессбара
 
     /*-- появляется после покупки автомайна --*/
-    float timeUpgrade = 30; // Ускорение майна. Начинается с 30% и падает на 2,5% каждое улучшение
-    float timeUpgradeD = 2.5f; 
-    float profiteUpgrade = 35; // Увеличение доходности майнинга. Начинается с 35% и падает на 2.5% каждое улучшение
+    public float timeUpgrade = 30; // Ускорение майна. Начинается с 30% и падает на 2,5% каждое улучшение
+    float timeUpgradeD = 2.5f;
+    public float profiteUpgrade = 35; // Увеличение доходности майнинга. Начинается с 35% и падает на 2.5% каждое улучшение
     float profiteUpgradeD = 2.5f;
     /*!-- появляется после покупки автомайна --*/
 
-    int clickCounter = 0; // Счетчик кликов по кнопке
-    int level = 1; // Уровень развития компьютера. Повышается на +1 каждые 50 кликов. Не зависит от EXP 
+    public int clickCounter = 0; // Счетчик кликов по кнопке
+    public int level = 1; // Уровень развития компьютера. Повышается на +1 каждые 50 кликов. Не зависит от EXP 
 
     public AutoMiner autoMiner;
     string jsonParts;
@@ -105,8 +105,23 @@ class Computer : MonoBehaviour
         buyComp.gameObject.SetActive(!isResearched);
         buyComp.onClick.AddListener(ResearchComp);
         transform.Find("ProgressPanel/nameText").gameObject.GetComponent<Text>().text = nameComp;
+        expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString() + "xp";
+        p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
+        bonusText.text = "$" + (bonusCost).ToString("0.#0");
+        if (isReady)
+        {
+            if (autoMiner.isBoughtAuto)
+            {
+                StartCoroutine(BonusPerSec());
+            }
+            block.SetActive(false);
+        }
+        else
+        {
+            block.SetActive(true);
+        }
         //autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
-        
+
     }
 
     public void Update()
@@ -134,16 +149,7 @@ class Computer : MonoBehaviour
     {
         
         clickCounter++;
-        g.screenPressed = true;
-
-       
-
-         /*Vector3 curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-         curPos.z = 0;
-         GameObject expPr = Instantiate(g.expPref, curPos, Quaternion.identity) as GameObject;
-         expPr.GetComponentInChildren<Text>().text = "+ 2xp";*/
-
-         exp += expD;
+        exp += expD;
         progressCounter1 = progressCounter1 + (100/maxClick);
         progressCounter2+= expD;
         if (progressCounter1 > 100)
@@ -597,16 +603,7 @@ class AutoMiner
     }
 }
 
-[System.Serializable]
-class PartsOfComputer
-{
-    /*-- JSON-сериализация --*/
-    public int id; // Номер компонента в списке улучшений
-    public bool isBought; // Куплен ли компонент?
-    public bool isBroken; // Сломан ли компонент?
-    public float curReliability; // Вероятность поломки компонента в зависимости от новизны
-    /*!-- JSON-сериализация --*/
-}
+
 
 //Класс Криптовалюты
 class Currency

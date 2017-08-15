@@ -20,15 +20,14 @@ public class Game : MonoBehaviour {
     public Text sr_pr; //средняя прибыль
     public Text prBarText; //количество опыта 
     public Image fill; //заполнение прогрессбара
-    public bool screenPressed;
-    public GameObject expPref; //префаб вылетающих очков опыта
+    //public GameObject expPref; //префаб вылетающих очков опыта
 
     Save sv = new Save();
 
     public Part[] parts;
     public typeOfPart[] typesOfParts;
 
-    void Start()
+    private void Awake()
     {
         money = 80f;
         /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/
@@ -43,40 +42,67 @@ public class Game : MonoBehaviour {
         parts[2] = new Part(2, "Электропитание", typesOfParts[2], 25, 35, 847, 540);
         parts[0] = new Part(0, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
         parts[3] = new Part(3, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
+
+        if (PlayerPrefs.HasKey("unitySV"))
+        {
+            sv = JsonUtility.FromJson<Save>(PlayerPrefs.GetString("unitySV"));
+            money = sv.money;
+
+            GameObject miners = GameObject.FindWithTag("Miners").gameObject;
+
+            int resSize = sv.currency.Length;
+            
+
+            int i = 0;
+            while (i < resSize)
+            {
+                Computer cur = miners.transform.GetChild(i).GetComponent<Computer>();
+                cur.currency = sv.currency[i];
+                cur.isReady = sv.isReady[i];
+                cur.bonus = sv.bonus[i];
+                cur.bonusCost = sv.bonusCost[i];
+                cur.progressCounter = sv.progressCounter[i];
+                cur.progressCounter1 = sv.progressCounter1[i];
+                cur.progressCounter2 = sv.progressCounter2[i];
+                cur.maxClick = sv.maxClick[i];
+                cur.exp = sv.exp[i];
+                cur.upgradeCost = sv.upgradeCost[i];
+                cur.upgradePoints = sv.upgradePoints[i];
+                cur.timeUpgrade = sv.timeUpgrade[i];
+                cur.profiteUpgrade = sv.profiteUpgrade[i];
+                cur.clickCounter = sv.clickCounter[i];
+                cur.level = sv.level[i];
+                cur.autoMiner.isBoughtAuto = sv.isBoughtAuto[i];
+                cur.autoMiner.autoTime = sv.autoTime[i];
+                cur.autoMiner.autoProfit = sv.autoProfit[i];
+                cur.autoMiner.timeBonus = sv.timeBonus[i];
+                cur.isResearched = true;
+                if (cur.compParts.Length != 0)
+                {
+                    PartsOfComputer[] p = JsonHelper.FromJson<PartsOfComputer>(sv.partsOfComp[i]);
+                    for (int j = 0; j < cur.compParts.Length; j++)
+                    {
+                        cur.compParts[j] = p[j];
+                    }
+                }
+                i++;
+            }
+
+        }
+    }
+
+    void Start()
+    {
+       
        
 
         this.autoMinerButton = improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto").gameObject.GetComponent<Button>();
         this.upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
         this.upgradeProfitButton = improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade").gameObject.GetComponent<Button>();
-        //this.upgradePointsText = improvementWin.transform.Find("ScrollContent/UpgradePoints").gameObject.GetComponent<Text>();
         this.upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
         this.levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
     }
 
-    public void Update()
-    {
-        if (screenPressed)
-        {
-            foreach (Touch touch in Input.touches)
-            {
-                Vector3 curPos2 = Camera.main.ScreenToWorldPoint(touch.position);
-                GameObject expPr2 = (GameObject)Instantiate(expPref, curPos2, Quaternion.identity);
-                expPr2.GetComponentInChildren<Text>().text = "+ 2xp";
-            }
-            
-            screenPressed = false;
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (screenPressed) {
-                Vector3 curPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                curPos.z = 0;
-                GameObject expPr = (GameObject)Instantiate(expPref, curPos, Quaternion.identity);
-                expPr.GetComponentInChildren<Text>().text = "+ 2xp";
-            }
-        }
-
-    }
 
     public void openCloseImprovementWin()
     {
@@ -89,9 +115,92 @@ public class Game : MonoBehaviour {
         improvementWin.SetActive(!improvementWin.activeSelf);
     }
 
+    public void saveGame()
+    {
+        sv.money = money;
+
+        GameObject miners = GameObject.FindWithTag("Miners").gameObject;
+
+        int resSize = 0;
+
+        while (miners.transform.GetChild(resSize).GetComponent<Computer>().isResearched) resSize++;
+
+        sv.currency = new float[resSize];
+        sv.isReady = new bool[resSize];
+        sv.bonus = new float[resSize];
+        sv.bonusCost = new float[resSize];
+        sv.maxClick = new int[resSize];
+        sv.exp = new int[resSize];
+        sv.upgradeCost = new int[resSize];
+        sv.upgradePoints = new int[resSize];
+        sv.timeUpgrade = new float[resSize];
+        sv.profiteUpgrade = new float[resSize];
+        sv.clickCounter = new int[resSize];
+        sv.progressCounter = new int[resSize];
+        sv.progressCounter1 = new int[resSize];
+        sv.progressCounter2 = new int[resSize];
+        sv.level = new int[resSize];
+        sv.isBoughtAuto = new bool[resSize];
+        sv.autoTime = new float[resSize];
+        sv.autoProfit = new float[resSize];
+        sv.timeBonus = new float[resSize];
+        sv.partsOfComp = new string[resSize];
+
+
+
+        int i = 0;
+        while (i < resSize)
+        {
+            Computer cur = miners.transform.GetChild(i).GetComponent<Computer>();
+            PartsOfComputer[] p = new PartsOfComputer[cur.compParts.Length];
+            sv.currency[i] = cur.currency;
+            sv.isReady[i] = cur.isReady;
+            sv.bonus[i] = cur.bonus;
+            sv.bonusCost[i] = cur.bonusCost;
+            sv.progressCounter[i] = cur.progressCounter;
+            sv.progressCounter1[i] = cur.progressCounter1;
+            sv.progressCounter2[i] = cur.progressCounter2;
+            sv.maxClick[i] = cur.maxClick;
+            sv.exp[i] = cur.exp;
+            sv.upgradeCost[i] = cur.upgradeCost;
+            sv.upgradePoints[i] = cur.upgradePoints;
+            sv.timeUpgrade[i] = cur.timeUpgrade;
+            sv.profiteUpgrade[i] = cur.profiteUpgrade;
+            sv.clickCounter[i] = cur.clickCounter;
+            sv.level[i] = cur.level;
+            sv.isBoughtAuto[i] = cur.autoMiner.isBoughtAuto;
+            sv.autoTime[i] = cur.autoMiner.autoTime;
+            sv.autoProfit[i] = cur.autoMiner.autoProfit;
+            sv.timeBonus[i] = cur.autoMiner.timeBonus;
+
+            for (int j = 0; j < cur.compParts.Length; j++)
+            {
+                p[j] = cur.compParts[j];
+            }
+
+            if (cur.compParts.Length != 0)
+            {
+                sv.partsOfComp[i] = JsonHelper.ToJson<PartsOfComputer>(p);
+            }
+            i++;
+
+        }
+
+
+        PlayerPrefs.SetString("unitySV", JsonUtility.ToJson(sv));
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            saveGame();
+        }
+    }
+
     private void OnApplicationQuit()
     {
-        PlayerPrefs.SetString("SV", JsonUtility.ToJson(sv));
+        saveGame();
     }
 
 }
@@ -141,7 +250,9 @@ public class Save
     public float money;
     public float[] currency;
     public bool[] isReady;
-    public bool[] isResearched;
+    public int[] progressCounter;
+    public int[] progressCounter1;
+    public int[] progressCounter2;
     public float[] bonus;
     public float[] bonusCost;
     public int[] maxClick;
@@ -157,8 +268,47 @@ public class Save
     public float[] autoProfit; 
     public float[] timeBonus;
 
-    public bool[][] partIsBought;
-    public bool[][] partIsBroken;
-    public float[][] curReliability;
+    public string[] partsOfComp;
 
 }
+
+[System.Serializable]
+public class PartsOfComputer
+{
+    /*-- JSON-сериализация --*/
+    public int id; // Номер компонента в списке улучшений
+    public bool isBought; // Куплен ли компонент?
+    public bool isBroken; // Сломан ли компонент?
+    public float curReliability; // Вероятность поломки компонента в зависимости от новизны
+    /*!-- JSON-сериализация --*/
+}
+
+public static class JsonHelper
+{
+    public static T[] FromJson<T>(string json)
+    {
+        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+        return wrapper.Items;
+    }
+
+    public static string ToJson<T>(T[] array)
+    {
+        Wrapper<T> wrapper = new Wrapper<T>();
+        wrapper.Items = array;
+        return JsonUtility.ToJson(wrapper);
+    }
+
+    public static string ToJson<T>(T[] array, bool prettyPrint)
+    {
+        Wrapper<T> wrapper = new Wrapper<T>();
+        wrapper.Items = array;
+        return JsonUtility.ToJson(wrapper, prettyPrint);
+    }
+
+    [System.Serializable]
+    private class Wrapper<T>
+    {
+        public T[] Items;
+    }
+}
+
