@@ -161,7 +161,6 @@ class Computer : MonoBehaviour
         if (progressCounter2 > upgradeCost)
         {
             level++;
-            
             if (maxClick > 1) maxClick--;
             progressCounter2 = progressCounter2 % upgradeCost;
             upgradePoints++;
@@ -217,7 +216,18 @@ class Computer : MonoBehaviour
     public void GetBonus()
     {
         exp += expU;
+        progressCounter2 += expU;
+        if (progressCounter2 > upgradeCost)
+        {
+            level++;
+            if (maxClick > 1) maxClick--;
+            progressCounter2 = progressCounter2 % upgradeCost;
+            upgradePoints++;
+            upgradeCost = (int)(upgradeCost * upgradeCoef);
+            updateUp();
+        }
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString() + "xp";
+        p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
         g.money = g.money - bonusCost;
         g.moneyText.text = "$"+g.money.ToString("0.#0");
         bonusCost = bonusCost * bonusCostD;
@@ -225,7 +235,11 @@ class Computer : MonoBehaviour
         bonus = bonus * bonusD;
         autoMiner.autoProfit = autoMiner.autoProfit + bonus;
         bonusText.text = "$"+(bonusCost).ToString("0.#0");
-        
+        //Вылетающие бонусы
+        pointSt = transform.GetChild(0).transform.GetChild(Random.Range(0, 3)).position;
+        GameObject expPr = (GameObject)Instantiate(plusXP, pointSt, Quaternion.identity);
+        expPr.GetComponentInChildren<Text>().text = "+" + expU.ToString() + "xp";
+
     }
     public void Exchange()
     {
@@ -338,6 +352,35 @@ class Computer : MonoBehaviour
         g.push.GetComponent<Animator>().SetTrigger("isShown");
     }
 
+    public void pushIsNotReady()
+    {
+        g.push.transform.Find("Icon").GetComponent<Image>().sprite = transform.Find("MenuButton/Icon").GetComponent<Image>().sprite;
+        g.push.transform.Find("Header").GetComponent<Text>().text = nameComp;
+        g.push.transform.Find("Description").GetComponent<Text>().text = "Компьютер не готов! Необходимо купить компоненты.";
+        g.push.GetComponent<Animator>().SetTrigger("isShown");
+    }
+
+    public void checkIsBroken()
+    {
+        bool isBroken = false;
+        if (!checkIsReady())
+        {
+            foreach (PartsOfComputer p in compParts)
+            {
+                isBroken = isBroken || p.isBroken;
+            }
+            if (isBroken)
+            {
+                pushBroken();
+            }
+            else
+            {
+                pushIsNotReady();
+            }
+        }
+    }
+
+
     public void openCloseImprovementWin()
     {
         if (!autoMiner.isBoughtAuto)
@@ -360,6 +403,7 @@ class Computer : MonoBehaviour
             g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
             g.improvementWin.transform.Find("Background/AutoMiner/GameObject/checkmark").GetComponent<check>().setOn();
             g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
+            g.autoMinerButton.interactable = false;
         }
         if (!isReady)
         {

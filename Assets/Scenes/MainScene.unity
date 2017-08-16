@@ -2663,7 +2663,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 200179757}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7327002}
+        m_MethodName: checkIsBroken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &200179757
@@ -7138,7 +7149,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 732748101}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 186858296}
+        m_MethodName: checkIsBroken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &732748101
@@ -9208,7 +9230,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 971262508}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 489848101}
+        m_MethodName: checkIsBroken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &971262508
@@ -11417,7 +11450,17 @@ Prefab:
       propertyPath: m_Delegates.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114000012509147228, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
         type: 2}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -11669,8 +11712,45 @@ Prefab:
       propertyPath: isReady
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].eventID
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7327002}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: openCloseImprovementWin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_TypeName
+      value: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012509147228, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
+    - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1210977832
@@ -15127,7 +15207,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1562730094}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 889384911}
+        m_MethodName: checkIsBroken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1562730094
@@ -15667,7 +15758,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1639766356}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 559493707}
+        m_MethodName: checkIsBroken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1639766356

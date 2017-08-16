@@ -1317,12 +1317,26 @@ MonoBehaviour:
   bonusButton: {fileID: 114000012124377978}
   buyComp: {fileID: 0}
   g: {fileID: 0}
+  progressCounter1: 0
+  progressCounter2: 0
+  currency: 0
   fullGPU: 40
   cost: 1
   nameComp: Irbis NB44
   isReady: 1
   isResearched: 0
+  bonus: 0.001
+  bonusCost: 2
+  maxClick: 10
+  exp: 0
+  upgradeCost: 200
+  upgradePoints: 0
   efficiency: 100
+  progressCounter: 0
+  timeUpgrade: 30
+  profiteUpgrade: 35
+  clickCounter: 0
+  level: 1
   autoMiner:
     autoCost: 50
     autoName: a
@@ -1430,7 +1444,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114000013526610262}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114000013195987836}
+        m_MethodName: checkIsBroken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114000014113933364
