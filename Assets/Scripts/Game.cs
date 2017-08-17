@@ -212,6 +212,12 @@ public class Game : MonoBehaviour {
         saveGame();
     }
 
+    public void restartGame()
+    {
+        PlayerPrefs.DeleteAll();
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
 }
 
 [System.Serializable]
