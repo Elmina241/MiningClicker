@@ -446,6 +446,7 @@ class Computer : MonoBehaviour
             GameObject A = Instantiate(partPrefab, partPrefab.transform.position = new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
             A.transform.SetParent(partsContainer.transform, false);
             A.transform.Find("nameText").GetComponent<Text>().text = g.parts[compParts[i].id].partName;
+            A.transform.Find("Image").GetComponent<Image>().sprite = g.parts[compParts[i].id].type.image;
             A.transform.Find("BuyNew/Text").GetComponent<Text>().text = "$" + g.parts[compParts[i].id].costNew + " | " + g.parts[compParts[i].id].reliabilityNew + "%";
             A.transform.Find("BuyUsed/Text").GetComponent<Text>().text = "$" + g.parts[compParts[i].id].costUsed + " | " + g.parts[compParts[i].id].reliabilityUsed + "%";
             A.transform.Find("BuyNew").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, true, A); });
@@ -568,6 +569,9 @@ class Computer : MonoBehaviour
             {
                 StopCoroutine(BonusPerSec());
                 StartCoroutine(BonusPerSec());
+                g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
+                g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
+                g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
             }
 
         }

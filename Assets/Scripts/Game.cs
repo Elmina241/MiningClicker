@@ -20,6 +20,7 @@ public class Game : MonoBehaviour {
     public Text sr_pr; //средняя прибыль
     public Text prBarText; //количество опыта 
     public Image fill; //заполнение прогрессбара
+    public Sprite[] partImages; //картинки компонентов
     //public GameObject expPref; //префаб вылетающих очков опыта
 
     Save sv = new Save();
@@ -31,17 +32,25 @@ public class Game : MonoBehaviour {
     {
         money = 80f;
         /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/
-        typesOfParts = new typeOfPart[3];
-        typesOfParts[0] = new typeOfPart(0, "CPU");
-        typesOfParts[1] = new typeOfPart(1, "GPU");
-        typesOfParts[2] = new typeOfPart(2, "Power");
+        typesOfParts = new typeOfPart[7];
+        typesOfParts[0] = new typeOfPart(0, "CPU", partImages[0]);
+        typesOfParts[1] = new typeOfPart(1, "GPU", partImages[1]);
+        typesOfParts[2] = new typeOfPart(2, "Power", partImages[2]);
+        typesOfParts[3] = new typeOfPart(3, "Motherboard", partImages[3]);
+        typesOfParts[4] = new typeOfPart(4, "SSD", partImages[4]);
+        typesOfParts[5] = new typeOfPart(5, "Cooling", partImages[5]);
+        typesOfParts[6] = new typeOfPart(6, "RAM", partImages[6]);
 
         /*Объявление компонентов*/
-        parts = new Part[4];
-        parts[1] = new Part(1, "Intel Core i5-6600K 3.5 GHz", typesOfParts[0], 8, 15, 215, 167);
-        parts[2] = new Part(2, "Электропитание", typesOfParts[2], 25, 35, 847, 540);
+        parts = new Part[8];
+        parts[1] = new Part(1, "Intel® Core™i3-2100 3.1 GHz", typesOfParts[0], 8, 15, 215, 167);
+        parts[2] = new Part(2, "Hipro 450W", typesOfParts[2], 25, 35, 847, 540);
         parts[0] = new Part(0, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
         parts[3] = new Part(3, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
+        parts[4] = new Part(4, "MSI H81M-E33", typesOfParts[3], 10, 25, 2, 10);
+        parts[5] = new Part(5, "JRam 4 GB", typesOfParts[6], 10, 25, 2, 10);
+        parts[6] = new Part(6, "SiliconPower Slim S60 ", typesOfParts[4], 10, 25, 2, 10);
+        parts[7] = new Part(7, "Xilence A402", typesOfParts[5], 10, 25, 2, 10);
 
         if (PlayerPrefs.HasKey("unitySV"))
         {
@@ -216,10 +225,10 @@ public class Part
     public float reliabilityUsed;
     public int costNew; // Цена нового компонента
     public int costUsed; // Цена Б/У компонента
-    public string image; // картиночка
+    
     /*!-- JSON-сериализация --*/
 
-    public Part(int id, string name, typeOfPart type, float reliabilityNew, float reliabilityUsed, int costNew, int costUsed, string image = "")
+    public Part(int id, string name, typeOfPart type, float reliabilityNew, float reliabilityUsed, int costNew, int costUsed)
     {
         this.id = id;
         partName = name;
@@ -228,7 +237,7 @@ public class Part
         this.reliabilityUsed = reliabilityUsed;
         this.costNew = costNew;
         this.costUsed = costUsed;
-        this.image = image;
+        
     }
 }
 
@@ -237,10 +246,12 @@ public class typeOfPart
 {
     public int id; // Номер типа
     public string name; // Имя типа
-    public typeOfPart(int id, string name)
+    public Sprite image; // картиночка
+    public typeOfPart(int id, string name, Sprite image)
     {
         this.id = id;
         this.name = name;
+        this.image = image;
     }
 }
 
