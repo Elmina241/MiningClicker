@@ -583,7 +583,8 @@ class Computer : MonoBehaviour
         changeBuyButtons();
         GameObject prevComp1 = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
         Computer pr1 = prevComp1.GetComponent<Computer>();
-        isReady = checkIsReady() && pr1.isReady;
+        if (checkIsReady() && isReady) isReady = true;
+        else isReady = checkIsReady() && pr1.isReady;
         unblock();
     }
 
