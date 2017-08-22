@@ -384,7 +384,10 @@ class Computer : MonoBehaviour
     {
         GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
         Computer next = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() + 1).gameObject.GetComponent<Computer>();
-
+        GameObject prevComp1 = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
+        Computer pr1 = prevComp1.GetComponent<Computer>();
+        if (checkIsReady() && isReady) isReady = true;
+        else isReady = checkIsReady() && pr1.isReady;
         if (isReady)
         {
             if (next.checkIsReady()) next.unblock();
@@ -581,10 +584,7 @@ class Computer : MonoBehaviour
         part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
         g.moneyText.text = "$" + g.money.ToString("0.#0");
         changeBuyButtons();
-        GameObject prevComp1 = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
-        Computer pr1 = prevComp1.GetComponent<Computer>();
-        if (checkIsReady() && isReady) isReady = true;
-        else isReady = checkIsReady() && pr1.isReady;
+        
         unblock();
     }
 
