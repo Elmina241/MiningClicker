@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
-
+        
     public Sprite[] background;
     
     public Text moneyText; //Деньги в $
