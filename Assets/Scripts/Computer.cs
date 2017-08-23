@@ -68,7 +68,6 @@ class Computer : MonoBehaviour
     float profiteUpgradeD = 2.5f;
     /*!-- появляется после покупки автомайна --*/
 
-    public int clickCounter = 0; // Счетчик кликов по кнопке
     public int level = 1; // Уровень развития компьютера. Повышается на +1 каждые 50 кликов. Не зависит от EXP 
 
     public AutoMiner autoMiner;
@@ -82,8 +81,8 @@ class Computer : MonoBehaviour
     void Start()
     {
         g.moneyText.text = "$" + g.money.ToString("0.#0");
-        Currency c = new Currency("ETH", 30000f);
-        this.cur = c;
+        
+        this.cur = g.currencies[0];
 
         
 
@@ -148,7 +147,7 @@ class Computer : MonoBehaviour
     public void OnClick()
     {
         
-        clickCounter++;
+        g.clickCounter++;
         exp += expD;
         progressCounter1 = progressCounter1 + (100/maxClick);
         progressCounter2+= expD;
@@ -156,6 +155,7 @@ class Computer : MonoBehaviour
         {
             progressCounter1 = 0;
             currency += bonus;
+            this.cur.sum += bonus;
             progressCounter++;
         }
         if (progressCounter2 > upgradeCost)
@@ -244,6 +244,7 @@ class Computer : MonoBehaviour
     public void Exchange()
     {
         g.money = (g.money + currency * cur.getExchRate());
+        g.sumMoney = (g.sumMoney + currency * cur.getExchRate());
         currency = 0;
         g.moneyText.text = "$"+ g.money.ToString("0.#0");
     }
@@ -274,6 +275,7 @@ class Computer : MonoBehaviour
             {
                 progressCounter1 = 0;
                 currency = currency + autoMiner.autoProfit;
+                this.cur.sum += autoMiner.autoProfit;
                 p1.fillAmount = (float)progressCounter1 / 100;
                 progressText.text = progressCounter1.ToString() + "%";
                 progressCounter++;
@@ -562,6 +564,7 @@ class Computer : MonoBehaviour
             buyComp.gameObject.SetActive(false);
             g.moneyText.text = "$" + g.money.ToString("0.#0");
             isResearched = true;
+            if (isFarm) g.farmCount++;
         }
     }
 
@@ -584,7 +587,7 @@ class Computer : MonoBehaviour
         part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
         g.moneyText.text = "$" + g.money.ToString("0.#0");
         changeBuyButtons();
-        
+        g.partCount++;
         unblock();
     }
 
@@ -664,22 +667,3 @@ class AutoMiner
 
 
 
-//Класс Криптовалюты
-class Currency
-{
-    private string name;
-    private float exchRate;
-    public Currency(string name, float exchRate)
-    {
-        this.name = name;
-        this.exchRate = exchRate;
-    }
-    public string getName()
-    {
-        return this.name;
-    }
-    public float getExchRate()
-    {
-        return this.exchRate;
-    }
-}

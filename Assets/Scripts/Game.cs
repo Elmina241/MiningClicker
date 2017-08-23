@@ -7,6 +7,11 @@ public class Game : MonoBehaviour {
     
     public Text moneyText; //Деньги в $
     public float money = 0;
+    public int clickCounter = 0; // Счетчик кликов по кнопке
+    public float sumMoney = 0; // Доход за всё время
+    public int farmCount =0; //счётчик ферм
+    public int partCount = 0; //счётчик купленных частей
+
     public GameObject improvementWin; //окно улучшений и запчастей
     public GameObject push; //панель уведомлений
     public Button autoMinerButton; //кнопка покупки автомайнера
@@ -27,10 +32,16 @@ public class Game : MonoBehaviour {
 
     public Part[] parts;
     public typeOfPart[] typesOfParts;
+    public Currency[] currencies;
 
     private void Awake()
     {
         money = 80f;
+
+        /*Объявление валют*/
+        currencies = new Currency[1];
+        currencies[0] = new Currency("ETH", 30000f);
+
         /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/
         typesOfParts = new typeOfPart[7];
         typesOfParts[0] = new typeOfPart(0, "CPU", partImages[0]);
@@ -56,11 +67,15 @@ public class Game : MonoBehaviour {
         {
             sv = JsonUtility.FromJson<Save>(PlayerPrefs.GetString("unitySV"));
             money = sv.money;
-
+            sumMoney = sv.sumMoney;
+            clickCounter = sv.clickCounter;
             GameObject miners = GameObject.FindWithTag("Miners").gameObject;
 
             int resSize = sv.currency.Length;
-            
+
+            farmCount = sv.farmCount;
+            partCount = sv.partCount;
+
 
             int i = 0;
             while (i < resSize)
@@ -79,7 +94,7 @@ public class Game : MonoBehaviour {
                 cur.upgradePoints = sv.upgradePoints[i];
                 cur.timeUpgrade = sv.timeUpgrade[i];
                 cur.profiteUpgrade = sv.profiteUpgrade[i];
-                cur.clickCounter = sv.clickCounter[i];
+                
                 cur.level = sv.level[i];
                 cur.autoMiner.isBoughtAuto = sv.isBoughtAuto[i];
                 cur.autoMiner.autoTime = sv.autoTime[i];
@@ -94,6 +109,12 @@ public class Game : MonoBehaviour {
                         cur.compParts[j] = p[j];
                     }
                 }
+                i++;
+            }
+            i = 0;
+            while (i < currencies.Length)
+            {
+                currencies[i].sum = sv.sumCur[i];
                 i++;
             }
 
@@ -127,6 +148,9 @@ public class Game : MonoBehaviour {
     public void saveGame()
     {
         sv.money = money;
+        sv.farmCount = farmCount;
+        sv.partCount = partCount;
+        sv.sumMoney = sumMoney;
 
         GameObject miners = GameObject.FindWithTag("Miners").gameObject;
 
@@ -144,7 +168,6 @@ public class Game : MonoBehaviour {
         sv.upgradePoints = new int[resSize];
         sv.timeUpgrade = new float[resSize];
         sv.profiteUpgrade = new float[resSize];
-        sv.clickCounter = new int[resSize];
         sv.progressCounter = new int[resSize];
         sv.progressCounter1 = new int[resSize];
         sv.progressCounter2 = new int[resSize];
@@ -154,8 +177,9 @@ public class Game : MonoBehaviour {
         sv.autoProfit = new float[resSize];
         sv.timeBonus = new float[resSize];
         sv.partsOfComp = new string[resSize];
+        sv.sumCur = new float[this.currencies.Length];
 
-
+        sv.clickCounter = clickCounter;
 
         int i = 0;
         while (i < resSize)
@@ -175,7 +199,7 @@ public class Game : MonoBehaviour {
             sv.upgradePoints[i] = cur.upgradePoints;
             sv.timeUpgrade[i] = cur.timeUpgrade;
             sv.profiteUpgrade[i] = cur.profiteUpgrade;
-            sv.clickCounter[i] = cur.clickCounter;
+            
             sv.level[i] = cur.level;
             sv.isBoughtAuto[i] = cur.autoMiner.isBoughtAuto;
             sv.autoTime[i] = cur.autoMiner.autoTime;
@@ -193,6 +217,12 @@ public class Game : MonoBehaviour {
             }
             i++;
 
+        }
+        i = 0;
+        while (i < currencies.Length)
+        {
+            sv.sumCur[i] = currencies[i].sum; 
+            i++;
         }
 
 
@@ -278,12 +308,16 @@ public class Save
     public int[] upgradePoints;
     public float[] timeUpgrade;
     public float[] profiteUpgrade;
-    public int[] clickCounter;
+    public int clickCounter;
     public int[] level;
     public bool[] isBoughtAuto;
     public float[] autoTime; 
     public float[] autoProfit; 
     public float[] timeBonus;
+    public float sumMoney; 
+    public int farmCount;
+    public int partCount;
+    public float[] sumCur;
 
     public string[] partsOfComp;
 
@@ -329,3 +363,24 @@ public static class JsonHelper
     }
 }
 
+//Класс Криптовалюты
+public class Currency
+{
+    private string name;
+    private float exchRate;
+    public float sum; //общее число заработанной валюты
+    public Currency(string name, float exchRate)
+    {
+        this.name = name;
+        this.exchRate = exchRate;
+        sum = 0f;
+    }
+    public string getName()
+    {
+        return this.name;
+    }
+    public float getExchRate()
+    {
+        return this.exchRate;
+    }
+}
