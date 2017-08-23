@@ -1,21 +1,20 @@
 fileFormatVersion: 2
-guid: efb5394d5211dfb4d9a25c47bb403823
-timeCreated: 1503392838
+guid: 0f80218d70c4c2543933097696b1ca66
+timeCreated: 1499672778
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Atlas3_0
-    21300002: Atlas3_1
-    21300004: Atlas3_2
-    21300006: Atlas3_3
-    21300008: Atlas3_4
-    21300010: Atlas3_5
-    21300012: Atlas3_6
-    21300014: Atlas3_7
+    21300000: p1
+    21300002: p2
+    21300004: p3
+    21300006: p4
+    21300008: p5
+    21300010: p6
+    21300012: m
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -61,106 +60,93 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Atlas3_0
+      name: p1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 105
-        width: 288
-        height: 407
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Atlas3_1
-      rect:
-        serializedVersion: 2
-        x: 289
-        y: 105
-        width: 288
-        height: 407
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Atlas3_2
-      rect:
-        serializedVersion: 2
-        x: 578
-        y: 272
-        width: 240
-        height: 240
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Atlas3_3
-      rect:
-        serializedVersion: 2
-        x: 819
-        y: 418
-        width: 94
-        height: 94
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Atlas3_4
-      rect:
-        serializedVersion: 2
-        x: 578
-        y: 194
-        width: 195
-        height: 77
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Atlas3_5
-      rect:
-        serializedVersion: 2
-        x: 774
-        y: 194
-        width: 195
-        height: 77
+        x: 7
+        y: 14
+        width: 40
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Atlas3_6
+      name: p2
       rect:
         serializedVersion: 2
-        x: 578
-        y: 116
-        width: 195
-        height: 77
+        x: 47
+        y: 14
+        width: 40
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Atlas3_7
+      name: p3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 38
-        width: 440
-        height: 66
+        x: 88
+        y: 14
+        width: 40
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: p4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 15
+        width: 40
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: p5
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 14
+        width: 38
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: p6
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 14
+        width: 42
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: m
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 14
+        width: 243
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
