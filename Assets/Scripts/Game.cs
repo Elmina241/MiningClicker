@@ -11,6 +11,7 @@ public class Game : MonoBehaviour {
     public float sumMoney = 0; // Доход за всё время
     public int farmCount =0; //счётчик ферм
     public int partCount = 0; //счётчик купленных частей
+    public int exp = 0;
 
     public GameObject improvementWin; //окно улучшений и запчастей
     public GameObject push; //панель уведомлений
@@ -75,6 +76,7 @@ public class Game : MonoBehaviour {
 
             farmCount = sv.farmCount;
             partCount = sv.partCount;
+            exp = sv.exp;
 
 
             int i = 0;
@@ -89,7 +91,7 @@ public class Game : MonoBehaviour {
                 cur.progressCounter1 = sv.progressCounter1[i];
                 cur.progressCounter2 = sv.progressCounter2[i];
                 cur.maxClick = sv.maxClick[i];
-                cur.exp = sv.exp[i];
+                
                 cur.upgradeCost = sv.upgradeCost[i];
                 cur.upgradePoints = sv.upgradePoints[i];
                 cur.timeUpgrade = sv.timeUpgrade[i];
@@ -163,7 +165,6 @@ public class Game : MonoBehaviour {
         sv.bonus = new float[resSize];
         sv.bonusCost = new float[resSize];
         sv.maxClick = new int[resSize];
-        sv.exp = new int[resSize];
         sv.upgradeCost = new int[resSize];
         sv.upgradePoints = new int[resSize];
         sv.timeUpgrade = new float[resSize];
@@ -178,7 +179,7 @@ public class Game : MonoBehaviour {
         sv.timeBonus = new float[resSize];
         sv.partsOfComp = new string[resSize];
         sv.sumCur = new float[this.currencies.Length];
-
+        sv.exp = exp;
         sv.clickCounter = clickCounter;
 
         int i = 0;
@@ -194,7 +195,7 @@ public class Game : MonoBehaviour {
             sv.progressCounter1[i] = cur.progressCounter1;
             sv.progressCounter2[i] = cur.progressCounter2;
             sv.maxClick[i] = cur.maxClick;
-            sv.exp[i] = cur.exp;
+            
             sv.upgradeCost[i] = cur.upgradeCost;
             sv.upgradePoints[i] = cur.upgradePoints;
             sv.timeUpgrade[i] = cur.timeUpgrade;
@@ -303,7 +304,7 @@ public class Save
     public float[] bonus;
     public float[] bonusCost;
     public int[] maxClick;
-    public int[] exp;
+    public int exp;
     public int[] upgradeCost;
     public int[] upgradePoints;
     public float[] timeUpgrade;

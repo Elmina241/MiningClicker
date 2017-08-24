@@ -51,7 +51,7 @@ class Computer : MonoBehaviour
     float bonusD = 1.32f;
     float bonusCostD = 1.44f;
     public int maxClick =10; // кол-во дробей прогресс-бара
-    public int exp = 0;
+    
     int expD = 50; // кол-во опыта за клик по кнопке
     int expU = 15; // кол-во опыта за улучшение доходности
     public int upgradeCost =200; //максимальное число EXP. Начало с 200
@@ -148,7 +148,9 @@ class Computer : MonoBehaviour
     {
         
         g.clickCounter++;
-        exp += expD;
+        if (g.clickCounter == 100) g.gameObject.GetComponent<Achievment>().unlockAch(0);
+        if (g.clickCounter == 10000) g.gameObject.GetComponent<Achievment>().unlockAch(7);
+        g.exp += expD;
         progressCounter1 = progressCounter1 + (100/maxClick);
         progressCounter2+= expD;
         if (progressCounter1 > 100)
@@ -156,6 +158,7 @@ class Computer : MonoBehaviour
             progressCounter1 = 0;
             currency += bonus;
             this.cur.sum += bonus;
+            if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
             progressCounter++;
         }
         if (progressCounter2 > upgradeCost)
@@ -215,7 +218,8 @@ class Computer : MonoBehaviour
 
     public void GetBonus()
     {
-        exp += expU;
+        g.exp += expU;
+        
         progressCounter2 += expU;
         if (progressCounter2 > upgradeCost)
         {
@@ -245,6 +249,8 @@ class Computer : MonoBehaviour
     {
         g.money = (g.money + currency * cur.getExchRate());
         g.sumMoney = (g.sumMoney + currency * cur.getExchRate());
+        if ((!g.gameObject.GetComponent<Achievment>().achievment[1].get) && g.sumMoney >= 5000f) g.gameObject.GetComponent<Achievment>().unlockAch(1);
+        if ((!g.gameObject.GetComponent<Achievment>().achievment[1].get) && g.sumMoney >= 1000000000f) g.gameObject.GetComponent<Achievment>().unlockAch(9);
         currency = 0;
         g.moneyText.text = "$"+ g.money.ToString("0.#0");
     }
@@ -276,6 +282,7 @@ class Computer : MonoBehaviour
                 progressCounter1 = 0;
                 currency = currency + autoMiner.autoProfit;
                 this.cur.sum += autoMiner.autoProfit;
+                if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
                 p1.fillAmount = (float)progressCounter1 / 100;
                 progressText.text = progressCounter1.ToString() + "%";
                 progressCounter++;
@@ -588,6 +595,7 @@ class Computer : MonoBehaviour
         g.moneyText.text = "$" + g.money.ToString("0.#0");
         changeBuyButtons();
         g.partCount++;
+        if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
         unblock();
     }
 

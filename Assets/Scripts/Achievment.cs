@@ -16,6 +16,8 @@ public class Achievment : MonoBehaviour {
     public Achievment_sys[] achievment; // менеджер по задачам
     public Sprite BuyBtn_green, BuyBtn_gray; // это кнопки "купить"/"не купить"
     public Store_manager[] _store; // менеджер магазина
+    public Game g;
+    public Text expCount;
 
     ////////////////////////////////////////////////
     ///                                          ///
@@ -66,6 +68,7 @@ public class Achievment : MonoBehaviour {
         Achiev.SetActive(true);
         Header.GetComponent<Image>().sprite = Gradient_achievment; 
         Header.transform.GetChild(1).GetComponent<Text>().text = "ЗАДАНИЯ";
+        
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Achievment_btn/Icon_Bg/Icon").GetComponent<Image>().sprite;
        // Parent_ach.GetComponent<ScrollRect>().content = 
        
@@ -89,6 +92,19 @@ public class Achievment : MonoBehaviour {
             }
 
         }
+
+        expCount.text = g.exp.ToString();
     }
-  
+
+    //Открытие достижения
+    public void unlockAch(int id)
+    {
+        achievment[id].get = true;
+        g.exp += achievment[id].award;
+        g.push.transform.Find("Icon").GetComponent<Image>().sprite = achievment[id].icon;
+        g.push.transform.Find("Header").GetComponent<Text>().text = achievment[id]._header;
+        g.push.transform.Find("Description").GetComponent<Text>().text = "Поздравляем! Награда получена!";
+        g.push.GetComponent<Animator>().SetTrigger("isShown");
+    }
+
 }
