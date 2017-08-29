@@ -158,7 +158,7 @@ public class Game : MonoBehaviour {
 
         int resSize = 0;
 
-        while (miners.transform.GetChild(resSize).GetComponent<Computer>().isResearched) resSize++;
+        while (resSize < miners.transform.childCount && miners.transform.GetChild(resSize).GetComponent<Computer>().isResearched) resSize++;
 
         sv.currency = new float[resSize];
         sv.isReady = new bool[resSize];
