@@ -119,6 +119,11 @@ public class Game : MonoBehaviour {
                 currencies[i].sum = sv.sumCur[i];
                 i++;
             }
+            Achievment_sys[] a = JsonHelper.FromJson<Achievment_sys>(sv.achievments);
+            for (int j = 0; j < gameObject.GetComponent<Achievment>().achievment.Length; j++)
+            {
+                gameObject.GetComponent<Achievment>().achievment[j] = a[j];
+            }
 
         }
     }
@@ -187,6 +192,7 @@ public class Game : MonoBehaviour {
         {
             Computer cur = miners.transform.GetChild(i).GetComponent<Computer>();
             PartsOfComputer[] p = new PartsOfComputer[cur.compParts.Length];
+            
             sv.currency[i] = cur.currency;
             sv.isReady[i] = cur.isReady;
             sv.bonus[i] = cur.bonus;
@@ -225,6 +231,14 @@ public class Game : MonoBehaviour {
             sv.sumCur[i] = currencies[i].sum; 
             i++;
         }
+
+        Achievment_sys[] a = new Achievment_sys[gameObject.GetComponent<Achievment>().achievment.Length];
+        for (int j = 0; j < gameObject.GetComponent<Achievment>().achievment.Length; j++)
+        {
+            a[j] = gameObject.GetComponent<Achievment>().achievment[j];
+        }
+
+        sv.achievments = JsonHelper.ToJson<Achievment_sys>(a);
 
 
         PlayerPrefs.SetString("unitySV", JsonUtility.ToJson(sv));
@@ -321,6 +335,7 @@ public class Save
     public float[] sumCur;
 
     public string[] partsOfComp;
+    public string achievments;
 
 }
 
