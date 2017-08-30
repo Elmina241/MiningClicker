@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
+using System;
 
 class Computer : MonoBehaviour
 {
@@ -44,7 +44,7 @@ class Computer : MonoBehaviour
     public int cost = 1; // цена компьютера
     public string nameComp = "Ноутбук"; // Имя компьютера
     public bool isReady; // готов ли компьютер к работе (все ли компоненты куплены)
-    bool isFarm; // ферма?
+    public bool isFarm; // ферма?
     public bool isResearched = true; // открыт ли компьютер
     public float bonus = 0.001f; // доход за заполнение прогресс-бара
     public float bonusCost = 2; // цена улучшения (на которую поднимаем доход)
@@ -188,32 +188,65 @@ class Computer : MonoBehaviour
             block.SetActive(!isReady);
             if (!isReady)
             {
-                GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
-                prevComp.transform.Find("BlockMining").gameObject.SetActive(false);
-                Computer pr = prevComp.GetComponent<Computer>();
-                pr.isReady = true;
-                if (!pr.autoMiner.isBoughtAuto)
+                if (isFarm)
                 {
-                    g.autoMinerButton.interactable = (g.money >= pr.autoMiner.autoCost);
+                    g.farmCount--;
+                    if (g.farmCount == 0)
+                    {
+                        unblockLast();
+                    }
                 }
-                else
+                GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
+                if ((isFarm && g.farmCount == 0 && !prevComp.GetComponent<Computer>().isFarm) || (!isFarm))
                 {
-                    StopCoroutine(pr.BonusPerSec());
-                    StartCoroutine(pr.BonusPerSec());
+                    prevComp.transform.Find("BlockMining").gameObject.SetActive(false);
+                    Computer pr = prevComp.GetComponent<Computer>();
+                    pr.isReady = true;
+                    if (!pr.autoMiner.isBoughtAuto)
+                    {
+                        g.autoMinerButton.interactable = (g.money >= pr.autoMiner.autoCost);
+                    }
+                    else
+                    {
+                        StopCoroutine(pr.BonusPerSec());
+                        StartCoroutine(pr.BonusPerSec());
+                    }
                 }
                 pushBroken();
             }
             if (g.improvementWin.activeSelf)
             {
-                changeBuyButtons();
+                //changeBuyButtons();
             }
         }
         //Вылетающие клики
-        pointSt = transform.GetChild(0).transform.GetChild(Random.Range(0, 3)).position;
+        pointSt = transform.GetChild(0).transform.GetChild(UnityEngine.Random.Range(0, 3)).position;
         Debug.Log(pointSt);
         GameObject expPr = (GameObject)Instantiate(plusXP, pointSt, Quaternion.identity);
         expPr.GetComponentInChildren<Text>().text = "+"+ expD.ToString()+ "xp";
 
+    }
+
+    private void unblockLast()
+    {
+        GameObject miners = GameObject.FindWithTag("Miners").gameObject;
+        Computer last;
+        int i = 0;
+        while (!miners.transform.GetChild(i).GetComponent<Computer>().isFarm) i++;
+        last = miners.transform.GetChild(i-1).GetComponent<Computer>();
+        last.isReady = true;
+        last.unblock();
+    }
+
+    private void blockLast()
+    {
+        GameObject miners = GameObject.FindWithTag("Miners").gameObject;
+        Computer last;
+        int i = 0;
+        while (!miners.transform.GetChild(i).GetComponent<Computer>().isFarm) i++;
+        last = miners.transform.GetChild(i - 1).GetComponent<Computer>();
+        last.isReady = false;
+        last.block.SetActive(true);
     }
 
     public void GetBonus()
@@ -240,7 +273,7 @@ class Computer : MonoBehaviour
         autoMiner.autoProfit = autoMiner.autoProfit + bonus;
         bonusText.text = "$"+(bonusCost).ToString("0.#0");
         //Вылетающие бонусы
-        pointSt = transform.GetChild(0).transform.GetChild(Random.Range(0, 3)).position;
+        pointSt = transform.GetChild(0).transform.GetChild(UnityEngine.Random.Range(0, 3)).position;
         GameObject expPr = (GameObject)Instantiate(plusXP, pointSt, Quaternion.identity);
         expPr.GetComponentInChildren<Text>().text = "+" + expU.ToString() + "xp";
 
@@ -303,24 +336,35 @@ class Computer : MonoBehaviour
                 block.SetActive(!isReady);
                 if (!isReady)
                 {
-                    GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
-                    prevComp.transform.Find("BlockMining").gameObject.SetActive(false);
-                    Computer pr = prevComp.GetComponent<Computer>();
-                    pr.isReady = true;
-                    if (!pr.autoMiner.isBoughtAuto)
+                    if (isFarm)
                     {
-                        g.autoMinerButton.interactable = (g.money >= pr.autoMiner.autoCost);
+                        g.farmCount--;
+                        if (g.farmCount == 0)
+                        {
+                            unblockLast();
+                        }
                     }
-                    else
+                    GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
+                    if ((isFarm && g.farmCount == 0 && !prevComp.GetComponent<Computer>().isFarm) || (!isFarm))
                     {
-                        StopCoroutine(pr.BonusPerSec());
-                        StartCoroutine(pr.BonusPerSec());
+                        prevComp.transform.Find("BlockMining").gameObject.SetActive(false);
+                        Computer pr = prevComp.GetComponent<Computer>();
+                        pr.isReady = true;
+                        if (!pr.autoMiner.isBoughtAuto)
+                        {
+                            g.autoMinerButton.interactable = (g.money >= pr.autoMiner.autoCost);
+                        }
+                        else
+                        {
+                            StopCoroutine(pr.BonusPerSec());
+                            StartCoroutine(pr.BonusPerSec());
+                        }
                     }
                     pushBroken();
                 }
                 if (g.improvementWin.activeSelf)
                 {
-                    changeBuyButtons();
+                    //changeBuyButtons();
                 }
             }
             yield return new WaitForSeconds((autoMiner.autoTime - autoMiner.timeBonus) / 100);
@@ -395,15 +439,28 @@ class Computer : MonoBehaviour
         GameObject prevComp1 = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
         Computer pr1 = prevComp1.GetComponent<Computer>();
         if (checkIsReady() && isReady) isReady = true;
-        else isReady = checkIsReady() && pr1.isReady;
+        else isReady = checkIsReady() && (pr1.isReady || (isFarm));
         try
         {
             Computer next = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() + 1).gameObject.GetComponent<Computer>();
             if (isReady)
             {
-                if (next.checkIsReady()) next.unblock();
+                if (next.checkIsReady()&&(!isFarm)) next.unblock();
                 else
                 {
+                    if (isFarm)
+                    {
+                        g.farmCount++;
+                        blockLast();
+                        if (g.farmCount == 1 && !g.gameObject.GetComponent<Achievment>().achievment[3].get)
+                        {
+                            g.gameObject.GetComponent<Achievment>().unlockAch(3);
+                        }
+                        if (g.farmCount == 3 && !g.gameObject.GetComponent<Achievment>().achievment[4].get)
+                        {
+                            g.gameObject.GetComponent<Achievment>().unlockAch(4);
+                        }
+                    }
                     block.SetActive(false);
                     efficiency = getEfficiency();
                     autoMiner.autoTime = autoMiner.maxTime * (200 - getEfficiency()) / 100;
@@ -420,9 +477,11 @@ class Computer : MonoBehaviour
                         g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
                     }
                 }
-                prevComp.transform.Find("BlockMining").gameObject.SetActive(true);
-                prevComp.GetComponent<Computer>().isReady = false;
-
+                if (!prevComp.GetComponent<Computer>().isFarm)
+                {
+                    prevComp.transform.Find("BlockMining").gameObject.SetActive(true);
+                    prevComp.GetComponent<Computer>().isReady = false;
+                }
             }
             else
             {
@@ -434,24 +493,35 @@ class Computer : MonoBehaviour
         {
             if (isReady)
             {
-                    block.SetActive(false);
-                    efficiency = getEfficiency();
-                    autoMiner.autoTime = autoMiner.maxTime * (200 - getEfficiency()) / 100;
-                    if (!autoMiner.isBoughtAuto)
+                if (isFarm)
+                {
+                    g.farmCount++;
+                    blockLast();
+                    if (g.farmCount == 3 && !g.gameObject.GetComponent<Achievment>().achievment[4].get)
                     {
-                        g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
+                        g.gameObject.GetComponent<Achievment>().unlockAch(4);
                     }
-                    else
-                    {
-                        StopCoroutine(BonusPerSec());
-                        StartCoroutine(BonusPerSec());
-                        g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
-                        g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
-                        g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
-                    }
-                prevComp.transform.Find("BlockMining").gameObject.SetActive(true);
-                prevComp.GetComponent<Computer>().isReady = false;
-
+                }
+                block.SetActive(false);
+                efficiency = getEfficiency();
+                autoMiner.autoTime = autoMiner.maxTime * (200 - getEfficiency()) / 100;
+                if (!autoMiner.isBoughtAuto)
+                {
+                    g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
+                }
+                else
+                {
+                    StopCoroutine(BonusPerSec());
+                    StartCoroutine(BonusPerSec());
+                    g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
+                    g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
+                    g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
+                }
+                if (!prevComp.GetComponent<Computer>().isFarm)
+                {
+                    prevComp.transform.Find("BlockMining").gameObject.SetActive(true);
+                    prevComp.GetComponent<Computer>().isReady = false;
+                }
             }
             else
             {
@@ -603,7 +673,7 @@ class Computer : MonoBehaviour
             buyComp.gameObject.SetActive(false);
             g.moneyText.text = "$" + g.money.ToString("0.#0");
             isResearched = true;
-            if (isFarm) g.farmCount++;
+            //if (isFarm) g.farmCount++;
         }
     }
 
@@ -628,7 +698,7 @@ class Computer : MonoBehaviour
         changeBuyButtons();
         g.partCount++;
         if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
-        unblock();
+        if (!isReady) unblock();
     }
 
     //Проверка, куплены ли все необходимые части

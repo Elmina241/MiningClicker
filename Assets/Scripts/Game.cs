@@ -9,7 +9,7 @@ public class Game : MonoBehaviour {
     public float money = 0;
     public int clickCounter = 0; // Счетчик кликов по кнопке
     public float sumMoney = 0; // Доход за всё время
-    public int farmCount =0; //счётчик ферм
+    public int farmCount =0; //счётчик работающих ферм
     public int partCount = 0; //счётчик купленных частей
     public int exp = 0;
 

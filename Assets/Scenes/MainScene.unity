@@ -2429,6 +2429,11 @@ Prefab:
       propertyPath: compParts.Array.data[0].id
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: isFarm
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012509147228, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
     - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -3502,6 +3507,11 @@ Prefab:
         type: 2}
       propertyPath: compParts.Array.data[0].id
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: isFarm
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -21464,6 +21474,11 @@ Prefab:
       propertyPath: compParts.Array.data[6].id
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: isFarm
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012509147228, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
     - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -21701,7 +21716,7 @@ MonoBehaviour:
       \u0434\u043B\u044F \u0441\u0438\u043D\u0445\u0440\u043E\u043D\u043D\u043E\u0439
       \u0434\u043E\u0431\u044B\u0447\u0438"
     award: 1200
-    get: 1
+    get: 0
   - icon: {fileID: 21300000, guid: e6e4ec83b6be9554ab264993725020c9, type: 3}
     _header: "\u041A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u043E\u043D\u0435\u0440"
     _description: "\u041A\u0443\u043F\u0438\u0442\u0435 100 \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0435\u0439,
