@@ -164,6 +164,7 @@ class Computer : MonoBehaviour
         if (progressCounter2 > upgradeCost)
         {
             level++;
+            if (isFarm && level == 10 && (!g.gameObject.GetComponent<Achievment>().achievment[8].get)) g.gameObject.GetComponent<Achievment>().unlockAch(8);
             if (maxClick > 1) maxClick--;
             progressCounter2 = progressCounter2 % upgradeCost;
             upgradePoints++;
