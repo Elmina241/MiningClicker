@@ -214,9 +214,9 @@ class Computer : MonoBehaviour
                 }
                 pushBroken();
             }
-            if (g.improvementWin.activeSelf)
+            if (g.improvementWin.activeSelf && gameObject.transform.GetSiblingIndex() == g.compId)
             {
-                //changeBuyButtons();
+                changeBuyButtons();
             }
         }
         //Вылетающие клики
@@ -362,9 +362,9 @@ class Computer : MonoBehaviour
                     }
                     pushBroken();
                 }
-                if (g.improvementWin.activeSelf)
+                if (g.improvementWin.activeSelf && gameObject.transform.GetSiblingIndex() == g.compId)
                 {
-                    //changeBuyButtons();
+                    changeBuyButtons();
                 }
             }
             yield return new WaitForSeconds((autoMiner.autoTime - autoMiner.timeBonus) / 100);
@@ -562,6 +562,7 @@ class Computer : MonoBehaviour
         }
         g.levelText.text = "Уровень: " + level.ToString();
         g.nameText.text = nameComp;
+        g.compId = gameObject.transform.GetSiblingIndex();
         
         g.fill.fillAmount = (float)progressCounter2 / (float)upgradeCost;
         g.prBarText.text = "XP " + progressCounter2.ToString() + " / " + upgradeCost.ToString();
