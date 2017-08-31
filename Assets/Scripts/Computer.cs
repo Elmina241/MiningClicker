@@ -20,6 +20,7 @@ class Computer : MonoBehaviour
     public Text expText; //Текст количества опыта
     public GameObject partsContainer; //Контейнер, содержащий части компьютера
     public GameObject partPrefab;
+    public GameObject infPref; //префаб бесконечной загрузки 
     public GameObject block; //блокировка майнинга, если не куплены все необходимые части
 
     public Image p1; //полоса прогресса заполнения кликов
@@ -130,6 +131,7 @@ class Computer : MonoBehaviour
         buyComp.interactable = (g.money >= cost);
         p1.fillAmount = (float)progressCounter1 / 100;
         progressText.text = progressCounter1.ToString() + "%";
+        
     }
     void updateUp()
     {
@@ -368,7 +370,15 @@ class Computer : MonoBehaviour
                     changeBuyButtons();
                 }
             }
-            yield return new WaitForSeconds((autoMiner.autoTime - autoMiner.timeBonus) / 100);
+            if ((autoMiner.autoTime - autoMiner.timeBonus) < 0.6f) {
+                infPref.SetActive(true);
+            }
+            else
+            {
+                infPref.SetActive(false);
+            }
+
+            yield return new WaitForSecondsRealtime((autoMiner.autoTime - autoMiner.timeBonus) / 100);
         }
     }
     public void BuyTimeUpgrade()
