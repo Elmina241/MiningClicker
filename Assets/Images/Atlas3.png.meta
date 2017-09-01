@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: efb5394d5211dfb4d9a25c47bb403823
-timeCreated: 1503392838
+timeCreated: 1504249082
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,8 @@ TextureImporter:
     21300010: Atlas3_5
     21300012: Atlas3_6
     21300014: Atlas3_7
+    21300016: Atlas3_8
+    21300018: Atlas3_9
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -65,7 +67,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 105
+        y: 617
         width: 288
         height: 407
       alignment: 0
@@ -78,7 +80,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 289
-        y: 105
+        y: 617
         width: 288
         height: 407
       alignment: 0
@@ -91,7 +93,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 578
-        y: 272
+        y: 784
         width: 240
         height: 240
       alignment: 0
@@ -104,7 +106,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 819
-        y: 418
+        y: 930
         width: 94
         height: 94
       alignment: 0
@@ -116,21 +118,8 @@ TextureImporter:
       name: Atlas3_4
       rect:
         serializedVersion: 2
-        x: 578
-        y: 194
-        width: 195
-        height: 77
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Atlas3_5
-      rect:
-        serializedVersion: 2
-        x: 774
-        y: 194
+        x: 819
+        y: 849
         width: 195
         height: 77
       alignment: 0
@@ -139,11 +128,37 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Atlas3_6
+      name: Atlas3_5
       rect:
         serializedVersion: 2
         x: 578
-        y: 116
+        y: 543
+        width: 240
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Atlas3_6
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 771
+        width: 195
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Atlas3_7
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 693
         width: 195
         height: 77
       alignment: 0
@@ -152,13 +167,26 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Atlas3_7
+      name: Atlas3_8
       rect:
         serializedVersion: 2
         x: 0
-        y: 38
+        y: 550
         width: 440
         height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Atlas3_9
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 302
+        width: 240
+        height: 240
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

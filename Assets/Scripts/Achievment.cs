@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Achievment : MonoBehaviour {
 
     // Овердохера переменных
-    public Sprite Gradient_store, Gradient_achievment; //Градиенты шапок для окон, шапка одна, а окон много)
+    public Sprite Gradient_store, Gradient_achievment, Gradient_settings; //Градиенты шапок для окон, шапка одна, а окон много)
     public GameObject Header; // шапка
     public Color yes; // сложные цветовые решения,
     public Color not; // на которые я сам не знаю ответа
@@ -13,6 +13,7 @@ public class Achievment : MonoBehaviour {
     public Sprite _N_received; // серый крестик
     public GameObject Store; // окно магаза
     public GameObject Achiev; // окно достижений и задач
+    public GameObject _settings; // окно достижений и задач
     public Achievment_sys[] achievment; // менеджер по задачам
     public Sprite BuyBtn_green, BuyBtn_gray; // это кнопки "купить"/"не купить"
     public Store_manager[] _store; // менеджер магазина
@@ -28,15 +29,26 @@ public class Achievment : MonoBehaviour {
     ///                                          ///
     ///                                          /// 
     ////////////////////////////////////////////////
+    public void Settings() // вызываем по кнопке магазина внизу 
+    {
+        _settings.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Gradient_settings;
+        _settings.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Settings_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
+        Header.SetActive(false);     
+        Achiev.SetActive(false); // отключаем панель ачивок
+        Store.SetActive(false);
+        _settings.SetActive(true);// подрубаем панель магаза      
 
+    }
 
     public void Store_set() // вызываем по кнопке магазина внизу 
-    {       
+    {
+        Header.SetActive(true);
         Header.GetComponent<Image>().sprite = Gradient_store; // задаем шапку
         Header.transform.GetChild(1).GetComponent<Text>().text = "МАГАЗИН"; // левый текст
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Store_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
         Achiev.SetActive(false); // отключаем панель ачивок
         Store.SetActive(true); // подрубаем панель магаза
+        _settings.SetActive(false);
 
         for (int i = 0; i < _store.Length; i++) // чекаем детей
         {
@@ -64,8 +76,10 @@ public class Achievment : MonoBehaviour {
     //АНАЛОГИЧНО ВНИЗУ ДЛЯ АЧИВОК
     public void Achievment_set()
     {
+        Header.SetActive(true);
         Store.SetActive(false);
         Achiev.SetActive(true);
+        _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_achievment; 
         Header.transform.GetChild(1).GetComponent<Text>().text = "ЗАДАНИЯ";
         

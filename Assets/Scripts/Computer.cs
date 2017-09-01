@@ -375,7 +375,7 @@ class Computer : MonoBehaviour
             }
             else
             {
-                infPref.SetActive(false);
+               // infPref.SetActive(false);
             }
 
             yield return new WaitForSecondsRealtime((autoMiner.autoTime - autoMiner.timeBonus) / 100);

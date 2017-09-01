@@ -238,7 +238,6 @@ MonoBehaviour:
   isReal: 0
   _priceReal: 0
   _priceGame: 0
-  check: {fileID: 114000013315387904}
 --- !u!114 &114000010844618328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,7 +275,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300008, guid: efb5394d5211dfb4d9a25c47bb403823, type: 3}
+  m_Sprite: {fileID: 21300014, guid: efb5394d5211dfb4d9a25c47bb403823, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
