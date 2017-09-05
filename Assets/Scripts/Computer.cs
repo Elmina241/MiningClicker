@@ -75,7 +75,13 @@ class Computer : MonoBehaviour
     string jsonParts;
     public PartsOfComputer[] compParts;
 
-    
+    public GameObject _level;
+
+    public void LevelUp()
+    {
+        _level.SetActive(true);
+        _level.GetComponent<Animator>().SetBool("Level", true);
+    }
 
 
 
@@ -166,6 +172,7 @@ class Computer : MonoBehaviour
         if (progressCounter2 > upgradeCost)
         {
             level++;
+            LevelUp();
             if (isFarm && level == 10 && (!g.gameObject.GetComponent<Achievment>().achievment[8].get)) g.gameObject.GetComponent<Achievment>().unlockAch(8);
             if (maxClick > 1) maxClick--;
             progressCounter2 = progressCounter2 % upgradeCost;

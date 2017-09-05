@@ -44,6 +44,8 @@ public class Achievment : MonoBehaviour {
         _currency.SetActive(false);
     }
 
+   
+
     public void CurrencyOff()
     {              
         _currency.GetComponent<Animator>().SetBool("Set", false);             
