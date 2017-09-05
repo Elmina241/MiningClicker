@@ -19,7 +19,10 @@ public class Achievment : MonoBehaviour {
     public Store_manager[] _store; // менеджер магазина
     public Game g;
     public Text expCount;
-
+    public GameObject _currency;
+    public bool _curS;
+    AnimatorRecorderMode recorderMode;
+    public GameObject m;
     ////////////////////////////////////////////////
     ///                                          ///
     ///                                          ///
@@ -29,6 +32,36 @@ public class Achievment : MonoBehaviour {
     ///                                          ///
     ///                                          /// 
     ////////////////////////////////////////////////
+    void Start()
+    {
+       
+    }
+
+   
+
+    void AnimationComplete()
+    {
+        _currency.SetActive(false);
+    }
+
+    public void CurrencyOff()
+    {              
+        _currency.GetComponent<Animator>().SetBool("Set", false);             
+    }
+
+    public void Currency()
+    {
+        if (m.activeSelf)
+        {
+            m.SetActive(false);
+        }
+       
+
+        _currency.SetActive(true);
+        _currency.GetComponent<Animator>().SetBool("Set", true);
+      
+    }
+
     public void Settings() // вызываем по кнопке магазина внизу 
     {
         _settings.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Gradient_settings;
@@ -36,12 +69,14 @@ public class Achievment : MonoBehaviour {
         Header.SetActive(false);     
         Achiev.SetActive(false); // отключаем панель ачивок
         Store.SetActive(false);
+        CurrencyOff();
         _settings.SetActive(true);// подрубаем панель магаза      
 
     }
 
     public void Store_set() // вызываем по кнопке магазина внизу 
     {
+        CurrencyOff();
         Header.SetActive(true);
         Header.GetComponent<Image>().sprite = Gradient_store; // задаем шапку
         Header.transform.GetChild(1).GetComponent<Text>().text = "МАГАЗИН"; // левый текст
@@ -76,13 +111,14 @@ public class Achievment : MonoBehaviour {
     //АНАЛОГИЧНО ВНИЗУ ДЛЯ АЧИВОК
     public void Achievment_set()
     {
+      
         Header.SetActive(true);
         Store.SetActive(false);
         Achiev.SetActive(true);
         _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_achievment; 
         Header.transform.GetChild(1).GetComponent<Text>().text = "ЗАДАНИЯ";
-        
+        CurrencyOff();
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Achievment_btn/Icon_Bg/Icon").GetComponent<Image>().sprite;
        // Parent_ach.GetComponent<ScrollRect>().content = 
        
