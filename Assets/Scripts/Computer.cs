@@ -198,6 +198,7 @@ class Computer : MonoBehaviour
             block.SetActive(!isReady);
             if (!isReady)
             {
+                infPref.transform.Find("Stripes").GetComponent<Animator>().speed = 0;
                 if (isFarm)
                 {
                     g.farmCount--;
@@ -256,6 +257,7 @@ class Computer : MonoBehaviour
         while (!miners.transform.GetChild(i).GetComponent<Computer>().isFarm) i++;
         last = miners.transform.GetChild(i - 1).GetComponent<Computer>();
         last.isReady = false;
+        infPref.transform.Find("Stripes").GetComponent<Animator>().speed = 0;
         last.block.SetActive(true);
     }
 
@@ -318,8 +320,16 @@ class Computer : MonoBehaviour
     {
         while (isReady)
         {
-            //clickCounter++;
-            progressCounter1++;
+            infPref.transform.Find("Stripes").GetComponent<Animator>().speed = 1;
+            if (((autoMiner.autoTime - autoMiner.timeBonus)/100) > 0.009f)
+            {
+                progressCounter1++;
+            }
+            else
+            {
+                int d = (int)((1 - (autoMiner.autoTime - autoMiner.timeBonus)) * 10);
+                progressCounter1 = progressCounter1 + d;
+            }
             if (progressCounter1 > 100)
             {
                 progressCounter1 = 0;
@@ -346,6 +356,7 @@ class Computer : MonoBehaviour
                 block.SetActive(!isReady);
                 if (!isReady)
                 {
+                    infPref.transform.Find("Stripes").GetComponent<Animator>().speed = 0;
                     if (isFarm)
                     {
                         g.farmCount--;
@@ -377,15 +388,23 @@ class Computer : MonoBehaviour
                     changeBuyButtons();
                 }
             }
-            if ((autoMiner.autoTime - autoMiner.timeBonus) < 0.6f) {
+            if ((autoMiner.autoTime - autoMiner.timeBonus) < 0.57f) {
                 infPref.SetActive(true);
+                progressText.text = "Скорость света";
             }
             else
             {
-               // infPref.SetActive(false);
+               infPref.SetActive(false);
             }
 
-            yield return new WaitForSecondsRealtime((autoMiner.autoTime - autoMiner.timeBonus) / 100);
+            if (((autoMiner.autoTime - autoMiner.timeBonus)/100) > 0.01f)
+            {
+                yield return new WaitForSecondsRealtime(((autoMiner.autoTime - autoMiner.timeBonus) / 100) - 0.01f);
+            }
+            else
+            {
+                yield return new WaitForSecondsRealtime(0);
+            }
         }
     }
     public void BuyTimeUpgrade()
@@ -396,7 +415,8 @@ class Computer : MonoBehaviour
         g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0));
         g.upgradeProfitButton.interactable = ((upgradePoints > 0) && (profiteUpgrade > 0));
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
-        g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
+        if (timeUpgrade > 0) g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
+        else g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "0%";
         g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
         g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
         updateUp();
@@ -499,6 +519,7 @@ class Computer : MonoBehaviour
                 {
                     prevComp.transform.Find("BlockMining").gameObject.SetActive(true);
                     prevComp.GetComponent<Computer>().isReady = false;
+                    prevComp.GetComponent<Computer>().infPref.transform.Find("Stripes").GetComponent<Animator>().speed = 0;
                 }
             }
             else
@@ -539,6 +560,7 @@ class Computer : MonoBehaviour
                 {
                     prevComp.transform.Find("BlockMining").gameObject.SetActive(true);
                     prevComp.GetComponent<Computer>().isReady = false;
+                    prevComp.GetComponent<Computer>().infPref.transform.Find("Stripes").GetComponent<Animator>().speed = 0;
                 }
             }
             else
@@ -585,7 +607,8 @@ class Computer : MonoBehaviour
         g.fill.fillAmount = (float)progressCounter2 / (float)upgradeCost;
         g.prBarText.text = "XP " + progressCounter2.ToString() + " / " + upgradeCost.ToString();
         g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
-        g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
+        if (timeUpgrade > 0) g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
+        else g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "0%";
 
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
         g.autoMinerButton.onClick.RemoveAllListeners();
