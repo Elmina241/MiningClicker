@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Miners
+  - RateMe
   layers:
   - Default
   - TransparentFX

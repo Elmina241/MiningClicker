@@ -23800,7 +23800,7 @@ GameObject:
   - 111: {fileID: 1210851912}
   m_Layer: 5
   m_Name: RateMe
-  m_TagString: Untagged
+  m_TagString: RateMe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23945,6 +23945,7 @@ MonoBehaviour:
   partCount: 0
   exp: 0
   improvementWin: {fileID: 1796159203}
+  rateWin: {fileID: 1210851906}
   compId: 0
   push: {fileID: 1927328353}
   autoMinerButton: {fileID: 0}

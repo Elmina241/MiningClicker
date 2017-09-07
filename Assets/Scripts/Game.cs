@@ -14,6 +14,7 @@ public class Game : MonoBehaviour {
     public int exp = 0;
 
     public GameObject improvementWin; //окно улучшений и запчастей
+    public GameObject rateWin; //окно оценки приложения
     public int compId; // ID компьютера, чьё окно улучшений сейчас отображается 
     public GameObject push; //панель уведомлений
     public Button autoMinerButton; //кнопка покупки автомайнера

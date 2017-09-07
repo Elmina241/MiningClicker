@@ -158,6 +158,10 @@ class Computer : MonoBehaviour
         g.clickCounter++;
         if (g.clickCounter == 100) g.gameObject.GetComponent<Achievment>().unlockAch(0);
         if (g.clickCounter == 10000) g.gameObject.GetComponent<Achievment>().unlockAch(7);
+        if (g.clickCounter == 1000)
+        {
+            g.rateWin.SetActive(true);
+        }
         g.exp += expD;
         progressCounter1 = progressCounter1 + (100/maxClick);
         progressCounter2+= expD;
@@ -247,6 +251,16 @@ class Computer : MonoBehaviour
         last = miners.transform.GetChild(i-1).GetComponent<Computer>();
         last.isReady = true;
         last.unblock();
+    }
+
+    private bool checkLast()
+    {
+        GameObject miners = GameObject.FindWithTag("Miners").gameObject;
+        Computer last;
+        int i = 0;
+        while (!miners.transform.GetChild(i).GetComponent<Computer>().isFarm) i++;
+        last = miners.transform.GetChild(i - 1).GetComponent<Computer>();
+        return last.isReady;
     }
 
     private void blockLast()
@@ -477,10 +491,20 @@ class Computer : MonoBehaviour
         GameObject prevComp1 = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
         Computer pr1 = prevComp1.GetComponent<Computer>();
         if (checkIsReady() && isReady) isReady = true;
-        else isReady = checkIsReady() && (pr1.isReady || (isFarm));
+        else isReady = checkIsReady() && (pr1.isReady || (isFarm && checkLast()));
         try
         {
             Computer next = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() + 1).gameObject.GetComponent<Computer>();
+            if (isFarm || (next.isFarm && isReady))
+            {
+                if (next.isFarm && isReady && !isFarm)
+                {
+                    prevComp.transform.Find("BlockMining").gameObject.SetActive(true);
+                    prevComp.GetComponent<Computer>().isReady = false;
+                    prevComp.GetComponent<Computer>().infPref.transform.Find("Stripes").GetComponent<Animator>().speed = 0;
+                }
+                next.unblock();
+            }
             if (isReady)
             {
                 if (next.checkIsReady()&&(!isFarm)) next.unblock();
@@ -738,6 +762,15 @@ class Computer : MonoBehaviour
         part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
         g.moneyText.text = "$" + g.money.ToString("0.#0");
         changeBuyButtons();
+        
+        if (autoMiner.isBoughtAuto)
+        {
+            efficiency = getEfficiency();
+            autoMiner.autoTime = autoMiner.maxTime * (200 - getEfficiency()) / 100;
+            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
+            g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
+        }
+        
         g.partCount++;
         if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
         if (!isReady) unblock();
