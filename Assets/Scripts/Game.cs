@@ -18,6 +18,8 @@ public class Game : MonoBehaviour {
     public int compId; // ID компьютера, чьё окно улучшений сейчас отображается 
     public GameObject push; //панель уведомлений
     public Button autoMinerButton; //кнопка покупки автомайнера
+    public Button offMinerButton; //кнопка покупки оффлайнового майнера
+    public Button offMinerBonusButton; //кнопка покупки улучшения оффрайнового манера
     public Button upgradeTimeButton; //кнопка покупки улучшения времени
     public Button upgradeProfitButton; //кнопка покупки улучшения дохода
     public Text upgradePointsText; //Текст очки улучшения
@@ -80,6 +82,8 @@ public class Game : MonoBehaviour {
             partCount = sv.partCount;
             exp = sv.exp;
 
+            System.DateTime dt = new System.DateTime(sv.date[0], sv.date[1], sv.date[2], sv.date[3], sv.date[4], sv.date[5]);
+            System.TimeSpan ts = System.DateTime.Now - dt;
 
             int i = 0;
             while (i < resSize)
@@ -93,11 +97,20 @@ public class Game : MonoBehaviour {
                 cur.progressCounter1 = sv.progressCounter1[i];
                 cur.progressCounter2 = sv.progressCounter2[i];
                 cur.maxClick = sv.maxClick[i];
-                
+
+                cur.isBoughtOff = sv.isBoughtOff[i];
+                cur.offProfit = sv.offProfit[i];
+                cur.offProfitBonus = sv.offProfitBonus[i];
+
                 cur.upgradeCost = sv.upgradeCost[i];
                 cur.upgradePoints = sv.upgradePoints[i];
                 cur.timeUpgrade = sv.timeUpgrade[i];
                 cur.profiteUpgrade = sv.profiteUpgrade[i];
+
+                if (cur.isBoughtOff)
+                {
+                    cur.currency = cur.currency + cur.offProfit * ts.Seconds;
+                }
                 
                 cur.level = sv.level[i];
                 cur.autoMiner.isBoughtAuto = sv.isBoughtAuto[i];
@@ -132,8 +145,8 @@ public class Game : MonoBehaviour {
 
     void Start()
     {
-       
-       
+
+        
 
         this.autoMinerButton = improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto").gameObject.GetComponent<Button>();
         this.upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
@@ -161,6 +174,13 @@ public class Game : MonoBehaviour {
         sv.partCount = partCount;
         sv.sumMoney = sumMoney;
 
+        sv.date[0] = System.DateTime.Now.Year;
+        sv.date[1] = System.DateTime.Now.Month;
+        sv.date[2] = System.DateTime.Now.Day;
+        sv.date[3] = System.DateTime.Now.Hour;
+        sv.date[4] = System.DateTime.Now.Minute;
+        sv.date[5] = System.DateTime.Now.Second;
+
         GameObject miners = GameObject.FindWithTag("Miners").gameObject;
 
         int resSize = 0;
@@ -181,7 +201,10 @@ public class Game : MonoBehaviour {
         sv.progressCounter2 = new int[resSize];
         sv.level = new int[resSize];
         sv.isBoughtAuto = new bool[resSize];
+        sv.isBoughtOff = new bool[resSize];
         sv.autoTime = new float[resSize];
+        sv.offProfit = new float[resSize];
+        sv.offProfitBonus = new float[resSize];
         sv.autoProfit = new float[resSize];
         sv.timeBonus = new float[resSize];
         sv.partsOfComp = new string[resSize];
@@ -208,7 +231,11 @@ public class Game : MonoBehaviour {
             sv.upgradePoints[i] = cur.upgradePoints;
             sv.timeUpgrade[i] = cur.timeUpgrade;
             sv.profiteUpgrade[i] = cur.profiteUpgrade;
-            
+
+            sv.isBoughtOff[i] = cur.isBoughtOff;
+            sv.offProfit[i] = cur.offProfit;
+            sv.offProfitBonus[i] = cur.offProfitBonus;
+
             sv.level[i] = cur.level;
             sv.isBoughtAuto[i] = cur.autoMiner.isBoughtAuto;
             sv.autoTime[i] = cur.autoMiner.autoTime;
@@ -328,7 +355,10 @@ public class Save
     public int clickCounter;
     public int[] level;
     public bool[] isBoughtAuto;
-    public float[] autoTime; 
+    public bool[] isBoughtOff;
+    public float[] autoTime;
+    public float[] offProfit;
+    public float[] offProfitBonus; 
     public float[] autoProfit; 
     public float[] timeBonus;
     public float sumMoney; 
@@ -338,6 +368,8 @@ public class Save
 
     public string[] partsOfComp;
     public string achievments;
+
+    public int[] date = new int[6];
 
 }
 

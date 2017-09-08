@@ -23949,6 +23949,8 @@ MonoBehaviour:
   compId: 0
   push: {fileID: 1927328353}
   autoMinerButton: {fileID: 0}
+  offMinerButton: {fileID: 1515065951}
+  offMinerBonusButton: {fileID: 1868941585}
   upgradeTimeButton: {fileID: 0}
   upgradeProfitButton: {fileID: 0}
   upgradePointsText: {fileID: 0}

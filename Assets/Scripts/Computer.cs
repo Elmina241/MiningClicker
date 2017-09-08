@@ -72,6 +72,15 @@ class Computer : MonoBehaviour
     public int level = 1; // Уровень развития компьютера. Повышается на +1 каждые 50 кликов. Не зависит от EXP 
 
     public AutoMiner autoMiner;
+
+    /*Оффлайн автомайнер*/
+    int offMinerCost = 150;
+    public bool isBoughtOff;
+    public float offProfit = 0.00001f;
+    public float offProfitBonus = 50;
+    float offProfitBonusD = 2.5f;
+    /********************/
+
     string jsonParts;
     public PartsOfComputer[] compParts;
 
@@ -329,7 +338,21 @@ class Computer : MonoBehaviour
         g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         g.improvementWin.transform.Find("Background/AutoMiner/GameObject/checkmark").GetComponent<check>().setOn();
         g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
+        g.offMinerButton.interactable = (g.money >= offMinerCost) && !isBoughtOff;
     }
+
+    public void BuyOffMiner()
+    {
+        g.money = g.money - offMinerCost;
+        isBoughtOff = true;
+        g.offMinerButton.interactable = false;
+        g.offMinerBonusButton.interactable = (upgradePoints > 0);
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
+        g.improvementWin.transform.Find("Background/NightMiner/GameObject/checkmark").GetComponent<check>().setOn();
+        g.improvementWin.transform.Find("Background/NightMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
+        g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost) && !autoMiner.isBoughtAuto;
+    }
+
     IEnumerator BonusPerSec()
     {
         while (isReady)
@@ -620,9 +643,26 @@ class Computer : MonoBehaviour
             g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
             g.autoMinerButton.interactable = false;
         }
+
+        if (!isBoughtOff)
+        {
+            g.offMinerButton.interactable = (g.money >= offMinerCost);
+            g.offMinerBonusButton.interactable = false;
+            g.improvementWin.transform.Find("Background/NightMiner/GameObject/checkmark").GetComponent<check>().setOff();
+            g.improvementWin.transform.Find("Background/NightMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "НАЖМИТЕ, ЧТОБЫ КУПИТЬ";
+        }
+        else
+        {
+            g.offMinerBonusButton.interactable = ((upgradePoints > 0) && (offProfitBonus > 0));
+            g.improvementWin.transform.Find("Background/NightMiner/GameObject/checkmark").GetComponent<check>().setOn();
+            g.improvementWin.transform.Find("Background/NightMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
+            g.offMinerButton.interactable = false;
+        }
+
         if (!isReady)
         {
             g.autoMinerButton.interactable = false;
+            g.offMinerButton.interactable = false;
         }
         g.levelText.text = "Уровень: " + level.ToString();
         g.nameText.text = nameComp;
@@ -641,9 +681,12 @@ class Computer : MonoBehaviour
         g.upgradeProfitButton.onClick.RemoveAllListeners();
         g.upgradeTimeButton.onClick.AddListener(BuyTimeUpgrade);
         g.upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
+        g.offMinerButton.onClick.RemoveAllListeners();
+        g.offMinerButton.onClick.AddListener(BuyOffMiner);
 
 
         g.improvementWin.transform.Find("Background/AutoMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + autoMiner.autoCost.ToString();
+        g.improvementWin.transform.Find("Background/NightMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + offMinerCost.ToString();
 
         g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = backgr;
         // g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = transform.Find("MenuButton").GetComponent<Image>().sprite;
