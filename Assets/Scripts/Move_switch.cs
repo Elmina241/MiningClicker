@@ -3,28 +3,25 @@ using System.Collections;
 
 public class Move_switch : MonoBehaviour {
 
-    public GameObject _switch;
-    public bool _curPosition;
-    Vector2 v1, v2;
-	// Use this for initialization
-	void Start () {
-        v1 = _switch.transform.position; 
-       
-    }
-    public void change()
+    public bool move;
+    public void Move_back()
     {
-        _curPosition = true;
+        if (!move)
+        {
+            gameObject.GetComponent<Animator>().SetBool("sw", true);
+            move = true;
+        }
+        else
+        {
+            gameObject.GetComponent<Animator>().SetBool("sw", false);
+            move = false;
+        }
+
     }
 
-    public void Move()
+    public void Move_to()
     {
-     //   _switch.transform.position = Vector2.Distance(v1, _switch.transform.position.x + 60f, Time.deltaTime * 1);
+      gameObject.GetComponent<Animator>().SetBool("sw", false);
     }
-    void Update()
-    {
-        if (_curPosition)
-        {
-            Move();
-        }
-    }
+    
 }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: efb5394d5211dfb4d9a25c47bb403823
-timeCreated: 1504249082
+timeCreated: 1505098973
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -14,6 +14,7 @@ TextureImporter:
     21300014: Atlas3_7
     21300016: Atlas3_8
     21300018: Atlas3_9
+    21300020: Atlas3_10
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -123,7 +124,7 @@ TextureImporter:
         width: 195
         height: 77
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -149,7 +150,7 @@ TextureImporter:
         width: 195
         height: 77
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -181,6 +182,19 @@ TextureImporter:
       tessellationDetail: 0
     - serializedVersion: 2
       name: Atlas3_9
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 147
+        width: 278
+        height: 395
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Atlas3_10
       rect:
         serializedVersion: 2
         x: 578
