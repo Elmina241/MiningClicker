@@ -339,6 +339,7 @@ class Computer : MonoBehaviour
         g.improvementWin.transform.Find("Background/AutoMiner/GameObject/checkmark").GetComponent<check>().setOn();
         g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
         g.offMinerButton.interactable = (g.money >= offMinerCost) && !isBoughtOff;
+        changeBuyButtons();
     }
 
     public void BuyOffMiner()
@@ -351,6 +352,13 @@ class Computer : MonoBehaviour
         g.improvementWin.transform.Find("Background/NightMiner/GameObject/checkmark").GetComponent<check>().setOn();
         g.improvementWin.transform.Find("Background/NightMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
         g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost) && !autoMiner.isBoughtAuto;
+        changeBuyButtons();
+    }
+
+    public void checkInteractable()
+    {
+        g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost) && !autoMiner.isBoughtAuto;
+        g.offMinerButton.interactable = (g.money >= offMinerCost) && !isBoughtOff;
     }
 
     IEnumerator BonusPerSec()
@@ -449,9 +457,7 @@ class Computer : MonoBehaviour
         upgradePoints--;
         autoMiner.timeBonus = autoMiner.timeBonus + ((autoMiner.autoTime - autoMiner.timeBonus) / 100) * timeUpgrade;
         timeUpgrade = timeUpgrade - timeUpgradeD;
-        g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0));
-        g.upgradeProfitButton.interactable = ((upgradePoints > 0) && (profiteUpgrade > 0));
-        g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
+        checkUpgradeButtons();
         if (timeUpgrade > 0) g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
         else g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "0%";
         g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
@@ -463,13 +469,29 @@ class Computer : MonoBehaviour
         upgradePoints--;
         autoMiner.autoProfit = autoMiner.autoProfit + (autoMiner.autoProfit / 100) * profiteUpgrade;
         profiteUpgrade = profiteUpgrade - profiteUpgradeD;
-        g.upgradeProfitButton.interactable = ((upgradePoints > 0) && (profiteUpgrade > 0));
-        g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0));
-        g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
+        checkUpgradeButtons();
         g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
         g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
         g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
         updateUp();
+    }
+
+    public void BuyTimeOffUpgrade()
+    {
+        upgradePoints--;
+        offProfit = offProfit + (offProfit / 100) * offProfitBonus;
+        offProfitBonus = offProfitBonus - (offProfitBonusD/100) * offProfitBonus;
+        checkUpgradeButtons();  
+        g.improvementWin.transform.Find("Background/UpgradeGroup/NightUpgrade/Text_count_n").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
+        updateUp();
+    }
+
+    public void checkUpgradeButtons()
+    {
+        g.upgradeProfitButton.interactable = ((upgradePoints > 0) && (profiteUpgrade > 0)) && autoMiner.isBoughtAuto;
+        g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0)) && autoMiner.isBoughtAuto;
+        g.offMinerBonusButton.interactable = ((upgradePoints > 0) && (offProfitBonus > 0)) && isBoughtOff;
+        g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
     }
 
     public void pushBroken()
@@ -673,6 +695,8 @@ class Computer : MonoBehaviour
         g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
         if (timeUpgrade > 0) g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "-" + timeUpgrade.ToString() + "%";
         else g.improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade/Text_count_tm").GetComponent<Text>().text = "0%";
+        if (offProfitBonus > 0) g.improvementWin.transform.Find("Background/UpgradeGroup/NightUpgrade/Text_count_n").GetComponent<Text>().text = "+" + offProfitBonus.ToString() + "%";
+        else g.improvementWin.transform.Find("Background/UpgradeGroup/NightUpgrade/Text_count_n").GetComponent<Text>().text = "0%";
 
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
         g.autoMinerButton.onClick.RemoveAllListeners();
@@ -680,6 +704,8 @@ class Computer : MonoBehaviour
         g.upgradeTimeButton.onClick.RemoveAllListeners();
         g.upgradeProfitButton.onClick.RemoveAllListeners();
         g.upgradeTimeButton.onClick.AddListener(BuyTimeUpgrade);
+        g.offMinerBonusButton.onClick.RemoveAllListeners();
+        g.offMinerBonusButton.onClick.AddListener(BuyTimeOffUpgrade);
         g.upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
         g.offMinerButton.onClick.RemoveAllListeners();
         g.offMinerButton.onClick.AddListener(BuyOffMiner);
@@ -817,6 +843,7 @@ class Computer : MonoBehaviour
         g.partCount++;
         if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
         if (!isReady) unblock();
+        checkInteractable();
     }
 
     //Проверка, куплены ли все необходимые части
