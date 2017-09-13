@@ -5263,7 +5263,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -1860
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
@@ -7665,7 +7665,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -868
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
@@ -10877,7 +10877,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -2356
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
@@ -18665,7 +18665,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -1116
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
@@ -19065,7 +19065,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -2108
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
@@ -19853,7 +19853,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -1364
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
@@ -24239,6 +24239,10 @@ MonoBehaviour:
   farmCount: 0
   partCount: 0
   exp: 0
+  reward: 100
+  rewardCost: 100
+  rewardD: 1.5
+  rewardCostD: 1.7
   improvementWin: {fileID: 1796159203}
   rateWin: {fileID: 0}
   compId: 0
@@ -24447,6 +24451,8 @@ MonoBehaviour:
     isBought: 0
   g: {fileID: 1210977833}
   expCount: {fileID: 1301108724}
+  reward: {fileID: 705337534}
+  rewardCost: {fileID: 656315392}
   _currency: {fileID: 975942359}
   _curS: 0
   m: {fileID: 1055936277}
@@ -29385,7 +29391,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -372
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
@@ -31232,7 +31238,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -1612
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
@@ -40336,7 +40342,7 @@ Prefab:
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -124.00028
+      value: -620
       objectReference: {fileID: 0}
     - target: {fileID: 224000011011470860, guid: 9bd6a57d59bbe2a42bb4f4e41f3faf01,
         type: 2}

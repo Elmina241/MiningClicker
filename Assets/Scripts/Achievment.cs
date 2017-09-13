@@ -19,6 +19,8 @@ public class Achievment : MonoBehaviour {
     public Store_manager[] _store; // менеджер магазина
     public Game g;
     public Text expCount;
+    public Text reward; //награда
+    public Text rewardCost; //стоимость награды
     public GameObject _currency;
     public bool _curS;
     AnimatorRecorderMode recorderMode;
@@ -146,6 +148,8 @@ public class Achievment : MonoBehaviour {
         }
 
         expCount.text = g.exp.ToString();
+        reward.text = "$ " + g.reward.ToString();
+        rewardCost.text = g.rewardCost.ToString();
     }
 
     //Открытие достижения
@@ -157,6 +161,12 @@ public class Achievment : MonoBehaviour {
         g.push.transform.Find("Header").GetComponent<Text>().text = achievment[id]._header;
         g.push.transform.Find("Description").GetComponent<Text>().text = "Поздравляем! Награда получена!";
         g.push.GetComponent<Animator>().SetTrigger("isShown");
+        if (g.exp >= g.rewardCost)
+        {
+            g.money = g.money + g.reward;
+            g.reward = (int)(g.reward * g.rewardD);
+            g.rewardCost = (int)(g.rewardCost * g.rewardCostD);
+        }
     }
 
 }

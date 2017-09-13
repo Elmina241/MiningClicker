@@ -146,7 +146,8 @@ class Computer : MonoBehaviour
         buyComp.interactable = (g.money >= cost);
         p1.fillAmount = (float)progressCounter1 / 100;
         progressText.text = progressCounter1.ToString() + "%";
-        
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
+
     }
     void updateUp()
     {
@@ -172,6 +173,7 @@ class Computer : MonoBehaviour
             g.rateWin.SetActive(true);
         }
         g.exp += expD;
+        checkEXP();
         progressCounter1 = progressCounter1 + (100/maxClick);
         progressCounter2+= expD;
         if (progressCounter1 > 100)
@@ -287,7 +289,7 @@ class Computer : MonoBehaviour
     public void GetBonus()
     {
         g.exp += expU;
-        
+        checkEXP();
         progressCounter2 += expU;
         if (progressCounter2 > upgradeCost)
         {
@@ -480,9 +482,9 @@ class Computer : MonoBehaviour
     {
         upgradePoints--;
         offProfit = offProfit + (offProfit / 100) * offProfitBonus;
-        offProfitBonus = offProfitBonus - (offProfitBonusD/100) * offProfitBonus;
+        offProfitBonus = offProfitBonus - offProfitBonusD;
         checkUpgradeButtons();  
-        g.improvementWin.transform.Find("Background/UpgradeGroup/NightUpgrade/Text_count_n").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
+        g.improvementWin.transform.Find("Background/UpgradeGroup/NightUpgrade/Text_count_n").GetComponent<Text>().text = "+" + offProfitBonus.ToString() + "%";
         updateUp();
     }
 
@@ -492,6 +494,16 @@ class Computer : MonoBehaviour
         g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0)) && autoMiner.isBoughtAuto;
         g.offMinerBonusButton.interactable = ((upgradePoints > 0) && (offProfitBonus > 0)) && isBoughtOff;
         g.upgradePointsText.text = "Очки улучшений: " + upgradePoints.ToString();
+    }
+
+    public void checkEXP()
+    {
+        if (g.exp >= g.rewardCost)
+        {
+            g.money = g.money + g.reward;
+            g.reward = (int)(g.reward * g.rewardD);
+            g.rewardCost = (int)(g.rewardCost * g.rewardCostD);
+        }
     }
 
     public void pushBroken()

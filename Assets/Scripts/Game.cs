@@ -13,6 +13,11 @@ public class Game : MonoBehaviour {
     public int partCount = 0; //счётчик купленных частей
     public int exp = 0;
 
+    public int reward = 100;
+    public int rewardCost = 100;
+    public float rewardD = 1.5f;
+    public float rewardCostD = 1.7f;
+
     public GameObject improvementWin; //окно улучшений и запчастей
     public GameObject rateWin; //окно оценки приложения
     public int compId; // ID компьютера, чьё окно улучшений сейчас отображается 
@@ -74,6 +79,8 @@ public class Game : MonoBehaviour {
             money = sv.money;
             sumMoney = sv.sumMoney;
             clickCounter = sv.clickCounter;
+            reward = sv.reward;
+            rewardCost = sv.rewardCost;
             GameObject miners = GameObject.FindWithTag("Miners").gameObject;
 
             int resSize = sv.currency.Length;
@@ -107,7 +114,7 @@ public class Game : MonoBehaviour {
                 cur.timeUpgrade = sv.timeUpgrade[i];
                 cur.profiteUpgrade = sv.profiteUpgrade[i];
 
-                if (cur.isBoughtOff)
+                if (cur.isBoughtOff && cur.isReady)
                 {
                     cur.currency = cur.currency + cur.offProfit * ts.Seconds;
                 }
@@ -173,6 +180,8 @@ public class Game : MonoBehaviour {
         sv.farmCount = farmCount;
         sv.partCount = partCount;
         sv.sumMoney = sumMoney;
+        sv.reward = reward;
+        sv.rewardCost = rewardCost;
 
         sv.date[0] = System.DateTime.Now.Year;
         sv.date[1] = System.DateTime.Now.Month;
@@ -364,6 +373,8 @@ public class Save
     public float sumMoney; 
     public int farmCount;
     public int partCount;
+    public int reward;
+    public int rewardCost;
     public float[] sumCur;
 
     public string[] partsOfComp;
