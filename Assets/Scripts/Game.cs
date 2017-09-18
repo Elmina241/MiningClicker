@@ -202,6 +202,7 @@ public class Game : MonoBehaviour {
         while (resSize < miners.transform.childCount && miners.transform.GetChild(resSize).GetComponent<Computer>().isResearched) resSize++;
 
         sv.currency = new float[resSize];
+        sv.isBought = new bool[gameObject.GetComponent<Achievment>()._store.Length];
         sv.isReady = new bool[resSize];
         sv.bonus = new float[resSize];
         sv.bonusCost = new float[resSize];
