@@ -36,7 +36,7 @@ public class Game : MonoBehaviour {
     public Text prBarText; //количество опыта 
     public Image fill; //заполнение прогрессбара
     public Sprite[] partImages; //картинки компонентов
-    //public GameObject expPref; //префаб вылетающих очков опыта
+    public bool isAutoExchangerOn = false;
 
     Save sv = new Save();
 
@@ -146,7 +146,11 @@ public class Game : MonoBehaviour {
             {
                 gameObject.GetComponent<Achievment>().achievment[j] = a[j];
             }
-
+            for (int j = 0; j < gameObject.GetComponent<Achievment>()._store.Length; j++)
+            {
+                gameObject.GetComponent<Achievment>()._store[j].isBought = sv.isBought[j];
+            }
+            isAutoExchangerOn = sv.isAutoExchangerOn;
         }
     }
 
@@ -182,6 +186,7 @@ public class Game : MonoBehaviour {
         sv.sumMoney = sumMoney;
         sv.reward = reward;
         sv.rewardCost = rewardCost;
+        sv.isAutoExchangerOn = isAutoExchangerOn;
 
         sv.date[0] = System.DateTime.Now.Year;
         sv.date[1] = System.DateTime.Now.Month;
@@ -275,6 +280,10 @@ public class Game : MonoBehaviour {
         {
             a[j] = gameObject.GetComponent<Achievment>().achievment[j];
         }
+        for (int j = 0; j < gameObject.GetComponent<Achievment>()._store.Length; j++)
+        {
+            sv.isBought[j] = gameObject.GetComponent<Achievment>()._store[j].isBought;
+        }
 
         sv.achievments = JsonHelper.ToJson<Achievment_sys>(a);
 
@@ -350,6 +359,7 @@ public class Save
     public float money;
     public float[] currency;
     public bool[] isReady;
+    public bool[] isBought;
     public int[] progressCounter;
     public int[] progressCounter1;
     public int[] progressCounter2;
@@ -376,6 +386,7 @@ public class Save
     public int reward;
     public int rewardCost;
     public float[] sumCur;
+    public bool isAutoExchangerOn;
 
     public string[] partsOfComp;
     public string achievments;

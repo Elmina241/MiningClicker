@@ -183,6 +183,10 @@ class Computer : MonoBehaviour
             this.cur.sum += bonus;
             if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
             progressCounter++;
+            if (g.isAutoExchangerOn)
+            {
+                Exchange();
+            }
         }
         if (progressCounter2 > upgradeCost)
         {
@@ -386,6 +390,10 @@ class Computer : MonoBehaviour
                 p1.fillAmount = (float)progressCounter1 / 100;
                 progressText.text = progressCounter1.ToString() + "%";
                 progressCounter++;
+                if (g.isAutoExchangerOn)
+                {
+                    Exchange();
+                }
             }
             if (progressCounter > 5)
             {

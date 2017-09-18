@@ -101,6 +101,7 @@ public class Achievment : MonoBehaviour {
             {
                 Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>().isBought = _store[i].isBought; // передаем параметр покупки true
                 Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+                Store.transform.GetChild(0).GetChild(0).GetChild(i).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;// меняем кнопку на серую
                 Store.transform.GetChild(0).GetChild(0).GetChild(i).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПЛЕНО"; // пишем что-то              
             }
             else
@@ -111,6 +112,7 @@ public class Achievment : MonoBehaviour {
             }
 
         }
+        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = _store[2].isBought;
     }
     //АНАЛОГИЧНО ВНИЗУ ДЛЯ АЧИВОК
     public void Achievment_set()
@@ -166,6 +168,29 @@ public class Achievment : MonoBehaviour {
             g.money = g.money + g.reward;
             g.reward = (int)(g.reward * g.rewardD);
             g.rewardCost = (int)(g.rewardCost * g.rewardCostD);
+        }
+    }
+
+    public void buyAutoExchanger()
+    {
+        _store[2].isBought = true;
+        g.money -= _store[2].priceGame;
+        g.isAutoExchangerOn = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
+        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+    }
+
+    public void switchAutoExchanger()
+    {
+        g.isAutoExchangerOn = !g.isAutoExchangerOn;
+        if (g.isAutoExchangerOn)
+        {
+            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Выключить";
+        }
+        else
+        {
+            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Включить";
         }
     }
 
