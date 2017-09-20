@@ -9,6 +9,7 @@ public class CoinFlip : MonoBehaviour {
     public Text _resultText;
     public Slider sld;
     public Button btn;
+    
 
     public float _bet;
 
@@ -66,10 +67,11 @@ public class CoinFlip : MonoBehaviour {
     public void Play()
     {
         _bet = (gameObject.GetComponent<Game>().money * sld.value);
-        btn.interactable = false;
+        
         Debug.Log(_bet);
         if (_bet != 0.0f && _choose!=0)
-        {            
+        {
+            btn.interactable = false;
             int rnd = Random.Range(1, 3);
             Debug.Log(rnd);
             switch (rnd)
