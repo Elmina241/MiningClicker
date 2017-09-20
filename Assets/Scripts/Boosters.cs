@@ -7,23 +7,25 @@ public class Boosters : MonoBehaviour {
     System.DateTime lastStartTime;
     public Game g;
     public int rechargeTimeP = 120;
-    public int rechargeTimeT = 120;
+    public int rechargeTimeT = 5;
     public int workTimeP = 30;
-    public int workTimeT = 30;
+    public int workTimeT = 15;
+    /*public bool isProfitBoosterReady;
+    public bool isTimeBoosterReady;*/
 
     // Use this for initialization
     void Start () {
-	
-	}
+        lastStartProfit = System.DateTime.Now;
+        lastStartTime = System.DateTime.Now;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
 
-    IEnumerator countProfitWork()
-    {
-        yield return new WaitForSecondsRealtime(workTimeP);
+        if (g.isProfitBoosterOn) g.isProfitBoosterOn = (System.DateTime.Now - lastStartProfit).Seconds <= workTimeP;
+        if (g.isTimeBoosterOn) g.isTimeBoosterOn = (System.DateTime.Now - lastStartTime).Seconds <= workTimeT;
+
     }
 
     public bool checkProfitBooster()
@@ -37,11 +39,19 @@ public class Boosters : MonoBehaviour {
 
     public void startProfitBooster()
     {
-        if (checkProfitBooster()) g.isProfitBoosterOn = true;
+        if (checkProfitBooster())
+        {
+            lastStartProfit = System.DateTime.Now;
+            g.isProfitBoosterOn = true;
+        }
     }
 
     public void startTimeBooster()
     {
-        if (checkTimeBooster()) g.isTimeBoosterOn = true;
+        if (checkTimeBooster())
+        {
+            lastStartTime = System.DateTime.Now;
+            g.isTimeBoosterOn = true;
+        }
     }
 }

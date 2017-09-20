@@ -179,8 +179,17 @@ class Computer : MonoBehaviour
         if (progressCounter1 > 100)
         {
             progressCounter1 = 0;
-            currency += bonus;
-            this.cur.sum += bonus;
+            if (g.isProfitBoosterOn)
+            {
+                currency = currency + bonus * 5;
+                this.cur.sum = this.cur.sum + bonus * 5;
+            }
+            else
+            {
+                currency += bonus;
+                this.cur.sum += bonus;
+            }
+            
             if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
             progressCounter++;
             if (g.isAutoExchangerOn)
@@ -372,20 +381,44 @@ class Computer : MonoBehaviour
         while (isReady)
         {
             infPref.transform.Find("Stripes").GetComponent<Animator>().speed = 1;
-            if (((autoMiner.autoTime - autoMiner.timeBonus)/100) > 0.009f)
+            if (g.isTimeBoosterOn)
             {
-                progressCounter1++;
+                if (((autoMiner.autoTime - autoMiner.timeBonus) / 500) > 0.009f)
+                {
+                    progressCounter1++;
+                }
+                else
+                {
+                    int d = (int)((1 - ((autoMiner.autoTime - autoMiner.timeBonus)/5)) * 10);
+                    progressCounter1 = progressCounter1 + d;
+                }
             }
             else
             {
-                int d = (int)((1 - (autoMiner.autoTime - autoMiner.timeBonus)) * 10);
-                progressCounter1 = progressCounter1 + d;
+                if (((autoMiner.autoTime - autoMiner.timeBonus) / 100) > 0.009f)
+                {
+                    progressCounter1++;
+                }
+                else
+                {
+                    int d = (int)((1 - (autoMiner.autoTime - autoMiner.timeBonus)) * 10);
+                    progressCounter1 = progressCounter1 + d;
+                }
             }
             if (progressCounter1 > 100)
             {
                 progressCounter1 = 0;
-                currency = currency + autoMiner.autoProfit;
-                this.cur.sum += autoMiner.autoProfit;
+                if (g.isProfitBoosterOn)
+                {
+                    currency = currency + autoMiner.autoProfit * 5;
+                    this.cur.sum = this.cur.sum + autoMiner.autoProfit * 5;
+                }
+                else
+                {
+                    currency = currency + autoMiner.autoProfit;
+                    this.cur.sum += autoMiner.autoProfit;
+                }
+                
                 if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
                 p1.fillAmount = (float)progressCounter1 / 100;
                 progressText.text = progressCounter1.ToString() + "%";
@@ -452,13 +485,27 @@ class Computer : MonoBehaviour
                infPref.SetActive(false);
             }
 
-            if (((autoMiner.autoTime - autoMiner.timeBonus)/100) > 0.01f)
+            if (g.isTimeBoosterOn)
             {
-                yield return new WaitForSecondsRealtime(((autoMiner.autoTime - autoMiner.timeBonus) / 100) - 0.01f);
+                if (((autoMiner.autoTime - autoMiner.timeBonus) / 500) > 0.01f)
+                {
+                    yield return new WaitForSecondsRealtime(((autoMiner.autoTime - autoMiner.timeBonus) / 500) - 0.01f);
+                }
+                else
+                {
+                    yield return new WaitForSecondsRealtime(0);
+                }
             }
             else
             {
-                yield return new WaitForSecondsRealtime(0);
+                if (((autoMiner.autoTime - autoMiner.timeBonus) / 100) > 0.01f)
+                {
+                    yield return new WaitForSecondsRealtime(((autoMiner.autoTime - autoMiner.timeBonus) / 100) - 0.01f);
+                }
+                else
+                {
+                    yield return new WaitForSecondsRealtime(0);
+                }
             }
         }
     }
