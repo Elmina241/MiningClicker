@@ -11,6 +11,7 @@ public class Achievment : MonoBehaviour {
     public Color not; // на которые я сам не знаю ответа
     public Sprite _received; // зеленый галочка
     public Sprite _N_received; // серый крестик
+    public GameObject Casino; // окно казино
     public GameObject Store; // окно магаза
     public GameObject Achiev; // окно достижений и задач
     public GameObject _settings; // окно достижений и задач
@@ -46,8 +47,6 @@ public class Achievment : MonoBehaviour {
         _currency.SetActive(false);
     }
 
-   
-
     public void CurrencyOff()
     {              
         _currency.GetComponent<Animator>().SetBool("Set", false);             
@@ -59,8 +58,6 @@ public class Achievment : MonoBehaviour {
         {
             m.SetActive(false);
         }
-       
-
         _currency.SetActive(true);
         _currency.GetComponent<Animator>().SetBool("Set", true);
       
@@ -73,6 +70,7 @@ public class Achievment : MonoBehaviour {
         Header.SetActive(false);     
         Achiev.SetActive(false); // отключаем панель ачивок
         Store.SetActive(false);
+        Casino.SetActive(false);
         CurrencyOff();
         _settings.SetActive(true);// подрубаем панель магаза      
 
@@ -86,6 +84,7 @@ public class Achievment : MonoBehaviour {
         Header.transform.GetChild(1).GetComponent<Text>().text = "МАГАЗИН"; // левый текст
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Store_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
         Achiev.SetActive(false); // отключаем панель ачивок
+        Casino.SetActive(false); 
         Store.SetActive(true); // подрубаем панель магаза
         _settings.SetActive(false);
 
@@ -117,9 +116,9 @@ public class Achievment : MonoBehaviour {
     //АНАЛОГИЧНО ВНИЗУ ДЛЯ АЧИВОК
     public void Achievment_set()
     {
-      
         Header.SetActive(true);
         Store.SetActive(false);
+        Casino.SetActive(false);
         Achiev.SetActive(true);
         _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_achievment; 
@@ -154,6 +153,18 @@ public class Achievment : MonoBehaviour {
         rewardCost.text = g.rewardCost.ToString();
     }
 
+    public void CasinoPlay()
+    {
+        Header.SetActive(true);
+        Casino.SetActive(true);
+        Store.SetActive(false);
+        Achiev.SetActive(false);
+        _settings.SetActive(false);
+        Header.GetComponent<Image>().sprite = Gradient_achievment;
+        Header.transform.GetChild(1).GetComponent<Text>().text = "Coin Flip";
+        CurrencyOff();
+        Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Jackpot/Icon_Bg/Icon").GetComponent<Image>().sprite;
+    }
     //Открытие достижения
     public void unlockAch(int id)
     {
