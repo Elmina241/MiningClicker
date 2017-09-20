@@ -8,6 +8,7 @@ public class CoinFlip : MonoBehaviour {
     public Text _resultPlay;
     public Text _resultText;
     public Slider sld;
+    public Button btn;
 
     public float _bet;
 
@@ -18,6 +19,7 @@ public class CoinFlip : MonoBehaviour {
         _resultText.text = "";
         _resultPlay.text = "";
         sld.value = 0;
+        btn.interactable = true;
     }
 
     public void BetRange()
@@ -47,12 +49,14 @@ public class CoinFlip : MonoBehaviour {
     {
         if (ch != rand)
         {
+            _choose = 0;
             Param(rand, "Вы проиграли\n" + "$"+conversionFunction(_bet));
             gameObject.GetComponent<Game>().money -= (gameObject.GetComponent<Game>().money * sld.value);
             gameObject.GetComponent<Game>().saveGame();
         }
         else
         {
+            _choose = 0;
             Param(rand, "Вы выиграли\n" + "$" + conversionFunction(_bet * 2));
             gameObject.GetComponent<Game>().money += ((gameObject.GetComponent<Game>().money * sld.value) * 2);
             gameObject.GetComponent<Game>().saveGame();
@@ -62,6 +66,7 @@ public class CoinFlip : MonoBehaviour {
     public void Play()
     {
         _bet = (gameObject.GetComponent<Game>().money * sld.value);
+        btn.interactable = false;
         Debug.Log(_bet);
         if (_bet != 0.0f && _choose!=0)
         {            
@@ -81,6 +86,7 @@ public class CoinFlip : MonoBehaviour {
                     }
             }
             BetRange();
+            btn.interactable = true;
         }       
     }
 
