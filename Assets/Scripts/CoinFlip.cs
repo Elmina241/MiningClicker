@@ -9,8 +9,9 @@ public class CoinFlip : MonoBehaviour {
     public Text _resultText;
     public Slider sld;
     public Button btn;
-    
-    
+    public GameObject btcAnim;
+    public GameObject dollarAnim;
+
 
     public float _bet;
 
@@ -32,6 +33,16 @@ public class CoinFlip : MonoBehaviour {
 
     public void ChooseSet(int _choose)
     {
+        if (_choose == 1)
+        {
+            dollarAnim.GetComponent<Animator>().SetBool("Set", false);
+            btcAnim.GetComponent<Animator>().SetBool("Set", true);
+        }
+        else
+        {
+            btcAnim.GetComponent<Animator>().SetBool("Set", false);
+            dollarAnim.GetComponent<Animator>().SetBool("Set", true);
+        }
         this._choose = _choose;
     }
     
