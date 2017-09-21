@@ -10,6 +10,7 @@ public class CoinFlip : MonoBehaviour {
     public Slider sld;
     public Button btn;
     
+    
 
     public float _bet;
 
@@ -22,6 +23,7 @@ public class CoinFlip : MonoBehaviour {
         sld.value = 0;
         btn.interactable = true;
     }
+   
 
     public void BetRange()
     {        
@@ -32,6 +34,7 @@ public class CoinFlip : MonoBehaviour {
     {
         this._choose = _choose;
     }
+    
 
     private string conversionFunction(float number)
     {
