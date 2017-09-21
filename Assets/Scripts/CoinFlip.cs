@@ -68,6 +68,8 @@ public class CoinFlip : MonoBehaviour {
             Param(rand, "Вы проиграли\n" + "$"+conversionFunction(_bet));
             gameObject.GetComponent<Game>().money -= (gameObject.GetComponent<Game>().money * sld.value);
             gameObject.GetComponent<Game>().saveGame();
+            btcAnim.GetComponent<Animator>().SetBool("Set", false);
+            dollarAnim.GetComponent<Animator>().SetBool("Set", false);
         }
         else
         {
@@ -75,6 +77,8 @@ public class CoinFlip : MonoBehaviour {
             Param(rand, "Вы выиграли\n" + "$" + conversionFunction(_bet * 2));
             gameObject.GetComponent<Game>().money += ((gameObject.GetComponent<Game>().money * sld.value) * 2);
             gameObject.GetComponent<Game>().saveGame();
+            btcAnim.GetComponent<Animator>().SetBool("Set", false);
+            dollarAnim.GetComponent<Animator>().SetBool("Set", false);
         }
     }
 
