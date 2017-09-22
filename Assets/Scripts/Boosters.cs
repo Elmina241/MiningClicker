@@ -6,7 +6,7 @@ public class Boosters : MonoBehaviour {
     System.DateTime lastStartProfit;
     System.DateTime lastStartTime;
     public Game g;
-    public int rechargeTimeP = 120;
+    public int rechargeTimeP = 5;
     public int rechargeTimeT = 5;
     public int workTimeP = 30;
     public int workTimeT = 15;
@@ -15,6 +15,9 @@ public class Boosters : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        rechargeTimeP = 5;
+        rechargeTimeT = 5;
         lastStartProfit = System.DateTime.Now;
         lastStartTime = System.DateTime.Now;
 
@@ -30,11 +33,11 @@ public class Boosters : MonoBehaviour {
 
     public bool checkProfitBooster()
     {
-        return (System.DateTime.Now - lastStartProfit).Seconds > rechargeTimeP;
+        return (System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP);
     }
     public bool checkTimeBooster()
     {
-        return (System.DateTime.Now - lastStartTime).Seconds > rechargeTimeT;
+        return (System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT);
     }
 
     public void startProfitBooster()
