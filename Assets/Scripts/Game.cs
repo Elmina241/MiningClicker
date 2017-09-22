@@ -36,7 +36,9 @@ public class Game : MonoBehaviour {
     public Text prBarText; //количество опыта 
     public Image fill; //заполнение прогрессбара
     public Sprite[] partImages; //картинки компонентов
-    public bool isAutoExchangerOn = false;
+    public bool isAutoExchangerOn = false; //Работает ли автообменник
+    public bool isProfitBoosterOn = false; //Работает ли бустер доходности
+    public bool isTimeBoosterOn = false; // Работает ли бустер времени
 
     Save sv = new Save();
 

@@ -182,6 +182,7 @@ public class Achievment : MonoBehaviour {
         }
     }
 
+    //Покупка автообменника
     public void buyAutoExchanger()
     {
         _store[2].isBought = true;
@@ -192,6 +193,7 @@ public class Achievment : MonoBehaviour {
         Store.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
     }
 
+    //Включение-выключение автообменника
     public void switchAutoExchanger()
     {
         g.isAutoExchangerOn = !g.isAutoExchangerOn;
@@ -203,6 +205,17 @@ public class Achievment : MonoBehaviour {
         {
             Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Включить";
         }
+    }
+
+    //Покупка бустера по доходности
+    public void buyProfitBooster()
+    {
+        _store[0].isBought = true;
+        g.money -= _store[0].priceGame;
+        g.isProfitBoosterOn = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
+        //Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
     }
 
 }
