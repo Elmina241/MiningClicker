@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Achievment : MonoBehaviour {
 
     // Овердохера переменных
-    public Sprite Gradient_store, Gradient_achievment, Gradient_settings; //Градиенты шапок для окон, шапка одна, а окон много)
+    public Sprite Gradient_store, Gradient_achievment, Gradient_settings, Gradient_casino; //Градиенты шапок для окон, шапка одна, а окон много)
     public GameObject Header; // шапка
     public Color yes; // сложные цветовые решения,
     public Color not; // на которые я сам не знаю ответа
@@ -160,7 +160,7 @@ public class Achievment : MonoBehaviour {
         Store.SetActive(false);
         Achiev.SetActive(false);
         _settings.SetActive(false);
-        Header.GetComponent<Image>().sprite = Gradient_achievment;
+        Header.GetComponent<Image>().sprite = Gradient_casino;
         Header.transform.GetChild(1).GetComponent<Text>().text = "Coin Flip";
         CurrencyOff();
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Jackpot/Icon_Bg/Icon").GetComponent<Image>().sprite;
