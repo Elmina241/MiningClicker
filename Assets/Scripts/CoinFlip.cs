@@ -9,7 +9,9 @@ public class CoinFlip : MonoBehaviour {
     public Text _resultText;
     public Slider sld;
     public Button btn;
-    
+    public GameObject btcAnim;
+    public GameObject dollarAnim;
+
 
     public float _bet;
 
@@ -22,6 +24,7 @@ public class CoinFlip : MonoBehaviour {
         sld.value = 0;
         btn.interactable = true;
     }
+   
 
     public void BetRange()
     {        
@@ -30,8 +33,19 @@ public class CoinFlip : MonoBehaviour {
 
     public void ChooseSet(int _choose)
     {
+        if (_choose == 1)
+        {
+            dollarAnim.GetComponent<Animator>().SetBool("Set", false);
+            btcAnim.GetComponent<Animator>().SetBool("Set", true);
+        }
+        else
+        {
+            btcAnim.GetComponent<Animator>().SetBool("Set", false);
+            dollarAnim.GetComponent<Animator>().SetBool("Set", true);
+        }
         this._choose = _choose;
     }
+    
 
     private string conversionFunction(float number)
     {
@@ -54,6 +68,8 @@ public class CoinFlip : MonoBehaviour {
             Param(rand, "Вы проиграли\n" + "$"+conversionFunction(_bet));
             gameObject.GetComponent<Game>().money -= (gameObject.GetComponent<Game>().money * sld.value);
             gameObject.GetComponent<Game>().saveGame();
+            btcAnim.GetComponent<Animator>().SetBool("Set", false);
+            dollarAnim.GetComponent<Animator>().SetBool("Set", false);
         }
         else
         {
@@ -61,6 +77,8 @@ public class CoinFlip : MonoBehaviour {
             Param(rand, "Вы выиграли\n" + "$" + conversionFunction(_bet * 2));
             gameObject.GetComponent<Game>().money += ((gameObject.GetComponent<Game>().money * sld.value) * 2);
             gameObject.GetComponent<Game>().saveGame();
+            btcAnim.GetComponent<Animator>().SetBool("Set", false);
+            dollarAnim.GetComponent<Animator>().SetBool("Set", false);
         }
     }
 
