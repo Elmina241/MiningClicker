@@ -725,9 +725,30 @@ class Computer : MonoBehaviour
         {
             g.upgradeTimeButton.interactable = ((upgradePoints > 0) && (timeUpgrade > 0));
             g.upgradeProfitButton.interactable = ((upgradePoints > 0) && (profiteUpgrade > 0));
-            g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК"; 
-            g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
-            g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
+            float time = 0;
+            float profit = 0;
+            if (g.isTimeBoosterOn)
+            {
+                g.time.text = ((autoMiner.autoTime - autoMiner.timeBonus)/5).ToString("0.#0") + " СЕК";
+                time = (autoMiner.autoTime - autoMiner.timeBonus) / 5;
+            }
+            else
+            {
+                g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
+                time = (autoMiner.autoTime - autoMiner.timeBonus);
+            }
+            
+            if (g.isProfitBoosterOn)
+            {
+                g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit * 5).ToString("#0.###0");
+                profit = autoMiner.autoProfit * 5;
+            }
+            else
+            {
+                g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit).ToString("#0.###0");
+                profit = autoMiner.autoProfit;
+            }
+            g.sr_pr.text = (profit / time).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
             g.improvementWin.transform.Find("Background/AutoMiner/GameObject/checkmark").GetComponent<check>().setOn();
             g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
             g.autoMinerButton.interactable = false;
