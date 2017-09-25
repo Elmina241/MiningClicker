@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Boosters : MonoBehaviour {
 
@@ -10,8 +11,8 @@ public class Boosters : MonoBehaviour {
     public int rechargeTimeT = 5;
     public int workTimeP = 30;
     public int workTimeT = 15;
-    /*public bool isProfitBoosterReady;
-    public bool isTimeBoosterReady;*/
+    public GameObject ProfitBoosterButton;
+    public GameObject TimeBoosterButton;
 
     // Use this for initialization
     void Start () {
@@ -28,6 +29,8 @@ public class Boosters : MonoBehaviour {
 
         if (g.isProfitBoosterOn) g.isProfitBoosterOn = (System.DateTime.Now - lastStartProfit).Seconds <= workTimeP;
         if (g.isTimeBoosterOn) g.isTimeBoosterOn = (System.DateTime.Now - lastStartTime).Seconds <= workTimeT;
+        ProfitBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP));
+        TimeBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT));
 
     }
 
