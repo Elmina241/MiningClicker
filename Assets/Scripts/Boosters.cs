@@ -31,7 +31,22 @@ public class Boosters : MonoBehaviour {
         if (g.isTimeBoosterOn) g.isTimeBoosterOn = (System.DateTime.Now - lastStartTime).Seconds <= workTimeT;
         ProfitBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP));
         TimeBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT));
-
+        if (!ProfitBoosterButton.GetComponent<Button>().interactable)
+        {
+            ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeP + workTimeP) - (System.DateTime.Now - lastStartProfit).Seconds).ToString("0#");
+        }
+        else
+        {
+            ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "Включить";
+        }
+        if (!TimeBoosterButton.GetComponent<Button>().interactable)
+        {
+            TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeT + workTimeT) - (System.DateTime.Now - lastStartTime).Seconds).ToString("0#");
+        }
+        else
+        {
+            TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "Включить";
+        }
     }
 
     public bool checkProfitBooster()
