@@ -129,21 +129,21 @@ public class Achievment : MonoBehaviour {
        
         for (int i = 0; i < achievment.Length; i++)
         {
-            Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>().icon.sprite = achievment[i].icon;// устанавливаем иконку
-            Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>()._header.text = achievment[i]._header.ToUpper();// заголовок в верхнем регистре
-            Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>()._description.text = achievment[i]._description.ToUpper();// описание в верхнем регистре
-            Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>()._award = achievment[i].award; //передаем награду в префаб
+            Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().icon.sprite = achievment[i].icon;// устанавливаем иконку
+            Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>()._header.text = achievment[i]._header.ToUpper();// заголовок в верхнем регистре
+            Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>()._description.text = achievment[i]._description.ToUpper();// описание в верхнем регистре
+            Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>()._award = achievment[i].award; //передаем награду в префаб
             if (achievment[i].get)
             {
-                Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>().get = achievment[i].get; // передаем параметр ПОЛУЧЕНО true 
-                Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>().check.sprite = _received; // устанавливаем спрайт галочки
-                Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>().check.color = yes; // делаем ее зеленой
+                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().get = achievment[i].get; // передаем параметр ПОЛУЧЕНО true 
+                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.sprite = _received; // устанавливаем спрайт галочки
+                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.color = yes; // делаем ее зеленой
             }
             else
             {
-                Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>().get = achievment[i].get;
-                Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>().check.sprite = _N_received; // устанавливаем спрайт крестика
-                Achiev.transform.GetChild(0).GetChild(2).GetChild(i).GetComponent<Ach_pref>().check.color = not; // делаем его серым
+                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().get = achievment[i].get;
+                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.sprite = _N_received; // устанавливаем спрайт крестика
+                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.color = not; // делаем его серым
             }
 
         }
@@ -188,9 +188,9 @@ public class Achievment : MonoBehaviour {
         _store[2].isBought = true;
         g.money -= _store[2].priceGame;
         g.isAutoExchangerOn = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
-        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+        Store.transform.GetChild(0).GetChild(0).GetChild(3).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
+        Store.transform.GetChild(0).GetChild(0).GetChild(3).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
     }
 
     //Включение-выключение автообменника
@@ -199,11 +199,11 @@ public class Achievment : MonoBehaviour {
         g.isAutoExchangerOn = !g.isAutoExchangerOn;
         if (g.isAutoExchangerOn)
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Выключить";
+            Store.transform.GetChild(0).GetChild(0).GetChild(3).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Выключить";
         }
         else
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Включить";
+            Store.transform.GetChild(0).GetChild(0).GetChild(3).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Включить";
         }
     }
 

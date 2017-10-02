@@ -13,7 +13,7 @@ public class Boosters : MonoBehaviour {
     public int workTimeT = 15;
     public GameObject ProfitBoosterButton;
     public GameObject TimeBoosterButton;
-
+    
     // Use this for initialization
     void Start () {
 

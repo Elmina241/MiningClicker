@@ -46,6 +46,28 @@ public class Game : MonoBehaviour {
     public typeOfPart[] typesOfParts;
     public Currency[] currencies;
 
+    [Header("Имена компонентов")]
+    public string[] NameOfCPU = new string[7] { "Intel® Pentium G4560 3500 GHz", "Intel® Core™i3-7100 3900 GHz", "Intel® Core™i5-7500 3400 GHz",
+    "Intel® Core™i5-7500 3400 GHz", "Intel® Core™i7-6900K 3200 GHz", "Intel® Core™i7-6700K 4000 GHz", "Intel® Xeon E5-2680v4 2400 GHz"};
+
+    public string[] NameOfGPU = new string[7] { "NVidia GeForce GTX 1050 Ti", "NVidia GeForce GTX 1050 Ti", "Palit GeForce GTX 1060 STORMX",
+    "Asus GeForce GTX 1070 TURBO", "NVidia GeForce GTX 1080" , "NVidia GeForce GTX 1080", "NVidia GeForce GTX 1080" };
+
+    public string[] NameOfMotherboard = new string[7] { "ASUS H110M-A/M.2", "ASRock H270 PRO4", "MSI B250M PRO-VD", "MSI H270 GAMING M3",
+    "MSI X99A SLI PLUS", "MSI Z170M MORTAR", "ASUS Z10PE-D16 WS"};
+
+    public string[] NameOfPower = new string[7] { "Thermaltake TR2 S 350W", "Cougar A 400W", "Zalman TX 500W", "Seasonic Prime 650W",
+    "Corsair AX860 860W", "CoolerMaster V1000 1000W", "Corsair AXi 1200W" };
+
+    public string[] NameOfSSD = new string[7] { "SiliconPower Slim S60 60 Gb", "SiliconPower Slim S70 120 Gb", "Kingston HyperX SAVAGE 240 Gb",
+    "Crucial Micron 5100 MAX 480 Gb", "Transcend SSD370s 512 Gb", "Intel 750 Series 800 Gb", "Corsair Neutron XT 960 Gb" };
+
+    public string[] NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
+    "ID-Cooling SE-204K", "Scythe Mugen 5",  "Thermaltake Pacific RL140", "CoolerMaster Master V8" };
+
+    public string[] NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 8 Gb",
+    "Kingston HyperX FURY 16 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
+
     private void Awake()
     {
         money = 80f;
