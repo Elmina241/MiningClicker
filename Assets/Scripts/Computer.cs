@@ -81,6 +81,9 @@ class Computer : MonoBehaviour
     float offProfitBonusD = 2.5f;
     /********************/
 
+    public bool isBoughtAutoRepair = false; //Куплена ли автопочинка 
+    public int autoRepairCost = 30;
+
     string jsonParts;
     public PartsOfComputer[] compParts;
 
@@ -220,6 +223,17 @@ class Computer : MonoBehaviour
                     System.Random rnd = new System.Random();
                     p.isBought = rnd.Next(1, 100) > p.curReliability;
                     p.isBroken = !p.isBought;
+                    if (p.isBroken && isBoughtAutoRepair && (g.money >= g.parts[p.id].costNew))
+                    {
+                        g.money -= g.parts[p.id].costNew;
+                        p.curReliability = g.parts[p.id].reliabilityNew;
+                        p.isBought = true;
+                        p.isBroken = false;
+                        g.moneyText.text = "$" + g.money.ToString("0.#0");
+                        g.partCount++;
+                        if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
+                        checkInteractable();
+                    }
                 }
             }
             isReady = checkIsReady();
@@ -357,6 +371,17 @@ class Computer : MonoBehaviour
         changeBuyButtons();
     }
 
+    //Покупка автопочинки
+    public void BuyAutoRepair()
+    {
+        g.money = g.money - autoRepairCost;
+        isBoughtAutoRepair = true;
+        g.autoRepairButton.interactable = false;
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
+        g.improvementWin.transform.Find("Background/AutoRepair/GameObject/checkmark").GetComponent<check>().setOn();
+        g.improvementWin.transform.Find("Background/AutoRepair/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
+    }
+
     public void BuyOffMiner()
     {
         g.money = g.money - offMinerCost;
@@ -374,6 +399,7 @@ class Computer : MonoBehaviour
     {
         g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost) && !autoMiner.isBoughtAuto;
         g.offMinerButton.interactable = (g.money >= offMinerCost) && !isBoughtOff;
+        g.autoRepairButton.interactable = (g.money >= autoRepairCost) && !isBoughtAutoRepair;
     }
 
     IEnumerator BonusPerSec()
@@ -438,6 +464,17 @@ class Computer : MonoBehaviour
                         System.Random rnd = new System.Random();
                         p.isBought = rnd.Next(1, 100) > p.curReliability;
                         p.isBroken = !p.isBought;
+                        if (p.isBroken && isBoughtAutoRepair && (g.money >= g.parts[p.id].costNew))
+                        {
+                            g.money -= g.parts[p.id].costNew;
+                            p.curReliability = g.parts[p.id].reliabilityNew;
+                            p.isBought = true;
+                            p.isBroken = false;
+                            g.moneyText.text = "$" + g.money.ToString("0.#0");
+                            g.partCount++;
+                            if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
+                            checkInteractable();
+                        }
                     }
                 }
                 isReady = checkIsReady();
@@ -769,6 +806,19 @@ class Computer : MonoBehaviour
             g.offMinerButton.interactable = false;
         }
 
+        if (!isBoughtAutoRepair)
+        {
+            g.autoRepairButton.interactable = (g.money >= autoRepairCost);
+            g.improvementWin.transform.Find("Background/AutoRepair/GameObject/checkmark").GetComponent<check>().setOff();
+            g.improvementWin.transform.Find("Background/AutoRepair/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "НАЖМИТЕ, ЧТОБЫ КУПИТЬ";
+        }
+        else
+        {
+            g.improvementWin.transform.Find("Background/AutoRepair/GameObject/checkmark").GetComponent<check>().setOn();
+            g.improvementWin.transform.Find("Background/AutoRepair/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
+            g.autoRepairButton.interactable = false;
+        }
+
         if (!isReady)
         {
             g.autoMinerButton.interactable = false;
@@ -797,10 +847,13 @@ class Computer : MonoBehaviour
         g.upgradeProfitButton.onClick.AddListener(BuyProfitUpgrade);
         g.offMinerButton.onClick.RemoveAllListeners();
         g.offMinerButton.onClick.AddListener(BuyOffMiner);
+        g.autoRepairButton.onClick.RemoveAllListeners();
+        g.autoRepairButton.onClick.AddListener(BuyAutoRepair);
 
 
         g.improvementWin.transform.Find("Background/AutoMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + autoMiner.autoCost.ToString();
         g.improvementWin.transform.Find("Background/NightMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + offMinerCost.ToString();
+        g.improvementWin.transform.Find("Background/AutoRepair/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + autoRepairCost.ToString();
 
         g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = backgr;
         // g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = transform.Find("MenuButton").GetComponent<Image>().sprite;
