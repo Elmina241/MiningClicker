@@ -25,6 +25,7 @@ public class Game : MonoBehaviour {
     public Button autoMinerButton; //кнопка покупки автомайнера
     public Button offMinerButton; //кнопка покупки оффлайнового майнера
     public Button offMinerBonusButton; //кнопка покупки улучшения оффрайнового манера
+    public Button autoRepairButton; //кнопка покупки автопочинки компонентов
     public Button upgradeTimeButton; //кнопка покупки улучшения времени
     public Button upgradeProfitButton; //кнопка покупки улучшения дохода
     public Text upgradePointsText; //Текст очки улучшения
@@ -145,6 +146,7 @@ public class Game : MonoBehaviour {
                 
                 cur.level = sv.level[i];
                 cur.autoMiner.isBoughtAuto = sv.isBoughtAuto[i];
+                cur.isBoughtAutoRepair = sv.isBoughtAutoRepair[i];
                 cur.autoMiner.autoTime = sv.autoTime[i];
                 cur.autoMiner.autoProfit = sv.autoProfit[i];
                 cur.autoMiner.timeBonus = sv.timeBonus[i];
@@ -238,6 +240,7 @@ public class Game : MonoBehaviour {
         sv.level = new int[resSize];
         sv.isBoughtAuto = new bool[resSize];
         sv.isBoughtOff = new bool[resSize];
+        sv.isBoughtAutoRepair = new bool[resSize];
         sv.autoTime = new float[resSize];
         sv.offProfit = new float[resSize];
         sv.offProfitBonus = new float[resSize];
@@ -274,6 +277,7 @@ public class Game : MonoBehaviour {
 
             sv.level[i] = cur.level;
             sv.isBoughtAuto[i] = cur.autoMiner.isBoughtAuto;
+            sv.isBoughtAutoRepair[i] = cur.isBoughtAutoRepair;
             sv.autoTime[i] = cur.autoMiner.autoTime;
             sv.autoProfit[i] = cur.autoMiner.autoProfit;
             sv.timeBonus[i] = cur.autoMiner.timeBonus;
@@ -396,6 +400,7 @@ public class Save
     public int clickCounter;
     public int[] level;
     public bool[] isBoughtAuto;
+    public bool[] isBoughtAutoRepair;
     public bool[] isBoughtOff;
     public float[] autoTime;
     public float[] offProfit;
