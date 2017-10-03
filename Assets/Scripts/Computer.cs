@@ -377,11 +377,9 @@ class Computer : MonoBehaviour
         g.money = g.money - autoRepairCost;
         isBoughtAutoRepair = true;
         g.autoRepairButton.interactable = false;
-        checkInteractable();
         g.moneyText.text = "$" + g.money.ToString("0.#0");
         g.improvementWin.transform.Find("Background/AutoRepair/GameObject/checkmark").GetComponent<check>().setOn();
         g.improvementWin.transform.Find("Background/AutoRepair/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
-        changeBuyButtons();
     }
 
     public void BuyOffMiner()
