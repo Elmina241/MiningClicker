@@ -49,10 +49,10 @@ public class Game : MonoBehaviour {
 
     [Header("Имена компонентов")]
     public string[] NameOfCPU = new string[7] { "Intel® Pentium G4560 3500 GHz", "Intel® Core™i3-7100 3900 GHz", "Intel® Core™i5-7500 3400 GHz",
-    "Intel® Core™i5-7500 3400 GHz", "Intel® Core™i7-6900K 3200 GHz", "Intel® Core™i7-6700K 4000 GHz", "Intel® Xeon E5-2680v4 2400 GHz"};
+    "Intel® Core™i5-7500 3400 GHz", "Intel® Core™i7-6900K 3200 GHz", "Intel® Core™i7-6700K 4000 GHz", "Intel® Xeon E5-2650v4 2200 GHz"};
 
     public string[] NameOfGPU = new string[7] { "NVidia GeForce GTX 1050 Ti", "NVidia GeForce GTX 1050 Ti", "Palit GeForce GTX 1060 STORMX",
-    "Asus GeForce GTX 1070 TURBO", "NVidia GeForce GTX 1080" , "NVidia GeForce GTX 1080", "NVidia GeForce GTX 1080" };
+    "Asus GeForce GTX 1070 TURBO", "NVidia GeForce GTX 1080 Ti" , "NVidia GeForce GTX 1080 Ti", "NVidia GeForce GTX 1080 Ti" };
 
     public string[] NameOfMotherboard = new string[7] { "ASUS H110M-A/M.2", "ASRock H270 PRO4", "MSI B250M PRO-VD", "MSI H270 GAMING M3",
     "MSI X99A SLI PLUS", "MSI Z170M MORTAR", "ASUS Z10PE-D16 WS"};
@@ -68,6 +68,25 @@ public class Game : MonoBehaviour {
 
     public string[] NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 8 Gb",
     "Kingston HyperX FURY 16 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
+
+    [Header("Цены компонентов")]
+    public int[] PriceOfCPU = new int[7] { 94, 146, 241, 241, 1056, 396, 1370 }; // в $
+
+    public int[] PriceOfGPU = new int[7] { 157, 157, 278, 488, 844, 844, 844 };
+
+    public int[] PriceOfMotherboard = new int[7] { 58, 98, 53, 112, 177, 91, 462 };
+
+    //public int[] PriceOfPower = new int[7] { 39, 55, 64, 272, 206, "CoolerMaster V1000 1000W", "Corsair AXi 1200W" };
+
+    //public int[] PriceOfSSD = new int[7] { "SiliconPower Slim S60 60 Gb", "SiliconPower Slim S70 120 Gb", "Kingston HyperX SAVAGE 240 Gb",
+    //"Crucial Micron 5100 MAX 480 Gb", "Transcend SSD370s 512 Gb", "Intel 750 Series 800 Gb", "Corsair Neutron XT 960 Gb" };
+
+    //public int[] PriceOfCooling = new int[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
+    //"ID-Cooling SE-204K", "Scythe Mugen 5",  "Thermaltake Pacific RL140", "CoolerMaster Master V8" };
+
+    //public int[] PriceOfRAM = new int[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 8 Gb",
+    //"Kingston HyperX FURY 16 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
+
 
     private void Awake()
     {
