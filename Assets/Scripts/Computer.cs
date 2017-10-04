@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using System;
+
 
 class Computer : MonoBehaviour
 {
@@ -220,8 +220,8 @@ class Computer : MonoBehaviour
             {
                 if (p.isBought)
                 {
-                    System.Random rnd = new System.Random();
-                    p.isBought = rnd.Next(1, 100) > p.curReliability;
+                    // p.isBought = rnd.Next(1, 100) > p.curReliability;
+                    p.isBought = Random.Range(1, 100) > p.curReliability;
                     p.isBroken = !p.isBought;
                     if (p.isBroken && isBoughtAutoRepair && (g.money >= g.parts[p.id].costNew))
                     {
