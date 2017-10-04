@@ -7,6 +7,7 @@ public class Boosters : MonoBehaviour {
     System.DateTime lastStartProfit;
     System.DateTime lastStartTime;
     public Game g;
+    public Achievment a;
     public int rechargeTimeP = 5;
     public int rechargeTimeT = 5;
     public int workTimeP = 30;
@@ -27,25 +28,32 @@ public class Boosters : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (g.isProfitBoosterOn) g.isProfitBoosterOn = (System.DateTime.Now - lastStartProfit).Seconds <= workTimeP;
-        if (g.isTimeBoosterOn) g.isTimeBoosterOn = (System.DateTime.Now - lastStartTime).Seconds <= workTimeT;
-        ProfitBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP));
-        TimeBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT));
-        if (!ProfitBoosterButton.GetComponent<Button>().interactable)
+        if (a._store[0].isBought)
         {
-            ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeP + workTimeP) - (System.DateTime.Now - lastStartProfit).Seconds).ToString("0#");
+            if (g.isProfitBoosterOn) g.isProfitBoosterOn = (System.DateTime.Now - lastStartProfit).Seconds <= workTimeP;
+            ProfitBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP));
+            if (!ProfitBoosterButton.GetComponent<Button>().interactable)
+            {
+                ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeP + workTimeP) - (System.DateTime.Now - lastStartProfit).Seconds).ToString("0#");
+            }
+            else
+            {
+                ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "Включить";
+            }
         }
-        else
+
+        if (a._store[1].isBought)
         {
-            ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "Включить";
-        }
-        if (!TimeBoosterButton.GetComponent<Button>().interactable)
-        {
-            TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeT + workTimeT) - (System.DateTime.Now - lastStartTime).Seconds).ToString("0#");
-        }
-        else
-        {
-            TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "Включить";
+            if (g.isTimeBoosterOn) g.isTimeBoosterOn = (System.DateTime.Now - lastStartTime).Seconds <= workTimeT;
+            TimeBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT));
+            if (!TimeBoosterButton.GetComponent<Button>().interactable)
+            {
+                TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeT + workTimeT) - (System.DateTime.Now - lastStartTime).Seconds).ToString("0#");
+            }
+            else
+            {
+                TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "Включить";
+            }
         }
     }
 

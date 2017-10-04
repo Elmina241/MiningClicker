@@ -218,4 +218,15 @@ public class Achievment : MonoBehaviour {
         Store.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
     }
 
+    //Покупка бустера по времени
+    public void buyTimeBooster()
+    {
+        _store[1].isBought = true;
+        g.money -= _store[1].priceGame;
+        g.isTimeBoosterOn = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(1).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
+        //Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+    }
+
 }

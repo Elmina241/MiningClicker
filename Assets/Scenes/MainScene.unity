@@ -2985,11 +2985,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1210977838}
+      objectReference: {fileID: 1210977835}
     - target: {fileID: 114000012554462446, guid: 3b6037dabb8b42144a508ab88b4ef1eb,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: startTimeBooster
+      value: buyTimeBooster
       objectReference: {fileID: 0}
     - target: {fileID: 114000012554462446, guid: 3b6037dabb8b42144a508ab88b4ef1eb,
         type: 2}
@@ -26122,6 +26122,7 @@ MonoBehaviour:
   autoMinerButton: {fileID: 0}
   offMinerButton: {fileID: 1515065951}
   offMinerBonusButton: {fileID: 1868941585}
+  autoRepairButton: {fileID: 0}
   upgradeTimeButton: {fileID: 0}
   upgradeProfitButton: {fileID: 0}
   upgradePointsText: {fileID: 0}
@@ -26347,7 +26348,7 @@ MonoBehaviour:
     priceGame: 150000
     isReal: 0
     priceReal: 0
-    isBought: 1
+    isBought: 0
   - icon: {fileID: 21300000, guid: a7d247d6e3ed9a240ac841d857894d4d, type: 3}
     _header: "\u0410\u0412\u0422\u041E\u041E\u0411\u041C\u0415\u041D\u041D\u0418\u041A"
     _description: "\u0410\u0412\u0422\u041E\u041C\u0410\u0422\u0418\u0427\u0415\u0421\u041A\u0418
@@ -26435,6 +26436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   g: {fileID: 1210977833}
+  a: {fileID: 1210977835}
   rechargeTimeP: 5
   rechargeTimeT: 5
   workTimeP: 30
