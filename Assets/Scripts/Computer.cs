@@ -298,7 +298,7 @@ class Computer : MonoBehaviour
         int i = 0;
         while (!miners.transform.GetChild(i).GetComponent<Computer>().isFarm) i++;
         last = miners.transform.GetChild(i - 1).GetComponent<Computer>();
-        return last.isReady;
+        return last.checkIsReady();
     }
 
     private void blockLast()

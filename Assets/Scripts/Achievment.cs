@@ -112,6 +112,14 @@ public class Achievment : MonoBehaviour {
 
         }
         Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = _store[2].isBought;
+        if (_store[2].isBought)
+        {
+            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().color = new Color(19f, 255f, 0f, 255f);
+        }
+        else
+        {
+            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().color = new Color(255f, 255f, 255f, 255f);
+        }
     }
     //АНАЛОГИЧНО ВНИЗУ ДЛЯ АЧИВОК
     public void Achievment_set()
@@ -188,9 +196,10 @@ public class Achievment : MonoBehaviour {
         _store[2].isBought = true;
         g.money -= _store[2].priceGame;
         g.isAutoExchangerOn = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(3).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
-        Store.transform.GetChild(0).GetChild(0).GetChild(3).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
+        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().color = new Color(19f, 255f, 0f, 255f);
+        Store.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
     }
 
     //Включение-выключение автообменника
@@ -199,11 +208,11 @@ public class Achievment : MonoBehaviour {
         g.isAutoExchangerOn = !g.isAutoExchangerOn;
         if (g.isAutoExchangerOn)
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(3).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Выключить";
+            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Выключить";
         }
         else
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(3).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Включить";
+            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Включить";
         }
     }
 
@@ -216,6 +225,7 @@ public class Achievment : MonoBehaviour {
         Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
         //Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
         Store.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+        Store.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПЛЕНО";
     }
 
     //Покупка бустера по времени
@@ -227,6 +237,7 @@ public class Achievment : MonoBehaviour {
         Store.transform.GetChild(0).GetChild(0).GetChild(1).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
         //Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
         Store.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+        Store.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПЛЕНО";
     }
 
 }

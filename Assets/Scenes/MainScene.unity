@@ -2990,11 +2990,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1210977838}
+      objectReference: {fileID: 1210977835}
     - target: {fileID: 114000012554462446, guid: 3b6037dabb8b42144a508ab88b4ef1eb,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: startTimeBooster
+      value: buyTimeBooster
       objectReference: {fileID: 0}
     - target: {fileID: 114000012554462446, guid: 3b6037dabb8b42144a508ab88b4ef1eb,
         type: 2}
@@ -8024,7 +8024,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 344619258}
   m_OnClick:
     m_PersistentCalls:
@@ -15456,10 +15456,10 @@ RectTransform:
   - {fileID: 552357586}
   m_Father: {fileID: 2136023930}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 435, y: -810}
-  m_SizeDelta: {x: 870, y: 1620}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &685689913
 MonoBehaviour:
@@ -22782,7 +22782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1055936278
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26938,7 +26938,7 @@ MonoBehaviour:
     priceGame: 150000
     isReal: 0
     priceReal: 0
-    isBought: 1
+    isBought: 0
   - icon: {fileID: 21300000, guid: a7d247d6e3ed9a240ac841d857894d4d, type: 3}
     _header: "\u0410\u0412\u0422\u041E\u041E\u0411\u041C\u0415\u041D\u041D\u0418\u041A"
     _description: "\u0410\u0412\u0422\u041E\u041C\u0410\u0422\u0418\u0427\u0415\u0421\u041A\u0418
@@ -27026,6 +27026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   g: {fileID: 1210977833}
+  a: {fileID: 1210977835}
   rechargeTimeP: 5
   rechargeTimeT: 5
   workTimeP: 30
@@ -34221,7 +34222,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
@@ -34235,7 +34236,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1556624414}
   m_OnClick:
     m_PersistentCalls:
@@ -34266,14 +34267,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.07586217, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300012, guid: efb5394d5211dfb4d9a25c47bb403823, type: 3}
+  m_Sprite: {fileID: 21300014, guid: efb5394d5211dfb4d9a25c47bb403823, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -38645,7 +38646,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1773982124}
   m_OnClick:
     m_PersistentCalls:
@@ -42300,7 +42301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2004710255
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45035,7 +45036,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 435, y: 0}
-  m_SizeDelta: {x: 870, y: 1620}
+  m_SizeDelta: {x: 870, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2136023931
 MonoBehaviour:
