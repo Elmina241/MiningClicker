@@ -638,6 +638,7 @@ class Computer : MonoBehaviour
     {
         GameObject prevComp = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
         GameObject prevComp1 = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).gameObject;
+        bool wasReady = isReady;
         Computer pr1 = prevComp1.GetComponent<Computer>();
         if (checkIsReady() && isReady) isReady = true;
         else isReady = checkIsReady() && (pr1.isReady || (isFarm && checkLast()));
@@ -659,7 +660,7 @@ class Computer : MonoBehaviour
                 if (next.checkIsReady()&&(!isFarm)) next.unblock();
                 else
                 {
-                    if (isFarm)
+                    if (isFarm && !wasReady)
                     {
                         g.farmCount++;
                         blockLast();
@@ -705,7 +706,7 @@ class Computer : MonoBehaviour
         {
             if (isReady)
             {
-                if (isFarm)
+                if (isFarm && !wasReady)
                 {
                     g.farmCount++;
                     blockLast();
