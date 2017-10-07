@@ -298,7 +298,7 @@ class Computer : MonoBehaviour
         int i = 0;
         while (!miners.transform.GetChild(i).GetComponent<Computer>().isFarm) i++;
         last = miners.transform.GetChild(i - 1).GetComponent<Computer>();
-        return last.checkIsReady();
+        return last.isReady;
     }
 
     private void blockLast()
@@ -641,7 +641,7 @@ class Computer : MonoBehaviour
         bool wasReady = isReady;
         Computer pr1 = prevComp1.GetComponent<Computer>();
         if (checkIsReady() && isReady) isReady = true;
-        else isReady = checkIsReady() && (pr1.isReady || (isFarm && checkLast()));
+        else isReady = checkIsReady() && (pr1.isReady || (isFarm && g.farmCount!=0) || (isFarm && checkLast()));
         try
         {
             Computer next = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() + 1).gameObject.GetComponent<Computer>();
