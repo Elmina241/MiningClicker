@@ -36,7 +36,7 @@ class Computer : MonoBehaviour
     public int progressCounter1 = 0;
     public int progressCounter2 = 0;
 
-    Currency cur;
+    public Currency cur;
     public float currency = 0;
 
     //процент от времени заполнения автомайнера при полном наборе видеокарт
@@ -397,9 +397,9 @@ class Computer : MonoBehaviour
 
     public void checkInteractable()
     {
-        g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost) && !autoMiner.isBoughtAuto;
-        g.offMinerButton.interactable = (g.money >= offMinerCost) && !isBoughtOff;
-        g.autoRepairButton.interactable = (g.money >= autoRepairCost) && !isBoughtAutoRepair;
+        g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost) && !autoMiner.isBoughtAuto && isReady;
+        g.offMinerButton.interactable = (g.money >= offMinerCost) && !isBoughtOff && isReady;
+        g.autoRepairButton.interactable = (g.money >= autoRepairCost) && !isBoughtAutoRepair && isReady;
     }
 
     IEnumerator BonusPerSec()
@@ -824,6 +824,7 @@ class Computer : MonoBehaviour
         {
             g.autoMinerButton.interactable = false;
             g.offMinerButton.interactable = false;
+            g.autoRepairButton.interactable = false;
         }
         g.levelText.text = "Уровень: " + level.ToString();
         g.nameText.text = nameComp;
@@ -863,9 +864,11 @@ class Computer : MonoBehaviour
         if (compParts.Length == 0)
         {
             g.improvementWin.transform.Find("Background/Description_parts/Text").GetComponent<Text>().text = "";
+            g.autoRepairButton.gameObject.transform.parent.gameObject.SetActive(false);
         }
         else
         {
+            g.autoRepairButton.gameObject.transform.parent.gameObject.SetActive(true);
             g.improvementWin.transform.Find("Background/Description_parts/Text").GetComponent<Text>().text = "Компоненты компьютера";
         }
         for (int i = 0; i < compParts.Length; i++)

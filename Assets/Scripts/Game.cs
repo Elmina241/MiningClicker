@@ -40,6 +40,7 @@ public class Game : MonoBehaviour {
     public bool isAutoExchangerOn = false; //Работает ли автообменник
     public bool isProfitBoosterOn = false; //Работает ли бустер доходности
     public bool isTimeBoosterOn = false; // Работает ли бустер времени
+    public GameObject nightResult; // Окошко заработанных денег за ночь
 
     Save sv = new Save();
 
@@ -138,9 +139,13 @@ public class Game : MonoBehaviour {
             System.TimeSpan ts = System.DateTime.Now - dt;
 
             int i = 0;
+            float nightMoney = 0;
+            bool isNight = false;
+
             while (i < resSize)
             {
                 Computer cur = miners.transform.GetChild(i).GetComponent<Computer>();
+                cur.cur = currencies[0];
                 cur.currency = sv.currency[i];
                 cur.isReady = sv.isReady[i];
                 cur.bonus = sv.bonus[i];
@@ -161,7 +166,9 @@ public class Game : MonoBehaviour {
 
                 if (cur.isBoughtOff && cur.isReady)
                 {
-                    cur.currency = cur.currency + cur.offProfit * ts.Seconds;
+                    //cur.currency = cur.currency + cur.offProfit * ts.Seconds;
+                    nightMoney = nightMoney + cur.offProfit * ts.Seconds * cur.cur.getExchRate();
+                    isNight = true;
                 }
                 
                 cur.level = sv.level[i];
@@ -197,6 +204,8 @@ public class Game : MonoBehaviour {
                 gameObject.GetComponent<Achievment>()._store[j].isBought = sv.isBought[j];
             }
             isAutoExchangerOn = sv.isAutoExchangerOn;
+            money = money + nightMoney;
+            if (isNight) showNightMining(nightMoney);
         }
     }
 
@@ -219,6 +228,32 @@ public class Game : MonoBehaviour {
             GameObject.Destroy(partsContainer.transform.GetChild(i).gameObject);
         }
         improvementWin.SetActive(!improvementWin.activeSelf);
+    }
+
+    //Функция отобржаения окна ночного заработка
+    public void showNightMining(float nightCurrency)
+    {
+        nightResult.transform.GetChild(0).GetChild(5).GetComponent<Text>().text = "$" + nightCurrency.ToString("0.#0");
+        nightResult.SetActive(true);
+    }
+
+    public int getCurrent()
+    {
+        GameObject miners = GameObject.FindWithTag("Miners").gameObject;
+        if (farmCount == 0)
+        {
+            int res = 0;
+            while (res < miners.transform.childCount && !miners.transform.GetChild(res).GetComponent<Computer>().isReady) res++;
+            return res;
+        }
+        else if (farmCount == 3)
+        {
+            return 11;
+        }
+        else if (miners.transform.GetChild(6).GetComponent<Computer>().isReady && miners.transform.GetChild(7).GetComponent<Computer>().isReady) return 8;
+        else if (miners.transform.GetChild(5).GetComponent<Computer>().isReady && miners.transform.GetChild(7).GetComponent<Computer>().isReady) return 9;
+        else if (miners.transform.GetChild(5).GetComponent<Computer>().isReady && miners.transform.GetChild(6).GetComponent<Computer>().isReady) return 10;
+        else return -1;
     }
 
     public void saveGame()
