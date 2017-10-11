@@ -4,7 +4,8 @@ using UnityEngine.UI;
 public class Game : MonoBehaviour {
         
     public Sprite[] background;
-    
+    Reward rew;
+
     public Text moneyText; //Деньги в $
     public float money = 0;
     public int clickCounter = 0; // Счетчик кликов по кнопке
@@ -92,7 +93,8 @@ public class Game : MonoBehaviour {
 
     private void Awake()
     {
-        money = 80f;
+        rew = gameObject.GetComponent<Reward>();
+        money = 20000f;
 
         /*Объявление валют*/
         currencies = new Currency[1];
@@ -134,6 +136,12 @@ public class Game : MonoBehaviour {
             farmCount = sv.farmCount;
             partCount = sv.partCount;
             exp = sv.exp;
+
+            ////System.DateTime dt = new System.DateTime(sv.date[0], sv.date[1], sv.date[2], sv.date[3], sv.date[4], sv.date[5]);
+            //rew.GetTime();
+            //ulong dt = rew.unixTime;
+
+
 
             System.DateTime dt = new System.DateTime(sv.date[0], sv.date[1], sv.date[2], sv.date[3], sv.date[4], sv.date[5]);
             System.TimeSpan ts = System.DateTime.Now - dt;
@@ -211,11 +219,11 @@ public class Game : MonoBehaviour {
 
     void Start()
     {
-        this.autoMinerButton = improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto").gameObject.GetComponent<Button>();
-        this.upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
-        this.upgradeProfitButton = improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade").gameObject.GetComponent<Button>();
-        this.upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
-        this.levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
+        autoMinerButton = improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto").gameObject.GetComponent<Button>();
+        upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
+        upgradeProfitButton = improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade").gameObject.GetComponent<Button>();
+        upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
+        levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
     }
 
 

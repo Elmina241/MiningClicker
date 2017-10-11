@@ -35,11 +35,6 @@ public class Achievment : MonoBehaviour {
     ///                                          ///
     ///                                          /// 
     ////////////////////////////////////////////////
-    void Start()
-    {
-       
-    }
-
    
 
     void AnimationComplete()
@@ -47,21 +42,21 @@ public class Achievment : MonoBehaviour {
         _currency.SetActive(false);
     }
 
-    public void CurrencyOff()
-    {              
-        _currency.GetComponent<Animator>().SetBool("Set", false);             
-    }
+    //public void CurrencyOff()
+    //{              
+    //    _currency.GetComponent<Animator>().SetBool("Set", false);             
+    //}
 
-    public void Currency()
-    {
-        if (m.activeSelf)
-        {
-            m.SetActive(false);
-        }
-        _currency.SetActive(true);
-        _currency.GetComponent<Animator>().SetBool("Set", true);
+    //public void Currency()
+    //{
+    //    if (m.activeSelf)
+    //    {
+    //        m.SetActive(false);
+    //    }
+    //    _currency.SetActive(true);
+    //    _currency.GetComponent<Animator>().SetBool("Set", true);
       
-    }
+    //}
 
     public void Settings() // вызываем по кнопке магазина внизу 
     {
@@ -71,14 +66,14 @@ public class Achievment : MonoBehaviour {
         Achiev.SetActive(false); // отключаем панель ачивок
         Store.SetActive(false);
         Casino.SetActive(false);
-        CurrencyOff();
+        //CurrencyOff();
         _settings.SetActive(true);// подрубаем панель магаза      
 
     }
 
     public void Store_set() // вызываем по кнопке магазина внизу 
     {
-        CurrencyOff();
+       // CurrencyOff();
         Header.SetActive(true);
         Header.GetComponent<Image>().sprite = Gradient_store; // задаем шапку
         Header.transform.GetChild(1).GetComponent<Text>().text = "МАГАЗИН"; // левый текст
@@ -131,9 +126,8 @@ public class Achievment : MonoBehaviour {
         _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_achievment; 
         Header.transform.GetChild(1).GetComponent<Text>().text = "ЗАДАНИЯ";
-        CurrencyOff();
-        Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Achievment_btn/Icon_Bg/Icon").GetComponent<Image>().sprite;
-       // Parent_ach.GetComponent<ScrollRect>().content = 
+      //  CurrencyOff();
+        Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Achievment_btn/Icon_Bg/Icon").GetComponent<Image>().sprite;       
        
         for (int i = 0; i < achievment.Length; i++)
         {
@@ -170,7 +164,7 @@ public class Achievment : MonoBehaviour {
         _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_casino;
         Header.transform.GetChild(1).GetComponent<Text>().text = "Coin Flip";
-        CurrencyOff();
+       // CurrencyOff();
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Jackpot/Icon_Bg/Icon").GetComponent<Image>().sprite;
     }
     //Открытие достижения
@@ -222,8 +216,7 @@ public class Achievment : MonoBehaviour {
         _store[0].isBought = true;
         g.money -= _store[0].priceGame;
         g.isProfitBoosterOn = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
-        //Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;       
         Store.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
         Store.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПЛЕНО";
     }
@@ -234,8 +227,7 @@ public class Achievment : MonoBehaviour {
         _store[1].isBought = true;
         g.money -= _store[1].priceGame;
         g.isTimeBoosterOn = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(1).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
-        //Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
+        Store.transform.GetChild(0).GetChild(0).GetChild(1).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;       
         Store.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
         Store.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПЛЕНО";
     }
