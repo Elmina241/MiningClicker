@@ -121,6 +121,25 @@ public class Game : MonoBehaviour {
         parts[6] = new Part(6, "SiliconPower Slim S60 ", typesOfParts[4], 10, 25, 2, 10);
         parts[7] = new Part(7, "Xilence A402", typesOfParts[5], 10, 25, 2, 10);
 
+        int partId = 0;
+        for (int i = 0; i < 7; i++)
+        {
+            parts[partId] = new Part(partId, NameOfCPU[i], typesOfParts[0], 12, 25, PriceOfCPU[i], (int)(PriceOfCPU[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfGPU[i], typesOfParts[1], 12, 25, PriceOfGPU[i], (int)(PriceOfGPU[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfPower[i], typesOfParts[2], 12, 25, PriceOfPower[i], (int)(PriceOfPower[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfMotherboard[i], typesOfParts[3], 12, 25, PriceOfMotherboard[i], (int)(PriceOfMotherboard[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfSSD[i], typesOfParts[4], 12, 25, PriceOfSSD[i], (int)(PriceOfSSD[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfCooling[i], typesOfParts[5], 12, 25, PriceOfCooling[i], (int)(PriceOfCooling[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfRAM[i], typesOfParts[6], 12, 25, PriceOfRAM[i], (int)(PriceOfRAM[i] * 0.6f));
+            partId++;
+        }
+
         if (PlayerPrefs.HasKey("unitySV"))
         {
             sv = JsonUtility.FromJson<Save>(PlayerPrefs.GetString("unitySV"));
