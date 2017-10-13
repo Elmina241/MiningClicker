@@ -5,12 +5,15 @@ using UnityEngine.UI;
 public class CoinFlip : MonoBehaviour {
 
     public Text _betText;
-    public Text _resultPlay;
+   // public Text _resultPlay;
     public Text _resultText;
+    public Image WinIcon;
+    public Sprite btc, dollar;
     public Slider sld;
     public Button btn;
     public GameObject btcAnim;
     public GameObject dollarAnim;
+    public GameObject Layer;
 
 
     public float _bet;
@@ -19,10 +22,11 @@ public class CoinFlip : MonoBehaviour {
 
     public void SetDefault()
     {
-        _resultText.text = "";
-        _resultPlay.text = "";
+        _resultText.text = string.Empty;
+       // _resultPlay.text = "";
         sld.value = 0;
         btn.interactable = true;
+        Layer.GetComponent<Animator>().SetBool("win", false);
     }
    
 
@@ -37,13 +41,25 @@ public class CoinFlip : MonoBehaviour {
         {
             dollarAnim.GetComponent<Animator>().SetBool("Set", false);
             btcAnim.GetComponent<Animator>().SetBool("Set", true);
+
+            Layer.GetComponent<Animator>().SetBool("win", false);
+            //if (Layer.GetComponent<Animator>().GetBool("rev") == true)
+            //{
+            //    Layer.GetComponent<Animator>().SetBool("rev", false);
+            //}
         }
         else
         {
             btcAnim.GetComponent<Animator>().SetBool("Set", false);
             dollarAnim.GetComponent<Animator>().SetBool("Set", true);
+            Layer.GetComponent<Animator>().SetBool("win", false);
+            //if (Layer.GetComponent<Animator>().GetBool("rev") == true)
+            //{
+            //    Layer.GetComponent<Animator>().SetBool("rev", false);
+            //}
         }
         this._choose = _choose;
+
     }
     
 
@@ -56,7 +72,7 @@ public class CoinFlip : MonoBehaviour {
 
     private void Param(int rand, string text)
     {
-        _resultPlay.text = rand.ToString();
+        //_resultPlay.text = rand.ToString();
         _resultText.text = text;
     }
 
@@ -70,6 +86,17 @@ public class CoinFlip : MonoBehaviour {
             gameObject.GetComponent<Game>().saveGame();
             btcAnim.GetComponent<Animator>().SetBool("Set", false);
             dollarAnim.GetComponent<Animator>().SetBool("Set", false);
+            if (rand == 1)
+            {
+                WinIcon.sprite = btc;
+                Layer.GetComponent<Animator>().SetBool("win", true);
+            }
+            else
+            {
+                WinIcon.sprite = dollar;
+                Layer.GetComponent<Animator>().SetBool("win", true);
+            }
+                
         }
         else
         {
@@ -79,6 +106,16 @@ public class CoinFlip : MonoBehaviour {
             gameObject.GetComponent<Game>().saveGame();
             btcAnim.GetComponent<Animator>().SetBool("Set", false);
             dollarAnim.GetComponent<Animator>().SetBool("Set", false);
+            if (rand == 1)
+            {
+                WinIcon.sprite = btc;
+                Layer.GetComponent<Animator>().SetBool("win", true);
+            }
+            else
+            {
+                WinIcon.sprite = dollar;
+                Layer.GetComponent<Animator>().SetBool("win", true);
+            }
         }
     }
 

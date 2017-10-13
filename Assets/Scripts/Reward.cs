@@ -115,7 +115,6 @@ public class Reward : MonoBehaviour {
         ulong diff = (unixTime - lastChestOpen); // разница между текущим и прошлым текущим
         ulong m = diff / 10000; // перевод в миллисекунды
         float secondsLeft = ((((_hours * 3600.0f) + (_minutes * 60.0f) + _sec) * 1000.0f) - m) / 1000.0f; // перевод в секунды
-        Debug.Log(secondsLeft);
         return (secondsLeft < 0);
     }
 }
