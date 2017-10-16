@@ -70,8 +70,8 @@ public class Game : MonoBehaviour {
     public string[] NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
     "ID-Cooling SE-204K", "Scythe Mugen 5",  "Thermaltake Pacific RL140", "CoolerMaster Master V8" };
 
-    public string[] NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 8 Gb",
-    "Kingston HyperX FURY 16 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
+    public string[] NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 4 Gb",
+    "Kingston HyperX FURY 8 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
 
     [Space(4)]
     [Header("Цены компонентов")]
@@ -88,7 +88,7 @@ public class Game : MonoBehaviour {
 
     public int[] PriceOfCooling = new int[7] { 16, 25, 34, 52, 66, 344, 129 };
 
-    public int[] PriceOfRAM = new int[7] { 18, 56, 138, 198, 332, 405, 905 };
+    public int[] PriceOfRAM = new int[7] { 18, 56, 92, 132, 332, 405, 905 };
 
 
     private void Awake()
@@ -111,7 +111,7 @@ public class Game : MonoBehaviour {
         typesOfParts[6] = new typeOfPart(6, "RAM", partImages[6]);
 
         /*Объявление компонентов*/
-        parts = new Part[8];
+        /*parts = new Part[8];
         parts[1] = new Part(1, "Intel® Core™i3-2100 3.1 GHz", typesOfParts[0], 8, 15, 215, 167);
         parts[2] = new Part(2, "Hipro 450W", typesOfParts[2], 25, 35, 847, 540);
         parts[0] = new Part(0, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
@@ -119,7 +119,7 @@ public class Game : MonoBehaviour {
         parts[4] = new Part(4, "MSI H81M-E33", typesOfParts[3], 10, 25, 2, 10);
         parts[5] = new Part(5, "JRam 4 GB", typesOfParts[6], 10, 25, 2, 10);
         parts[6] = new Part(6, "SiliconPower Slim S60 ", typesOfParts[4], 10, 25, 2, 10);
-        parts[7] = new Part(7, "Xilence A402", typesOfParts[5], 10, 25, 2, 10);
+        parts[7] = new Part(7, "Xilence A402", typesOfParts[5], 10, 25, 2, 10);*/
 
         int partId = 0;
         for (int i = 0; i < 7; i++)
