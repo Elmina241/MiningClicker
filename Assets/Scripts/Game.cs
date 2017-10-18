@@ -55,8 +55,8 @@ public class Game : MonoBehaviour {
     public string[] NameOfCPU = new string[7] { "Intel® Pentium G4560 3500 GHz", "Intel® Core™i3-7100 3900 GHz", "Intel® Core™i5-7500 3400 GHz",
     "Intel® Core™i5-7500 3400 GHz", "Intel® Core™i7-6900K 3200 GHz", "Intel® Core™i7-6700K 4000 GHz", "Intel® Xeon E5-2650v4 2200 GHz"};
 
-    public string[] NameOfGPU = new string[7] { "NVidia GeForce GTX 1050 Ti", "NVidia GeForce GTX 1050 Ti", "Palit GeForce GTX 1060 STORMX",
-    "Asus GeForce GTX 1070 TURBO", "NVidia GeForce GTX 1080 Ti" , "NVidia GeForce GTX 1080 Ti", "NVidia GeForce GTX 1080 Ti" };
+    public string[] NameOfGPU = new string[7] { "NVidia GF GTX 1050 Ti", "NVidia GF GTX 1050 Ti", "Palit GF GTX 1060 STORMX",
+    "Asus GF GTX 1070 TURBO", "NVidia GF GTX 1080 Ti" , "NVidia GF GTX 1080 Ti", "NVidia GF GTX 1080 Ti" };
 
     public string[] NameOfMotherboard = new string[7] { "ASUS H110M-A/M.2", "ASRock H270 PRO4", "MSI B250M PRO-VD", "MSI H270 GAMING M3",
     "MSI X99A SLI PLUS", "MSI Z170M MORTAR", "ASUS Z10PE-D16 WS"};
@@ -96,6 +96,9 @@ public class Game : MonoBehaviour {
         rew = gameObject.GetComponent<Reward>();
         money = 20000f;
 
+        NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
+        "ID-Cooling SE-204K", "Scythe Mugen 5",  "Thermaltake Pacific RL140", "CoolerMaster Master V8" };
+
         /*Объявление валют*/
         currencies = new Currency[1];
         currencies[0] = new Currency("ETH", 30000f);
@@ -120,7 +123,7 @@ public class Game : MonoBehaviour {
         parts[5] = new Part(5, "JRam 4 GB", typesOfParts[6], 10, 25, 2, 10);
         parts[6] = new Part(6, "SiliconPower Slim S60 ", typesOfParts[4], 10, 25, 2, 10);
         parts[7] = new Part(7, "Xilence A402", typesOfParts[5], 10, 25, 2, 10);*/
-
+        parts = new Part[49];
         int partId = 0;
         for (int i = 0; i < 7; i++)
         {
