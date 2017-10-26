@@ -43,8 +43,6 @@ public class Achievment : MonoBehaviour
     {
         if (Casino.activeSelf)
         {
-            Casino.SetActive(false);
-            Header.SetActive(false);
             Menu_down.GetComponent<Animator>().SetBool("casino", false);
         }
         else if (Store.activeSelf)
@@ -97,12 +95,12 @@ public class Achievment : MonoBehaviour
 
     }
 
-    
+
 
     public void Store_set() // вызываем по кнопке магазина внизу 
     {
         Menu_down.GetComponent<Animator>().SetBool("store", true);
-        Menu_down.GetComponent<Animator>().SetBool("settings", false);        
+        Menu_down.GetComponent<Animator>().SetBool("settings", false);
         Menu_down.GetComponent<Animator>().SetBool("casino", false);
         Menu_down.GetComponent<Animator>().SetBool("achievment", false);
         //if (Casino.activeSelf)
@@ -196,14 +194,12 @@ public class Achievment : MonoBehaviour
     public void CasinoPlay()
     {
         Menu_down.SetActive(true);
-        Casino.SetActive(true);
-        Header.SetActive(true);
-       // Menu_down.GetComponent<Animator>().SetBool("casino", true);
+        Menu_down.GetComponent<Animator>().SetBool("casino", true);
         //Menu_down.GetComponent<Animator>().SetBool("store", false);
-        //Menu_down.GetComponent<Animator>().SetBool("settings", false);
-        //Menu_down.GetComponent<Animator>().SetBool("store", false);
-        //Menu_down.GetComponent<Animator>().SetBool("casino", false);
-        //Menu_down.GetComponent<Animator>().SetBool("achievment", false);
+        Menu_down.GetComponent<Animator>().SetBool("settings", false);
+        Menu_down.GetComponent<Animator>().SetBool("store", false);
+        Menu_down.GetComponent<Animator>().SetBool("casino", false);
+        Menu_down.GetComponent<Animator>().SetBool("achievment", false);
 
 
         Header.GetComponent<Image>().sprite = Gradient_casino;
