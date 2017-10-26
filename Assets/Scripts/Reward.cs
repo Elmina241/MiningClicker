@@ -2,19 +2,18 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Reward : MonoBehaviour {
+public class Reward : MonoBehaviour
+{
 
     public float _hours = 0.0f;
     public float _minutes = 0.0f;
     public float _sec = 0.0f;
-    public GameObject g; 
+    public GameObject g;
     public Game gObj;
     public Sprite spr;
     private ulong lastChestOpen;
     public string[] items;
     public ulong unixTime;
-
-    public GameObject RateMe, NightRes;
 
     private void Start()
     {
@@ -22,24 +21,24 @@ public class Reward : MonoBehaviour {
 
         if (!IsChestReady())
         {
-            g.SetActive(false); 
-        }      
+            g.SetActive(false);
+        }
     }
 
     private void Update()
     {
         if (!g.activeSelf)
-        {            
+        {
             if (IsChestReady())
-            {               
+            {
                 g.SetActive(true);
-            }       
+            }
         }
     }
     //// КОД НИЖЕ ПАРСИТ В UNIX-ФОРМАТЕ ВРЕМЯ С СЕРВЕРА
     public IEnumerator GetTime()
     {
-        WWW itemsData = new WWW("http://worldclockapi.com/api/json/est/now");        
+        WWW itemsData = new WWW("http://worldclockapi.com/api/json/est/now");
         yield return itemsData;
         string result = itemsData.text;
         items = result.Split(',');
@@ -49,7 +48,7 @@ public class Reward : MonoBehaviour {
 
     string GetValueTime(string data, string index)
     {
-        string value = data.Substring(data.IndexOf(index)+index.Length);
+        string value = data.Substring(data.IndexOf(index) + index.Length);
         return value;
     }
 
@@ -105,7 +104,7 @@ public class Reward : MonoBehaviour {
         gObj.push.transform.Find("Description").GetComponent<Text>().text = "Получено $" + rew.ToString();
         gObj.push.GetComponent<Animator>().SetTrigger("isShown");
         StartCoroutine(GetTime());
-        lastChestOpen = unixTime;    
+        lastChestOpen = unixTime;
         PlayerPrefs.SetString("LastChestOpen", lastChestOpen.ToString());
         g.SetActive(false);
     }
@@ -119,11 +118,4 @@ public class Reward : MonoBehaviour {
         float secondsLeft = ((((_hours * 3600.0f) + (_minutes * 60.0f) + _sec) * 1000.0f) - m) / 1000.0f; // перевод в секунды
         return (secondsLeft < 0);
     }
-
-    public void RateMePleaseBitch()
-    {
-        //RateMe.SetActive(true);
-        NightRes.SetActive(true);
-    }
-   
 }
