@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Game : MonoBehaviour {
-        
+public class Game : MonoBehaviour
+{
+
     public Sprite[] background;
     Reward rew;
 
@@ -10,7 +11,7 @@ public class Game : MonoBehaviour {
     public float money = 0;
     public int clickCounter = 0; // Счетчик кликов по кнопке
     public float sumMoney = 0; // Доход за всё время
-    public int farmCount =0; //счётчик работающих ферм
+    public int farmCount = 0; //счётчик работающих ферм
     public int partCount = 0; //счётчик купленных частей
     public int exp = 0;
 
@@ -49,14 +50,14 @@ public class Game : MonoBehaviour {
     public typeOfPart[] typesOfParts;
     public Currency[] currencies;
 
-    
+
     [Header("Имена компонентов")]
     [Space(4)]
     public string[] NameOfCPU = new string[7] { "Intel® Pentium G4560 3500 GHz", "Intel® Core™i3-7100 3900 GHz", "Intel® Core™i5-7500 3400 GHz",
     "Intel® Core™i5-7500 3400 GHz", "Intel® Core™i7-6900K 3200 GHz", "Intel® Core™i7-6700K 4000 GHz", "Intel® Xeon E5-2650v4 2200 GHz"};
 
-    public string[] NameOfGPU = new string[7] { "NVidia GeForce GTX 1050 Ti", "NVidia GeForce GTX 1050 Ti", "Palit GeForce GTX 1060 STORMX",
-    "Asus GeForce GTX 1070 TURBO", "NVidia GeForce GTX 1080 Ti" , "NVidia GeForce GTX 1080 Ti", "NVidia GeForce GTX 1080 Ti" };
+    public string[] NameOfGPU = new string[7] { "NVidia GF GTX 1050 Ti", "NVidia GF GTX 1050 Ti", "Palit GF GTX 1060 STORMX",
+    "Asus GF GTX 1070 TURBO", "NVidia GF GTX 1080 Ti" , "NVidia GF GTX 1080 Ti", "NVidia GF GTX 1080 Ti" };
 
     public string[] NameOfMotherboard = new string[7] { "ASUS H110M-A/M.2", "ASRock H270 PRO4", "MSI B250M PRO-VD", "MSI H270 GAMING M3",
     "MSI X99A SLI PLUS", "MSI Z170M MORTAR", "ASUS Z10PE-D16 WS"};
@@ -70,12 +71,12 @@ public class Game : MonoBehaviour {
     public string[] NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
     "ID-Cooling SE-204K", "Scythe Mugen 5",  "Thermaltake Pacific RL140", "CoolerMaster Master V8" };
 
-    public string[] NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 8 Gb",
-    "Kingston HyperX FURY 16 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
+    public string[] NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 4 Gb",
+    "Kingston HyperX FURY 8 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
 
     [Space(4)]
     [Header("Цены компонентов")]
-    
+
     public int[] PriceOfCPU = new int[7] { 94, 146, 241, 241, 1056, 396, 1370 }; // в $
 
     public int[] PriceOfGPU = new int[7] { 157, 157, 278, 488, 844, 844, 844 };
@@ -88,13 +89,51 @@ public class Game : MonoBehaviour {
 
     public int[] PriceOfCooling = new int[7] { 16, 25, 34, 52, 66, 344, 129 };
 
-    public int[] PriceOfRAM = new int[7] { 18, 56, 138, 198, 332, 405, 905 };
+    public int[] PriceOfRAM = new int[7] { 18, 56, 92, 132, 332, 405, 905 };
 
 
     private void Awake()
     {
         rew = gameObject.GetComponent<Reward>();
         money = 20000f;
+
+        NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
+        "ID-Cooling SE-204K", "Scythe Mugen 5",  "Thermaltake Pacific RL140", "CoolerMaster Master V8" };
+
+        NameOfCPU = new string[7] { "Intel® Pentium G4560 3500 GHz", "Intel® Core™i3-7100 3900 GHz", "Intel® Core™i5-7500 3400 GHz",
+        "Intel® Core™i5-7500 3400 GHz", "Intel® Core™i7-6900K 3200 GHz", "Intel® Core™i7-6700K 4000 GHz", "Intel® Xeon E5-2650v4 2200 GHz"};
+
+        NameOfGPU = new string[7] { "NVidia GF GTX 1050 Ti", "NVidia GF GTX 1050 Ti", "Palit GF GTX 1060 STORMX",
+        "Asus GF GTX 1070 TURBO", "NVidia GF GTX 1080 Ti" , "NVidia GF GTX 1080 Ti", "NVidia GF GTX 1080 Ti" };
+
+        NameOfMotherboard = new string[7] { "ASUS H110M-A/M.2", "ASRock H270 PRO4", "MSI B250M PRO-VD", "MSI H270 GAMING M3",
+        "MSI X99A SLI PLUS", "MSI Z170M MORTAR", "ASUS Z10PE-D16 WS"};
+
+        NameOfPower = new string[7] { "Thermaltake TR2 S 350W", "Cougar A 400W", "Zalman TX 500W", "Seasonic Prime 650W",
+        "Corsair AX860 860W", "CoolerMaster V1000 1000W", "Corsair AXi 1200W" };
+
+        NameOfSSD = new string[7] { "SiliconPower Slim S60 60 Gb", "SiliconPower Slim S70 120 Gb", "Kingston HyperX SAVAGE 240 Gb",
+        "Crucial Micron 5100 MAX 480 Gb", "Transcend SSD370s 512 Gb", "Intel 750 Series 800 Gb", "Corsair Neutron XT 960 Gb" };
+
+        NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
+        "ID-Cooling SE-204K", "Scythe Mugen 5",  "Thermaltake Pacific RL140", "CoolerMaster Master V8" };
+
+        NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 4 Gb",
+        "Kingston HyperX FURY 8 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
+
+        PriceOfCPU = new int[7] { 94, 146, 241, 241, 1056, 396, 1370 }; // в $
+
+        PriceOfGPU = new int[7] { 157, 157, 278, 488, 844, 844, 844 };
+
+        PriceOfMotherboard = new int[7] { 58, 98, 53, 112, 177, 91, 462 };
+
+        PriceOfPower = new int[7] { 39, 55, 64, 272, 206, 260, 456 };
+
+        PriceOfSSD = new int[7] { 63, 88, 158, 412, 282, 990, 660 };
+
+        PriceOfCooling = new int[7] { 16, 25, 34, 52, 66, 344, 129 };
+
+        PriceOfRAM = new int[7] { 18, 56, 92, 132, 332, 405, 905 };
 
         /*Объявление валют*/
         currencies = new Currency[1];
@@ -111,7 +150,7 @@ public class Game : MonoBehaviour {
         typesOfParts[6] = new typeOfPart(6, "RAM", partImages[6]);
 
         /*Объявление компонентов*/
-        parts = new Part[8];
+        /*parts = new Part[8];
         parts[1] = new Part(1, "Intel® Core™i3-2100 3.1 GHz", typesOfParts[0], 8, 15, 215, 167);
         parts[2] = new Part(2, "Hipro 450W", typesOfParts[2], 25, 35, 847, 540);
         parts[0] = new Part(0, "AMD Radeon RX 470", typesOfParts[1], 10, 25, 2, 10);
@@ -119,7 +158,26 @@ public class Game : MonoBehaviour {
         parts[4] = new Part(4, "MSI H81M-E33", typesOfParts[3], 10, 25, 2, 10);
         parts[5] = new Part(5, "JRam 4 GB", typesOfParts[6], 10, 25, 2, 10);
         parts[6] = new Part(6, "SiliconPower Slim S60 ", typesOfParts[4], 10, 25, 2, 10);
-        parts[7] = new Part(7, "Xilence A402", typesOfParts[5], 10, 25, 2, 10);
+        parts[7] = new Part(7, "Xilence A402", typesOfParts[5], 10, 25, 2, 10);*/
+        parts = new Part[49];
+        int partId = 0;
+        for (int i = 0; i < 7; i++)
+        {
+            parts[partId] = new Part(partId, NameOfCPU[i], typesOfParts[0], 12, 25, PriceOfCPU[i], (int)(PriceOfCPU[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfGPU[i], typesOfParts[1], 12, 25, PriceOfGPU[i], (int)(PriceOfGPU[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfPower[i], typesOfParts[2], 12, 25, PriceOfPower[i], (int)(PriceOfPower[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfMotherboard[i], typesOfParts[3], 12, 25, PriceOfMotherboard[i], (int)(PriceOfMotherboard[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfSSD[i], typesOfParts[4], 12, 25, PriceOfSSD[i], (int)(PriceOfSSD[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfCooling[i], typesOfParts[5], 12, 25, PriceOfCooling[i], (int)(PriceOfCooling[i] * 0.6f));
+            partId++;
+            parts[partId] = new Part(partId, NameOfRAM[i], typesOfParts[6], 12, 25, PriceOfRAM[i], (int)(PriceOfRAM[i] * 0.6f));
+            partId++;
+        }
 
         if (PlayerPrefs.HasKey("unitySV"))
         {
@@ -178,7 +236,7 @@ public class Game : MonoBehaviour {
                     nightMoney = nightMoney + cur.offProfit * ts.Seconds * cur.cur.getExchRate();
                     isNight = true;
                 }
-                
+
                 cur.level = sv.level[i];
                 cur.autoMiner.isBoughtAuto = sv.isBoughtAuto[i];
                 cur.isBoughtAutoRepair = sv.isBoughtAutoRepair[i];
@@ -319,7 +377,7 @@ public class Game : MonoBehaviour {
         {
             Computer cur = miners.transform.GetChild(i).GetComponent<Computer>();
             PartsOfComputer[] p = new PartsOfComputer[cur.compParts.Length];
-            
+
             sv.currency[i] = cur.currency;
             sv.isReady[i] = cur.isReady;
             sv.bonus[i] = cur.bonus;
@@ -328,7 +386,7 @@ public class Game : MonoBehaviour {
             sv.progressCounter1[i] = cur.progressCounter1;
             sv.progressCounter2[i] = cur.progressCounter2;
             sv.maxClick[i] = cur.maxClick;
-            
+
             sv.upgradeCost[i] = cur.upgradeCost;
             sv.upgradePoints[i] = cur.upgradePoints;
             sv.timeUpgrade[i] = cur.timeUpgrade;
@@ -360,7 +418,7 @@ public class Game : MonoBehaviour {
         i = 0;
         while (i < currencies.Length)
         {
-            sv.sumCur[i] = currencies[i].sum; 
+            sv.sumCur[i] = currencies[i].sum;
             i++;
         }
 
@@ -412,7 +470,7 @@ public class Part
     public float reliabilityUsed;
     public int costNew; // Цена нового компонента
     public int costUsed; // Цена Б/У компонента
-    
+
     /*!-- JSON-сериализация --*/
 
     public Part(int id, string name, typeOfPart type, float reliabilityNew, float reliabilityUsed, int costNew, int costUsed)
@@ -424,7 +482,7 @@ public class Part
         this.reliabilityUsed = reliabilityUsed;
         this.costNew = costNew;
         this.costUsed = costUsed;
-        
+
     }
 }
 
@@ -467,10 +525,10 @@ public class Save
     public bool[] isBoughtOff;
     public float[] autoTime;
     public float[] offProfit;
-    public float[] offProfitBonus; 
-    public float[] autoProfit; 
+    public float[] offProfitBonus;
+    public float[] autoProfit;
     public float[] timeBonus;
-    public float sumMoney; 
+    public float sumMoney;
     public int farmCount;
     public int partCount;
     public int reward;
