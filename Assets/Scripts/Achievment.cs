@@ -78,7 +78,6 @@ public class Achievment : MonoBehaviour
     //    }
     //    _currency.SetActive(true);
     //    _currency.GetComponent<Animator>().SetBool("Set", true);
-
     //}
 
     //Ниже пойдет вызов кучи анимаций
@@ -94,8 +93,6 @@ public class Achievment : MonoBehaviour
         Menu_down.GetComponent<Animator>().SetBool("achievment", false);
 
     }
-
-
 
     public void Store_set() // вызываем по кнопке магазина внизу 
     {

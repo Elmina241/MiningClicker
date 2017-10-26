@@ -135,8 +135,8 @@ public class Game : MonoBehaviour
 
         PriceOfRAM = new int[7] { 18, 56, 92, 132, 332, 405, 905 };
 
-        /*Объявление валют*/
-        currencies = new Currency[1];
+    /*Объявление валют*/
+    currencies = new Currency[1];
         currencies[0] = new Currency("ETH", 30000f);
 
         /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/

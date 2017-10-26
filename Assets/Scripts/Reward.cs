@@ -8,7 +8,7 @@ public class Reward : MonoBehaviour
     public float _hours = 0.0f;
     public float _minutes = 0.0f;
     public float _sec = 0.0f;
-    public GameObject g;
+    public GameObject g; 
     public Game gObj;
     public Sprite spr;
     private ulong lastChestOpen;
@@ -48,7 +48,7 @@ public class Reward : MonoBehaviour
 
     string GetValueTime(string data, string index)
     {
-        string value = data.Substring(data.IndexOf(index) + index.Length);
+        string value = data.Substring(data.IndexOf(index)+index.Length);
         return value;
     }
 
