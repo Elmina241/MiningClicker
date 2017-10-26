@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Reward : MonoBehaviour {
+public class Reward : MonoBehaviour
+{
 
     public float _hours = 0.0f;
     public float _minutes = 0.0f;
@@ -20,24 +21,24 @@ public class Reward : MonoBehaviour {
 
         if (!IsChestReady())
         {
-            g.SetActive(false); 
-        }      
+            g.SetActive(false);
+        }
     }
 
     private void Update()
     {
         if (!g.activeSelf)
-        {            
+        {
             if (IsChestReady())
-            {               
+            {
                 g.SetActive(true);
-            }       
+            }
         }
     }
     //// КОД НИЖЕ ПАРСИТ В UNIX-ФОРМАТЕ ВРЕМЯ С СЕРВЕРА
     public IEnumerator GetTime()
     {
-        WWW itemsData = new WWW("http://worldclockapi.com/api/json/est/now");        
+        WWW itemsData = new WWW("http://worldclockapi.com/api/json/est/now");
         yield return itemsData;
         string result = itemsData.text;
         items = result.Split(',');
@@ -103,7 +104,7 @@ public class Reward : MonoBehaviour {
         gObj.push.transform.Find("Description").GetComponent<Text>().text = "Получено $" + rew.ToString();
         gObj.push.GetComponent<Animator>().SetTrigger("isShown");
         StartCoroutine(GetTime());
-        lastChestOpen = unixTime;    
+        lastChestOpen = unixTime;
         PlayerPrefs.SetString("LastChestOpen", lastChestOpen.ToString());
         g.SetActive(false);
     }

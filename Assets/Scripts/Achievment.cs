@@ -78,7 +78,6 @@ public class Achievment : MonoBehaviour
     //    }
     //    _currency.SetActive(true);
     //    _currency.GetComponent<Animator>().SetBool("Set", true);
-
     //}
 
     //Ниже пойдет вызов кучи анимаций
@@ -95,12 +94,10 @@ public class Achievment : MonoBehaviour
 
     }
 
-    
-
     public void Store_set() // вызываем по кнопке магазина внизу 
     {
         Menu_down.GetComponent<Animator>().SetBool("store", true);
-        Menu_down.GetComponent<Animator>().SetBool("settings", false);        
+        Menu_down.GetComponent<Animator>().SetBool("settings", false);
         Menu_down.GetComponent<Animator>().SetBool("casino", false);
         Menu_down.GetComponent<Animator>().SetBool("achievment", false);
         //if (Casino.activeSelf)

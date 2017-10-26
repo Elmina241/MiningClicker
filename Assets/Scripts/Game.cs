@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Game : MonoBehaviour {
-        
+public class Game : MonoBehaviour
+{
+
     public Sprite[] background;
     Reward rew;
 
@@ -10,7 +11,7 @@ public class Game : MonoBehaviour {
     public float money = 0;
     public int clickCounter = 0; // Счетчик кликов по кнопке
     public float sumMoney = 0; // Доход за всё время
-    public int farmCount =0; //счётчик работающих ферм
+    public int farmCount = 0; //счётчик работающих ферм
     public int partCount = 0; //счётчик купленных частей
     public int exp = 0;
 
@@ -49,7 +50,7 @@ public class Game : MonoBehaviour {
     public typeOfPart[] typesOfParts;
     public Currency[] currencies;
 
-    
+
     [Header("Имена компонентов")]
     [Space(4)]
     public string[] NameOfCPU = new string[7] { "Intel® Pentium G4560 3500 GHz", "Intel® Core™i3-7100 3900 GHz", "Intel® Core™i5-7500 3400 GHz",
@@ -75,7 +76,7 @@ public class Game : MonoBehaviour {
 
     [Space(4)]
     [Header("Цены компонентов")]
-    
+
     public int[] PriceOfCPU = new int[7] { 94, 146, 241, 241, 1056, 396, 1370 }; // в $
 
     public int[] PriceOfGPU = new int[7] { 157, 157, 278, 488, 844, 844, 844 };
@@ -235,7 +236,7 @@ public class Game : MonoBehaviour {
                     nightMoney = nightMoney + cur.offProfit * ts.Seconds * cur.cur.getExchRate();
                     isNight = true;
                 }
-                
+
                 cur.level = sv.level[i];
                 cur.autoMiner.isBoughtAuto = sv.isBoughtAuto[i];
                 cur.isBoughtAutoRepair = sv.isBoughtAutoRepair[i];
@@ -376,7 +377,7 @@ public class Game : MonoBehaviour {
         {
             Computer cur = miners.transform.GetChild(i).GetComponent<Computer>();
             PartsOfComputer[] p = new PartsOfComputer[cur.compParts.Length];
-            
+
             sv.currency[i] = cur.currency;
             sv.isReady[i] = cur.isReady;
             sv.bonus[i] = cur.bonus;
@@ -385,7 +386,7 @@ public class Game : MonoBehaviour {
             sv.progressCounter1[i] = cur.progressCounter1;
             sv.progressCounter2[i] = cur.progressCounter2;
             sv.maxClick[i] = cur.maxClick;
-            
+
             sv.upgradeCost[i] = cur.upgradeCost;
             sv.upgradePoints[i] = cur.upgradePoints;
             sv.timeUpgrade[i] = cur.timeUpgrade;
@@ -417,7 +418,7 @@ public class Game : MonoBehaviour {
         i = 0;
         while (i < currencies.Length)
         {
-            sv.sumCur[i] = currencies[i].sum; 
+            sv.sumCur[i] = currencies[i].sum;
             i++;
         }
 
@@ -469,7 +470,7 @@ public class Part
     public float reliabilityUsed;
     public int costNew; // Цена нового компонента
     public int costUsed; // Цена Б/У компонента
-    
+
     /*!-- JSON-сериализация --*/
 
     public Part(int id, string name, typeOfPart type, float reliabilityNew, float reliabilityUsed, int costNew, int costUsed)
@@ -481,7 +482,7 @@ public class Part
         this.reliabilityUsed = reliabilityUsed;
         this.costNew = costNew;
         this.costUsed = costUsed;
-        
+
     }
 }
 
@@ -524,10 +525,10 @@ public class Save
     public bool[] isBoughtOff;
     public float[] autoTime;
     public float[] offProfit;
-    public float[] offProfitBonus; 
-    public float[] autoProfit; 
+    public float[] offProfitBonus;
+    public float[] autoProfit;
     public float[] timeBonus;
-    public float sumMoney; 
+    public float sumMoney;
     public int farmCount;
     public int partCount;
     public int reward;
