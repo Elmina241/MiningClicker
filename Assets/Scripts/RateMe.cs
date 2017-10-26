@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RateMe : MonoBehaviour {
-
-    
-    public void RateOn()
-    {
-       
-    }
-
+public class RateMe : MonoBehaviour
+{
     public void RateOff()
     {
-        
+        bool exit = gameObject.GetComponent<Animator>().GetBool("exit");
+        if (exit) gameObject.SetActive(false);
     }
-    void Update()
+
+    public void OpenGP()
     {
-        if (Input.GetKey(KeyCode.C))
-        {
-            RateOn();
-        }
+        Application.OpenURL("market://details?id=com.miningclicker.ds");
+    }
+
+    public void RateMePleaseBitchExit()
+    {
+        gameObject.GetComponent<Animator>().SetBool("exit", true);
     }
 }

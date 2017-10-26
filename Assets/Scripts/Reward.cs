@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using System.Collections;
 using UnityEngine.UI;
 
 public class Reward : MonoBehaviour {
@@ -7,9 +7,14 @@ public class Reward : MonoBehaviour {
     public float _hours = 0.0f;
     public float _minutes = 0.0f;
     public float _sec = 0.0f;
-    public GameObject g;
+    public GameObject g; 
     public Game gObj;
+    public Sprite spr;
     private ulong lastChestOpen;
+    public string[] items;
+    public ulong unixTime;
+
+    public GameObject RateMe, NightRes;
 
     private void Start()
     {
@@ -31,6 +36,22 @@ public class Reward : MonoBehaviour {
             }       
         }
     }
+    //// КОД НИЖЕ ПАРСИТ В UNIX-ФОРМАТЕ ВРЕМЯ С СЕРВЕРА
+    public IEnumerator GetTime()
+    {
+        WWW itemsData = new WWW("http://worldclockapi.com/api/json/est/now");        
+        yield return itemsData;
+        string result = itemsData.text;
+        items = result.Split(',');
+        //Debug.Log(GetValueTime(items[6], "\"currentFileTime\":"));
+        unixTime = ulong.Parse(GetValueTime(items[6], "\"currentFileTime\":"));
+    }
+
+    string GetValueTime(string data, string index)
+    {
+        string value = data.Substring(data.IndexOf(index)+index.Length);
+        return value;
+    }
 
     public void ChestClick()
     {
@@ -39,62 +60,70 @@ public class Reward : MonoBehaviour {
         switch (gObj.getCurrent())
         {
             case 0:
-                rew = UnityEngine.Random.Range(9, 15);
+                rew = Random.Range(9, 15);
                 break;
             case 1:
-                UnityEngine.Random.Range(20, 30);
+                rew = Random.Range(20, 30);
                 break;
             case 2:
-                UnityEngine.Random.Range(40, 80);
+                rew = Random.Range(40, 80);
                 break;
             case 3:
-                UnityEngine.Random.Range(100, 170);
+                rew = Random.Range(100, 170);
                 break;
             case 4:
-                UnityEngine.Random.Range(200, 300);
+                rew = Random.Range(200, 300);
                 break;
             case 5:
-                UnityEngine.Random.Range(310, 500);
+                rew = Random.Range(310, 500);
                 break;
             case 6:
-                UnityEngine.Random.Range(550, 1000);
+                rew = Random.Range(550, 1000);
                 break;
             case 7:
-                UnityEngine.Random.Range(1200, 2000);
+                rew = Random.Range(1200, 2000);
                 break;
             case 8:
-                UnityEngine.Random.Range(800, 1500);
+                rew = Random.Range(800, 1500);
                 break;
             case 9:
-                UnityEngine.Random.Range(370, 1700);
+                rew = Random.Range(370, 1700);
                 break;
             case 10:
-                UnityEngine.Random.Range(350, 840);
+                rew = Random.Range(350, 840);
                 break;
             case 11:
-                UnityEngine.Random.Range(310, 2000);
+                rew = Random.Range(310, 2000);
                 break;
             default:
                 break;
         }
         gObj.money += rew;
         gObj.moneyText.text = "$" + gObj.money.ToString("0.#0");
-        //g.GetComponent<Game>().push.transform.Find("Icon").GetComponent<Image>().sprite = transform.Find("MenuButton/Icon").GetComponent<Image>().sprite;
+        gObj.GetComponent<Game>().push.transform.Find("Icon").GetComponent<Image>().sprite = spr;
         gObj.push.transform.Find("Header").GetComponent<Text>().text = "Ежедневная награда!";
         gObj.push.transform.Find("Description").GetComponent<Text>().text = "Получено $" + rew.ToString();
         gObj.push.GetComponent<Animator>().SetTrigger("isShown");
-        lastChestOpen = (ulong)DateTime.Now.Ticks; // текущее время (прошлое)
+        StartCoroutine(GetTime());
+        lastChestOpen = unixTime;    
         PlayerPrefs.SetString("LastChestOpen", lastChestOpen.ToString());
         g.SetActive(false);
     }
 
+
     private bool IsChestReady()
     {
-        ulong diff = ((ulong)DateTime.Now.Ticks - lastChestOpen); // разница между текущим и прошлым текущим
-        ulong m = diff / TimeSpan.TicksPerMillisecond; // перевод в миллисекунды
-
-        float secondsLeft = ((((_hours*3600.0f)+(_minutes*60.0f)+_sec)*1000.0f) - m) / 1000.0f; // перевод в секунды
-        Debug.Log(secondsLeft);
+        StartCoroutine(GetTime());
+        ulong diff = (unixTime - lastChestOpen); // разница между текущим и прошлым текущим
+        ulong m = diff / 10000; // перевод в миллисекунды
+        float secondsLeft = ((((_hours * 3600.0f) + (_minutes * 60.0f) + _sec) * 1000.0f) - m) / 1000.0f; // перевод в секунды
         return (secondsLeft < 0);
     }
+
+    public void RateMePleaseBitch()
+    {
+        //RateMe.SetActive(true);
+        NightRes.SetActive(true);
+    }
+   
 }
