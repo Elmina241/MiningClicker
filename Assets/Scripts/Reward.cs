@@ -13,12 +13,12 @@ public class Reward : MonoBehaviour
     public Sprite spr;
     private ulong lastChestOpen;
     public string[] items;
-    public ulong unixTime;
+    public ulong unixTime; //текущее время
 
     private void Start()
     {
         lastChestOpen = ulong.Parse(PlayerPrefs.GetString("LastChestOpen"));
-
+        print(lastChestOpen);
         if (!IsChestReady())
         {
             g.SetActive(false);
@@ -104,6 +104,7 @@ public class Reward : MonoBehaviour
         gObj.push.transform.Find("Description").GetComponent<Text>().text = "Получено $" + rew.ToString();
         gObj.push.GetComponent<Animator>().SetTrigger("isShown");
         StartCoroutine(GetTime());
+        //GetTime();
         lastChestOpen = unixTime;
         PlayerPrefs.SetString("LastChestOpen", lastChestOpen.ToString());
         g.SetActive(false);
@@ -113,9 +114,11 @@ public class Reward : MonoBehaviour
     private bool IsChestReady()
     {
         StartCoroutine(GetTime());
-        ulong diff = (unixTime - lastChestOpen); // разница между текущим и прошлым текущим
-        ulong m = diff / 10000; // перевод в миллисекунды
-        float secondsLeft = ((((_hours * 3600.0f) + (_minutes * 60.0f) + _sec) * 1000.0f) - m) / 1000.0f; // перевод в секунды
+        //GetTime();
+        ulong diff = (unixTime - lastChestOpen); // разница между текущим и прошлым текущимы
+        ulong m = diff / 10000000; // перевод в секунды
+        float secondsLeft = ((_hours * 3600.0f) + (_minutes * 60.0f) + _sec) - m; // секунд осталось
+        //print(secondsLeft);
         return (secondsLeft < 0);
     }
 }

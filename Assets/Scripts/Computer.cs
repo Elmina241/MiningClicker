@@ -762,9 +762,7 @@ class Computer : MonoBehaviour
 
     public void openCloseImprovementWin()
     {
-        changeBuyButtons();
-        print("OpenPanel");
-        g.improvementWin.SetActive(!g.improvementWin.activeSelf);
+        
         if (!autoMiner.isBoughtAuto)
         {
             g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
@@ -901,6 +899,8 @@ class Computer : MonoBehaviour
             A.transform.Find("BuyUsed").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, false, A); });
         }
         //updateUp();//обновление очков улучшений
+        changeBuyButtons();
+        g.improvementWin.SetActive(!g.improvementWin.activeSelf);
 
     }
 
