@@ -91,7 +91,6 @@ public class Game : MonoBehaviour
 
     public int[] PriceOfRAM = new int[7] { 18, 56, 92, 132, 332, 405, 905 };
 
-
     private void Awake()
     {
         rew = gameObject.GetComponent<Reward>();
@@ -281,7 +280,7 @@ public class Game : MonoBehaviour
         upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
         upgradeProfitButton = improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade").gameObject.GetComponent<Button>();
         upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
-        levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
+        levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();        
     }
 
 

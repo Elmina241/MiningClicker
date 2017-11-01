@@ -29,7 +29,7 @@ class Computer : MonoBehaviour
     public Button bonusButton; //кнопка покупки улучшения
     public Button buyComp; //кнопка покупки компьютера
 
-    
+
 
     public Game g;
 
@@ -40,7 +40,7 @@ class Computer : MonoBehaviour
     public float currency = 0;
 
     //процент от времени заполнения автомайнера при полном наборе видеокарт
-    public int fullGPU=40;
+    public int fullGPU = 40;
 
     public int cost = 1; // цена компьютера
     public string nameComp = "Ноутбук"; // Имя компьютера
@@ -51,13 +51,13 @@ class Computer : MonoBehaviour
     public float bonusCost = 2; // цена улучшения (на которую поднимаем доход)
     float bonusD = 1.32f;
     float bonusCostD = 1.44f;
-    public int maxClick =10; // кол-во дробей прогресс-бара
-    
+    public int maxClick = 10; // кол-во дробей прогресс-бара
+
     int expD = 50; // кол-во опыта за клик по кнопке
     int expU = 15; // кол-во опыта за улучшение доходности
-    public int upgradeCost =200; //максимальное число EXP. Начало с 200
+    public int upgradeCost = 200; //максимальное число EXP. Начало с 200
     float upgradeCoef = 1.16f; // коеф. сложности upgradeCost, для ноута - 1,12. 
-    public int upgradePoints =0; // кол-во очков улучшений (ОУ)
+    public int upgradePoints = 0; // кол-во очков улучшений (ОУ)
     //удалить 
     public int efficiency = 100;
     public int progressCounter = 0; // счётчик заполнения прогрессбара
@@ -95,15 +95,26 @@ class Computer : MonoBehaviour
         _level.GetComponent<Animator>().SetBool("Level", true);
     }
 
-
+    public GameObject clickParent;
+    public GameObject clickTextPrefab;
+    private clickObj[] clickTextPool = new clickObj[10];
+    public GameObject Empty;
+    private int ClickNum;
 
     void Start()
     {
-        g.moneyText.text = "$" + g.money.ToString("0.#0");
-        
-        this.cur = g.currencies[0];
+        clickParent.transform.localScale = new Vector2(1, 1);
 
-        
+        for (int i = 0; i < clickTextPool.Length; i++)
+        {
+            Empty = Instantiate(clickTextPrefab, clickParent.transform) as GameObject;
+            clickTextPool[i] = Empty.GetComponent<clickObj>();
+            //clickTextPool[i] = Instantiate(clickTextPrefab, clickParent.transform).ga
+        }
+
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
+
+        this.cur = g.currencies[0];
 
         Text t = transform.Find("ProgressPanel/currencyName").gameObject.GetComponent<Text>();
         t.text = cur.getName();
@@ -118,7 +129,7 @@ class Computer : MonoBehaviour
         this.bonusButton = transform.Find("BonusPanel/BonusButton").gameObject.GetComponent<Button>();
         this.buyComp = transform.Find("BuyComp").gameObject.GetComponent<Button>();
         this.partsContainer = g.improvementWin.transform.Find("Background/Parts").gameObject;
-        buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = "$"+cost;
+        buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = "$" + cost;
         bonusButton.onClick.AddListener(GetBonus);
         buyComp.gameObject.SetActive(!isResearched);
         buyComp.onClick.AddListener(ResearchComp);
@@ -155,7 +166,7 @@ class Computer : MonoBehaviour
     void updateUp()
     {
         if (upgradePoints > 0)
-       {
+        {
             PU.SetActive(true);
             PU_text.text = "ОУ: " + upgradePoints.ToString();
         }
@@ -167,7 +178,7 @@ class Computer : MonoBehaviour
 
     public void OnClick()
     {
-        
+
         g.clickCounter++;
         if (g.clickCounter == 100) g.gameObject.GetComponent<Achievment>().unlockAch(0);
         if (g.clickCounter == 10000) g.gameObject.GetComponent<Achievment>().unlockAch(7);
@@ -177,8 +188,8 @@ class Computer : MonoBehaviour
         }
         g.exp += expD;
         checkEXP();
-        progressCounter1 = progressCounter1 + (100/maxClick);
-        progressCounter2+= expD;
+        progressCounter1 = progressCounter1 + (100 / maxClick);
+        progressCounter2 += expD;
         if (progressCounter1 > 100)
         {
             progressCounter1 = 0;
@@ -192,7 +203,7 @@ class Computer : MonoBehaviour
                 currency += bonus;
                 this.cur.sum += bonus;
             }
-            
+
             if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
             progressCounter++;
             if (g.isAutoExchangerOn)
@@ -211,7 +222,7 @@ class Computer : MonoBehaviour
             upgradeCost = (int)(upgradeCost * upgradeCoef);
             updateUp();
         }
-        expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString()+"xp";       
+        expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString() + "xp";
         p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
         if (progressCounter > 5)
         {
@@ -272,11 +283,13 @@ class Computer : MonoBehaviour
                 changeBuyButtons();
             }
         }
-        //Вылетающие клики
-        pointSt = transform.GetChild(0).transform.GetChild(UnityEngine.Random.Range(0, 3)).position;
-        Debug.Log(pointSt);
-        GameObject expPr = (GameObject)Instantiate(plusXP, pointSt, Quaternion.identity);
-        expPr.GetComponentInChildren<Text>().text = "+"+ expD.ToString()+ "xp";
+        //Вылетающие клики        
+        clickTextPool[ClickNum].StartMotion(expD);
+        ClickNum = ClickNum == clickTextPool.Length - 1 ? 0 : ClickNum + 1;
+        //pointSt = transform.GetChild(0).transform.GetChild(Random.Range(0, 3)).position;
+        //Debug.Log(pointSt);
+        //GameObject expPr = (GameObject)Instantiate(plusXP, pointSt, Quaternion.identity);
+        //expPr.GetComponentInChildren<Text>().text = "+" + expD.ToString() + "xp";
 
     }
 
@@ -286,7 +299,7 @@ class Computer : MonoBehaviour
         Computer last;
         int i = 0;
         while (!miners.transform.GetChild(i).GetComponent<Computer>().isFarm) i++;
-        last = miners.transform.GetChild(i-1).GetComponent<Computer>();
+        last = miners.transform.GetChild(i - 1).GetComponent<Computer>();
         last.isReady = true;
         last.unblock();
     }
@@ -330,12 +343,12 @@ class Computer : MonoBehaviour
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString() + "xp";
         p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
         g.money = g.money - bonusCost;
-        g.moneyText.text = "$"+g.money.ToString("0.#0");
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
         bonusCost = bonusCost * bonusCostD;
         autoMiner.autoProfit = autoMiner.autoProfit - bonus;
         bonus = bonus * bonusD;
         autoMiner.autoProfit = autoMiner.autoProfit + bonus;
-        bonusText.text = "$"+(bonusCost).ToString("0.#0");
+        bonusText.text = "$" + (bonusCost).ToString("0.#0");
         //Вылетающие бонусы
         pointSt = transform.GetChild(0).transform.GetChild(UnityEngine.Random.Range(0, 3)).position;
         GameObject expPr = (GameObject)Instantiate(plusXP, pointSt, Quaternion.identity);
@@ -349,7 +362,7 @@ class Computer : MonoBehaviour
         if ((!g.gameObject.GetComponent<Achievment>().achievment[1].get) && g.sumMoney >= 5000f) g.gameObject.GetComponent<Achievment>().unlockAch(1);
         if ((!g.gameObject.GetComponent<Achievment>().achievment[1].get) && g.sumMoney >= 1000000000f) g.gameObject.GetComponent<Achievment>().unlockAch(9);
         currency = 0;
-        g.moneyText.text = "$"+ g.money.ToString("0.#0");
+        g.moneyText.text = "$" + g.money.ToString("0.#0");
     }
     public void BuyAutoMiner()
     {
@@ -415,7 +428,7 @@ class Computer : MonoBehaviour
                 }
                 else
                 {
-                    int d = (int)((1 - ((autoMiner.autoTime - autoMiner.timeBonus)/5)) * 10);
+                    int d = (int)((1 - ((autoMiner.autoTime - autoMiner.timeBonus) / 5)) * 10);
                     progressCounter1 = progressCounter1 + d;
                 }
             }
@@ -444,7 +457,7 @@ class Computer : MonoBehaviour
                     currency = currency + autoMiner.autoProfit;
                     this.cur.sum += autoMiner.autoProfit;
                 }
-                
+
                 if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
                 p1.fillAmount = (float)progressCounter1 / 100;
                 progressText.text = progressCounter1.ToString() + "%";
@@ -513,13 +526,14 @@ class Computer : MonoBehaviour
                     changeBuyButtons();
                 }
             }
-            if ((autoMiner.autoTime - autoMiner.timeBonus) < 0.57f) {
+            if ((autoMiner.autoTime - autoMiner.timeBonus) < 0.57f)
+            {
                 infPref.SetActive(true);
                 progressText.text = "Скорость света";
             }
             else
             {
-               infPref.SetActive(false);
+                infPref.SetActive(false);
             }
 
             if (g.isTimeBoosterOn)
@@ -575,7 +589,7 @@ class Computer : MonoBehaviour
         upgradePoints--;
         offProfit = offProfit + (offProfit / 100) * offProfitBonus;
         offProfitBonus = offProfitBonus - offProfitBonusD;
-        checkUpgradeButtons();  
+        checkUpgradeButtons();
         g.improvementWin.transform.Find("Background/UpgradeGroup/NightUpgrade/Text_count_n").GetComponent<Text>().text = "+" + offProfitBonus.ToString() + "%";
         updateUp();
     }
@@ -641,7 +655,7 @@ class Computer : MonoBehaviour
         bool wasReady = isReady;
         Computer pr1 = prevComp1.GetComponent<Computer>();
         if (checkIsReady() && isReady) isReady = true;
-        else isReady = checkIsReady() && (pr1.isReady || (isFarm && g.farmCount!=0) || (isFarm && checkLast()));
+        else isReady = checkIsReady() && (pr1.isReady || (isFarm && g.farmCount != 0) || (isFarm && checkLast()));
         try
         {
             Computer next = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() + 1).gameObject.GetComponent<Computer>();
@@ -657,7 +671,7 @@ class Computer : MonoBehaviour
             }
             if (isReady)
             {
-                if (next.checkIsReady()&&(!isFarm)) next.unblock();
+                if (next.checkIsReady() && (!isFarm)) next.unblock();
                 else
                 {
                     if (isFarm && !wasReady)
@@ -748,6 +762,9 @@ class Computer : MonoBehaviour
 
     public void openCloseImprovementWin()
     {
+        changeBuyButtons();
+        print("OpenPanel");
+        g.improvementWin.SetActive(!g.improvementWin.activeSelf);
         if (!autoMiner.isBoughtAuto)
         {
             g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost);
@@ -767,7 +784,7 @@ class Computer : MonoBehaviour
             float profit = 0;
             if (g.isTimeBoosterOn)
             {
-                g.time.text = ((autoMiner.autoTime - autoMiner.timeBonus)/5).ToString("0.#0") + " СЕК";
+                g.time.text = ((autoMiner.autoTime - autoMiner.timeBonus) / 5).ToString("0.#0") + " СЕК";
                 time = (autoMiner.autoTime - autoMiner.timeBonus) / 5;
             }
             else
@@ -775,7 +792,7 @@ class Computer : MonoBehaviour
                 g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
                 time = (autoMiner.autoTime - autoMiner.timeBonus);
             }
-            
+
             if (g.isProfitBoosterOn)
             {
                 g.pribyl.text = cur.getName() + " " + (autoMiner.autoProfit * 5).ToString("#0.###0");
@@ -829,7 +846,7 @@ class Computer : MonoBehaviour
         g.levelText.text = "Уровень: " + level.ToString();
         g.nameText.text = nameComp;
         g.compId = gameObject.transform.GetSiblingIndex();
-        
+
         g.fill.fillAmount = (float)progressCounter2 / (float)upgradeCost;
         g.prBarText.text = "XP " + progressCounter2.ToString() + " / " + upgradeCost.ToString();
         g.improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade/Text_count_pr").GetComponent<Text>().text = "+" + profiteUpgrade.ToString() + "%";
@@ -884,8 +901,7 @@ class Computer : MonoBehaviour
             A.transform.Find("BuyUsed").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, false, A); });
         }
         //updateUp();//обновление очков улучшений
-        changeBuyButtons();
-        g.improvementWin.SetActive(!g.improvementWin.activeSelf);
+
     }
 
     //мощность компьютера в процентах
@@ -976,7 +992,7 @@ class Computer : MonoBehaviour
         part.transform.Find("BuyUsed").gameObject.GetComponent<Button>().interactable = false;
         g.moneyText.text = "$" + g.money.ToString("0.#0");
         changeBuyButtons();
-        
+
         if (autoMiner.isBoughtAuto)
         {
             efficiency = getEfficiency();
@@ -984,7 +1000,7 @@ class Computer : MonoBehaviour
             g.time.text = (autoMiner.autoTime - autoMiner.timeBonus).ToString("0.#0") + " СЕК";
             g.sr_pr.text = ((autoMiner.autoProfit) / (autoMiner.autoTime - autoMiner.timeBonus)).ToString("#0.###0") + " " + cur.getName() + " / СЕК";
         }
-        
+
         g.partCount++;
         if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
         if (!isReady) unblock();
@@ -999,7 +1015,7 @@ class Computer : MonoBehaviour
         masIsBought = new bool[g.typesOfParts.Length];
         if (compParts.Length != 0)
         {
-            for (int i=0; i < masIsBought.Length; i++)
+            for (int i = 0; i < masIsBought.Length; i++)
             {
                 masIsBought[i] = false;
             }

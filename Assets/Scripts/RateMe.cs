@@ -16,6 +16,7 @@ public class RateMe : MonoBehaviour
 
     public void RateMePleaseBitchExit()
     {
+        //Сюда код перед закрытием (ссылка на ГП)
         gameObject.GetComponent<Animator>().SetBool("exit", true);
     }
 }

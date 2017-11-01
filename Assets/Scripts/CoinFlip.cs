@@ -15,6 +15,7 @@ public class CoinFlip : MonoBehaviour {
     public GameObject dollarAnim;
     public GameObject Layer;
 
+   
 
     public float _bet;
 
@@ -28,8 +29,8 @@ public class CoinFlip : MonoBehaviour {
         btn.interactable = true;
         Layer.GetComponent<Animator>().SetBool("win", false);
     }
-   
 
+   
     public void BetRange()
     {        
         _betText.text = "$"+(conversionFunction(gameObject.GetComponent<Game>().money * sld.value)).ToString();

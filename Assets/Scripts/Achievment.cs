@@ -17,7 +17,7 @@ public class Achievment : MonoBehaviour
     public GameObject Casino; // окно казино
     public GameObject Store; // окно магаза
     public GameObject Achiev; // окно достижений и задач
-    public GameObject _settings; // окно достижений и задач
+    public GameObject _settings; // окно настроек
     public Achievment_sys[] achievment; // менеджер по задачам
     public Sprite BuyBtn_green, BuyBtn_gray; // это кнопки "купить"/"не купить"
     public Store_manager[] _store; // менеджер магазина
@@ -84,32 +84,26 @@ public class Achievment : MonoBehaviour
     //Все завязано на Menu_down. Он управляет вызовом всех панелек
     public void Settings() // вызываем по кнопке магазина внизу 
     {
+        gameObject.GetComponent<CoinFlip>().SetDefault();
+        _settings.SetActive(true);
+        Header.SetActive(false);
+        Casino.SetActive(false);
+        Store.SetActive(false);
+        Achiev.SetActive(false);
+        
         _settings.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Gradient_settings;
         _settings.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Settings_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
-
-        Menu_down.GetComponent<Animator>().SetBool("settings", true);
-        Menu_down.GetComponent<Animator>().SetBool("store", false);
-        Menu_down.GetComponent<Animator>().SetBool("casino", false);
-        Menu_down.GetComponent<Animator>().SetBool("achievment", false);
-
+        
     }
 
     public void Store_set() // вызываем по кнопке магазина внизу 
     {
-        Menu_down.GetComponent<Animator>().SetBool("store", true);
-        Menu_down.GetComponent<Animator>().SetBool("settings", false);
-        Menu_down.GetComponent<Animator>().SetBool("casino", false);
-        Menu_down.GetComponent<Animator>().SetBool("achievment", false);
-        //if (Casino.activeSelf)
-        //{
-        //    Menu_down.GetComponent<Animator>().SetBool("casino", false);
-        //}
-        //else if (Achiev.activeSelf)
-        //{
-        //    Menu_down.GetComponent<Animator>().SetBool("achievment", false);
-        //}
-
-
+        gameObject.GetComponent<CoinFlip>().SetDefault();
+        Header.SetActive(true);
+        Casino.SetActive(false);
+        Store.SetActive(true);
+        Achiev.SetActive(false);
+        _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_store; // задаем шапку
         Header.transform.GetChild(1).GetComponent<Text>().text = "МАГАЗИН"; // левый текст
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Store_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
@@ -151,11 +145,12 @@ public class Achievment : MonoBehaviour
     //АНАЛОГИЧНО ВНИЗУ ДЛЯ АЧИВОК
     public void Achievment_set()
     {
-
-        Menu_down.GetComponent<Animator>().SetBool("settings", false);
-        Menu_down.GetComponent<Animator>().SetBool("store", false);
-        Menu_down.GetComponent<Animator>().SetBool("casino", false);
-        Menu_down.GetComponent<Animator>().SetBool("achievment", true);
+        gameObject.GetComponent<CoinFlip>().SetDefault();
+        Header.SetActive(true);
+        Casino.SetActive(false);
+        Store.SetActive(false);
+        Achiev.SetActive(true);
+        _settings.SetActive(false);
 
         Header.GetComponent<Image>().sprite = Gradient_achievment;
         Header.transform.GetChild(1).GetComponent<Text>().text = "ЗАДАНИЯ";
@@ -190,18 +185,13 @@ public class Achievment : MonoBehaviour
 
     public void CasinoPlay()
     {
-        Menu_down.SetActive(true);
-        Menu_down.GetComponent<Animator>().SetBool("casino", true);
-        //Menu_down.GetComponent<Animator>().SetBool("store", false);
-        Menu_down.GetComponent<Animator>().SetBool("settings", false);
-        Menu_down.GetComponent<Animator>().SetBool("store", false);
-        Menu_down.GetComponent<Animator>().SetBool("casino", false);
-        Menu_down.GetComponent<Animator>().SetBool("achievment", false);
-
-
+        Header.SetActive(true);
+        Casino.SetActive(true);
+        Store.SetActive(false);
+        Achiev.SetActive(false);
+        _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_casino;
-        Header.transform.GetChild(1).GetComponent<Text>().text = "Coin Flip";
-        // CurrencyOff();
+        Header.transform.GetChild(1).GetComponent<Text>().text = "Coin Flip";       
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Jackpot/Icon_Bg/Icon").GetComponent<Image>().sprite;
     }
     //Открытие достижения
