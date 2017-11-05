@@ -576,6 +576,7 @@ public static class JsonHelper
 }
 
 //Класс Криптовалюты
+[System.Serializable]
 public class Currency
 {
     private string name;

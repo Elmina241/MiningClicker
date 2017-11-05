@@ -181,7 +181,7 @@ class Computer : MonoBehaviour
 
         g.clickCounter++;
         if (g.clickCounter == 100) g.gameObject.GetComponent<Achievment>().unlockAch(0);
-        if (g.clickCounter == 10000) g.gameObject.GetComponent<Achievment>().unlockAch(7);
+        if (g.clickCounter == 10000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
         if (g.clickCounter == 1000)
         {
             g.rateWin.SetActive(true);
@@ -204,7 +204,7 @@ class Computer : MonoBehaviour
                 this.cur.sum += bonus;
             }
 
-            if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
+            if ((!g.gameObject.GetComponent<Achievment>().achievment[5].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(5);
             progressCounter++;
             if (g.isAutoExchangerOn)
             {
@@ -215,7 +215,7 @@ class Computer : MonoBehaviour
         {
             level++;
             LevelUp();
-            if (isFarm && level == 10 && (!g.gameObject.GetComponent<Achievment>().achievment[8].get)) g.gameObject.GetComponent<Achievment>().unlockAch(8);
+            if (isFarm && level == 10 && (!g.gameObject.GetComponent<Achievment>().achievment[7].get)) g.gameObject.GetComponent<Achievment>().unlockAch(7);
             if (maxClick > 1) maxClick--;
             progressCounter2 = progressCounter2 % upgradeCost;
             upgradePoints++;
@@ -242,7 +242,7 @@ class Computer : MonoBehaviour
                         p.isBroken = false;
                         g.moneyText.text = "$" + g.money.ToString("0.#0");
                         g.partCount++;
-                        if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
+                        if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(4);
                         checkInteractable();
                     }
                 }
@@ -360,7 +360,7 @@ class Computer : MonoBehaviour
         g.money = (g.money + currency * cur.getExchRate());
         g.sumMoney = (g.sumMoney + currency * cur.getExchRate());
         if ((!g.gameObject.GetComponent<Achievment>().achievment[1].get) && g.sumMoney >= 5000f) g.gameObject.GetComponent<Achievment>().unlockAch(1);
-        if ((!g.gameObject.GetComponent<Achievment>().achievment[1].get) && g.sumMoney >= 1000000000f) g.gameObject.GetComponent<Achievment>().unlockAch(9);
+        if ((!g.gameObject.GetComponent<Achievment>().achievment[1].get) && g.sumMoney >= 1000000000f) g.gameObject.GetComponent<Achievment>().unlockAch(8);
         currency = 0;
         g.moneyText.text = "$" + g.money.ToString("0.#0");
     }
@@ -458,7 +458,7 @@ class Computer : MonoBehaviour
                     this.cur.sum += autoMiner.autoProfit;
                 }
 
-                if ((!g.gameObject.GetComponent<Achievment>().achievment[6].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(6);
+                if ((!g.gameObject.GetComponent<Achievment>().achievment[5].get) && cur.sum >= 1000) g.gameObject.GetComponent<Achievment>().unlockAch(5);
                 p1.fillAmount = (float)progressCounter1 / 100;
                 progressText.text = progressCounter1.ToString() + "%";
                 progressCounter++;
@@ -485,7 +485,7 @@ class Computer : MonoBehaviour
                             p.isBroken = false;
                             g.moneyText.text = "$" + g.money.ToString("0.#0");
                             g.partCount++;
-                            if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
+                            if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(4);
                             checkInteractable();
                         }
                     }
@@ -678,13 +678,13 @@ class Computer : MonoBehaviour
                     {
                         g.farmCount++;
                         blockLast();
-                        if (g.farmCount == 1 && !g.gameObject.GetComponent<Achievment>().achievment[3].get)
+                        if (g.farmCount == 1 && !g.gameObject.GetComponent<Achievment>().achievment[2].get)
+                        {
+                            g.gameObject.GetComponent<Achievment>().unlockAch(2);
+                        }
+                        if (g.farmCount == 3 && !g.gameObject.GetComponent<Achievment>().achievment[3].get)
                         {
                             g.gameObject.GetComponent<Achievment>().unlockAch(3);
-                        }
-                        if (g.farmCount == 3 && !g.gameObject.GetComponent<Achievment>().achievment[4].get)
-                        {
-                            g.gameObject.GetComponent<Achievment>().unlockAch(4);
                         }
                     }
                     block.SetActive(false);
@@ -724,9 +724,9 @@ class Computer : MonoBehaviour
                 {
                     g.farmCount++;
                     blockLast();
-                    if (g.farmCount == 3 && !g.gameObject.GetComponent<Achievment>().achievment[4].get)
+                    if (g.farmCount == 3 && !g.gameObject.GetComponent<Achievment>().achievment[3].get)
                     {
-                        g.gameObject.GetComponent<Achievment>().unlockAch(4);
+                        g.gameObject.GetComponent<Achievment>().unlockAch(3);
                     }
                 }
                 block.SetActive(false);
@@ -879,11 +879,13 @@ class Computer : MonoBehaviour
         if (compParts.Length == 0)
         {
             g.improvementWin.transform.Find("Background/Description_parts/Text").GetComponent<Text>().text = "";
-            g.autoRepairButton.gameObject.transform.parent.gameObject.SetActive(false);
+            g.autoRepairButton.gameObject.transform.parent.parent.gameObject.SetActive(false);
+            g.improvementWin.transform.GetChild(1).GetChild(7).gameObject.SetActive(false);
         }
         else
         {
-            g.autoRepairButton.gameObject.transform.parent.gameObject.SetActive(true);
+            g.autoRepairButton.gameObject.transform.parent.parent.gameObject.SetActive(true);
+            g.improvementWin.transform.GetChild(1).GetChild(7).gameObject.SetActive(true);
             g.improvementWin.transform.Find("Background/Description_parts/Text").GetComponent<Text>().text = "Компоненты компьютера";
         }
         for (int i = 0; i < compParts.Length; i++)
@@ -1002,7 +1004,7 @@ class Computer : MonoBehaviour
         }
 
         g.partCount++;
-        if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(5);
+        if (g.partCount == 100) g.gameObject.GetComponent<Achievment>().unlockAch(4);
         if (!isReady) unblock();
         checkInteractable();
     }
