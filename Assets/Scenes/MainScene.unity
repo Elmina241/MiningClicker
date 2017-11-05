@@ -4671,7 +4671,7 @@ RectTransform:
   m_Children:
   - {fileID: 1497425846}
   m_Father: {fileID: 788906130}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 233.2, y: 0.0000009536743}
@@ -6942,7 +6942,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 362121044}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1210977839}
+        m_MethodName: SwitchButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1210977835}
+        m_MethodName: Settings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &362121044
@@ -7970,7 +7992,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 428650680}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1210977839}
+        m_MethodName: SwitchButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1210977835}
+        m_MethodName: Settings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &428650680
@@ -13792,8 +13836,8 @@ RectTransform:
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 915040067}
   - {fileID: 219845147}
+  - {fileID: 915040067}
   - {fileID: 522034777}
   m_Father: {fileID: 530590970}
   m_RootOrder: 2
@@ -15761,7 +15805,7 @@ GameObject:
   - 222: {fileID: 915040069}
   - 114: {fileID: 915040068}
   m_Layer: 5
-  m_Name: Sounds
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15780,7 +15824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 788906130}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -202, y: -0.027001023}
@@ -20971,6 +21015,7 @@ GameObject:
   - 114: {fileID: 1210977836}
   - 114: {fileID: 1210977837}
   - 114: {fileID: 1210977838}
+  - 114: {fileID: 1210977839}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -21299,7 +21344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hours: 0
   _minutes: 0
-  _sec: 30
+  _sec: 60
   g: {fileID: 2126435108}
   gObj: {fileID: 1210977833}
   spr: {fileID: 21300000, guid: 6a38fd0f2a92fe0418109dc84ec4e170, type: 3}
@@ -21346,6 +21391,17 @@ MonoBehaviour:
   workTimeT: 15
   ProfitBoosterButton: {fileID: 344619255}
   TimeBoosterButton: {fileID: 1773982121}
+--- !u!114 &1210977839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210977832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc2ff64784c2ba41bc60c42e7bef70c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1227371824
 GameObject:
   m_ObjectHideFlags: 0
@@ -29851,8 +29907,8 @@ RectTransform:
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1962109642}
   - {fileID: 2089948682}
+  - {fileID: 1962109642}
   - {fileID: 428650678}
   - {fileID: 362121042}
   m_Father: {fileID: 530590970}
@@ -31491,9 +31547,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1210977835}
-        m_MethodName: exit
-        m_Mode: 1
+      - m_Target: {fileID: 1055936277}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -33268,7 +33324,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1724084939}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -202, y: -0.026981354}
@@ -34731,7 +34787,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1724084939}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -1.0999985}

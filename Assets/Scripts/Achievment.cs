@@ -90,7 +90,12 @@ public class Achievment : MonoBehaviour
         Casino.SetActive(false);
         Store.SetActive(false);
         Achiev.SetActive(false);
-        
+        //ЛОКАЛИЗАЦИЯ
+        _settings.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[3];
+        _settings.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[0];//перевод звуков
+        _settings.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[1];//перевод музыки
+        _settings.transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[2];//перевод языка
+
         _settings.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Gradient_settings;
         _settings.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Settings_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
         
@@ -105,7 +110,7 @@ public class Achievment : MonoBehaviour
         Achiev.SetActive(false);
         _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_store; // задаем шапку
-        Header.transform.GetChild(1).GetComponent<Text>().text = "МАГАЗИН"; // левый текст
+        Header.transform.GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[1];//"МАГАЗИН"; // левый текст
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Store_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
 
 
@@ -153,7 +158,7 @@ public class Achievment : MonoBehaviour
         _settings.SetActive(false);
 
         Header.GetComponent<Image>().sprite = Gradient_achievment;
-        Header.transform.GetChild(1).GetComponent<Text>().text = "ЗАДАНИЯ";
+        Header.transform.GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[2]; //"ЗАДАНИЯ";
         //  CurrencyOff();
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Achievment_btn/Icon_Bg/Icon").GetComponent<Image>().sprite;
 
@@ -191,7 +196,7 @@ public class Achievment : MonoBehaviour
         Achiev.SetActive(false);
         _settings.SetActive(false);
         Header.GetComponent<Image>().sprite = Gradient_casino;
-        Header.transform.GetChild(1).GetComponent<Text>().text = "Coin Flip";       
+        Header.transform.GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[0];//"Coin Flip";       
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Jackpot/Icon_Bg/Icon").GetComponent<Image>().sprite;
     }
     //Открытие достижения

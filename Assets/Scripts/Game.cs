@@ -53,43 +53,36 @@ public class Game : MonoBehaviour
 
     [Header("Имена компонентов")]
     [Space(4)]
-    public string[] NameOfCPU = new string[7] { "Intel® Pentium G4560 3500 GHz", "Intel® Core™i3-7100 3900 GHz", "Intel® Core™i5-7500 3400 GHz",
-    "Intel® Core™i5-7500 3400 GHz", "Intel® Core™i7-6900K 3200 GHz", "Intel® Core™i7-6700K 4000 GHz", "Intel® Xeon E5-2650v4 2200 GHz"};
+    public string[] NameOfCPU;
 
-    public string[] NameOfGPU = new string[7] { "NVidia GF GTX 1050 Ti", "NVidia GF GTX 1050 Ti", "Palit GF GTX 1060 STORMX",
-    "Asus GF GTX 1070 TURBO", "NVidia GF GTX 1080 Ti" , "NVidia GF GTX 1080 Ti", "NVidia GF GTX 1080 Ti" };
+    public string[] NameOfGPU;
 
-    public string[] NameOfMotherboard = new string[7] { "ASUS H110M-A/M.2", "ASRock H270 PRO4", "MSI B250M PRO-VD", "MSI H270 GAMING M3",
-    "MSI X99A SLI PLUS", "MSI Z170M MORTAR", "ASUS Z10PE-D16 WS"};
+    public string[] NameOfMotherboard;
 
-    public string[] NameOfPower = new string[7] { "Thermaltake TR2 S 350W", "Cougar A 400W", "Zalman TX 500W", "Seasonic Prime 650W",
-    "Corsair AX860 860W", "CoolerMaster V1000 1000W", "Corsair AXi 1200W" };
+    public string[] NameOfPower;
 
-    public string[] NameOfSSD = new string[7] { "SiliconPower Slim S60 60 Gb", "SiliconPower Slim S70 120 Gb", "Kingston HyperX SAVAGE 240 Gb",
-    "Crucial Micron 5100 MAX 480 Gb", "Transcend SSD370s 512 Gb", "Intel 750 Series 800 Gb", "Corsair Neutron XT 960 Gb" };
+    public string[] NameOfSSD;
 
-    public string[] NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
-    "ID-Cooling SE-204K", "Scythe Mugen 5",  "Thermaltake Pacific RL140", "CoolerMaster Master V8" };
+    public string[] NameOfCooling;
 
-    public string[] NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 4 Gb",
-    "Kingston HyperX FURY 8 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
+    public string[] NameOfRAM;
 
     [Space(4)]
     [Header("Цены компонентов")]
 
-    public int[] PriceOfCPU = new int[7] { 94, 146, 241, 241, 1056, 396, 1370 }; // в $
+    public int[] PriceOfCPU; // в $
 
-    public int[] PriceOfGPU = new int[7] { 157, 157, 278, 488, 844, 844, 844 };
+    public int[] PriceOfGPU;
 
-    public int[] PriceOfMotherboard = new int[7] { 58, 98, 53, 112, 177, 91, 462 };
+    public int[] PriceOfMotherboard;
 
-    public int[] PriceOfPower = new int[7] { 39, 55, 64, 272, 206, 260, 456 };
+    public int[] PriceOfPower;
 
-    public int[] PriceOfSSD = new int[7] { 63, 88, 158, 412, 282, 990, 660 };
+    public int[] PriceOfSSD;
 
-    public int[] PriceOfCooling = new int[7] { 16, 25, 34, 52, 66, 344, 129 };
+    public int[] PriceOfCooling;
 
-    public int[] PriceOfRAM = new int[7] { 18, 56, 92, 132, 332, 405, 905 };
+    public int[] PriceOfRAM;
 
     private void Awake()
     {
