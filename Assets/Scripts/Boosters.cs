@@ -35,10 +35,12 @@ public class Boosters : MonoBehaviour {
             if (!ProfitBoosterButton.GetComponent<Button>().interactable)
             {
                 ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeP + workTimeP) - (System.DateTime.Now - lastStartProfit).Seconds).ToString("0#");
+                ProfitBoosterButton.GetComponent<Image>().sprite = GetComponent<Achievment>().BuyBtn_gray;
             }
             else
             {
-                ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "Включить";
+                ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[2]; //"Включить";
+                ProfitBoosterButton.GetComponent<Image>().sprite = GetComponent<Achievment>().Btn_violet;
             }
         }
 
@@ -49,10 +51,12 @@ public class Boosters : MonoBehaviour {
             if (!TimeBoosterButton.GetComponent<Button>().interactable)
             {
                 TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeT + workTimeT) - (System.DateTime.Now - lastStartTime).Seconds).ToString("0#");
+                TimeBoosterButton.GetComponent<Image>().sprite = GetComponent<Achievment>().BuyBtn_gray;
             }
             else
             {
-                TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "Включить";
+                TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[2]; //"Включить";
+                TimeBoosterButton.GetComponent<Image>().sprite = GetComponent<Achievment>().Btn_violet;
             }
         }
     }

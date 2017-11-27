@@ -19,7 +19,7 @@ public class Achievment : MonoBehaviour
     public GameObject Achiev; // окно достижений и задач
     public GameObject _settings; // окно настроек
     public Achievment_sys[] achievment; // менеджер по задачам
-    public Sprite BuyBtn_green, BuyBtn_gray; // это кнопки "купить"/"не купить"
+    public Sprite BuyBtn_green, BuyBtn_gray, Btn_violet; // это кнопки "купить"/"не купить"
     public Store_manager[] _store; // менеджер магазина
     public Game g;
     public Text expCount;
@@ -29,6 +29,7 @@ public class Achievment : MonoBehaviour
     public bool _curS;
     AnimatorRecorderMode recorderMode;
     public GameObject m;
+    Transform achiev, set, store;
     ////////////////////////////////////////////////
     ///                                          ///
     ///                                          ///
@@ -38,48 +39,21 @@ public class Achievment : MonoBehaviour
     ///                                          ///
     ///                                          /// 
     ////////////////////////////////////////////////
-
-    public void exit()
+    private void Start()
     {
-        if (Casino.activeSelf)
-        {
-            Menu_down.GetComponent<Animator>().SetBool("casino", false);
-        }
-        else if (Store.activeSelf)
-        {
-            Menu_down.GetComponent<Animator>().SetBool("store", false);
-        }
-        else if (Achiev.activeSelf)
-        {
-            Menu_down.GetComponent<Animator>().SetBool("achievment", false);
-        }
-        else if (_settings.activeSelf)
-        {
-            Menu_down.GetComponent<Animator>().SetBool("settings", false);
-        }
-
+        achiev = Achiev.transform.GetChild(0);
+        set = _settings.transform.GetChild(0);
+        store = Store.transform.GetChild(0);
     }
+
 
     void AnimationComplete()
     {
         _currency.SetActive(false);
     }
 
-    //public void CurrencyOff()
-    //{              
-    //    _currency.GetComponent<Animator>().SetBool("Set", false);             
-    //}
 
-    //public void Currency()
-    //{
-    //    if (m.activeSelf)
-    //    {
-    //        m.SetActive(false);
-    //    }
-    //    _currency.SetActive(true);
-    //    _currency.GetComponent<Animator>().SetBool("Set", true);
-    //}
-
+    
     //Ниже пойдет вызов кучи анимаций
     //Все завязано на Menu_down. Он управляет вызовом всех панелек
     public void Settings() // вызываем по кнопке магазина внизу 
@@ -91,14 +65,18 @@ public class Achievment : MonoBehaviour
         Store.SetActive(false);
         Achiev.SetActive(false);
         //ЛОКАЛИЗАЦИЯ
-        _settings.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[3];
-        _settings.transform.GetChild(0).GetChild(1).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[0];//перевод звуков
-        _settings.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[1];//перевод музыки
-        _settings.transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[2];//перевод языка
+        set.GetChild(0).GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[3];
+        set.GetChild(1).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[0];//перевод звуков
+        set.GetChild(2).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[1];//перевод музыки
+        set.GetChild(3).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[2];//перевод языка
+        set.GetChild(4).GetChild(1).GetComponent<Text>().text = LangSystem.lng.windows[3]; // Оценить игру
+        set.GetChild(5).GetChild(1).GetChild(0).GetComponent<Text>().text = LangSystem.lng.settingsParam[3]; // Мы в вк
 
-        _settings.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Gradient_settings;
-        _settings.transform.GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Settings_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
-        
+
+
+        set.GetChild(0).GetComponent<Image>().sprite = Gradient_settings;
+        set.GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Settings_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
+
     }
 
     public void Store_set() // вызываем по кнопке магазина внизу 
@@ -116,35 +94,41 @@ public class Achievment : MonoBehaviour
 
         for (int i = 0; i < _store.Length; i++) // чекаем детей
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>().icon.sprite = _store[i].icon; // устанавливаем иконку
-            Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>()._header.text = _store[i]._header.ToUpper(); // заголовок в верхнем регистре
-            Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>()._description.text = _store[i]._description.ToUpper(); // описание в верхнем регистре
-            Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>().isReal = _store[i].isReal; // передаем переменную, отвечающую за реальные бабосики
-            Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>()._priceGame = _store[i].priceGame; // передаем игровую цену
-            Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>()._priceReal = _store[i].priceReal; // передаем цену за рублики
+            store.GetChild(0).GetChild(i).GetComponent<Store_pref>().icon.sprite = _store[i].icon; // устанавливаем иконку
+            store.GetChild(0).GetChild(i).GetComponent<Store_pref>()._header.text = LangSystem.lng.storeArrHeader[i]; //_store[i]._header.ToUpper(); // заголовок в верхнем регистре
+            store.GetChild(0).GetChild(i).GetComponent<Store_pref>()._description.text = LangSystem.lng.storeArrDescription[i]; //_store[i]._description.ToUpper(); // описание в верхнем регистре
+            store.GetChild(0).GetChild(i).GetComponent<Store_pref>().isReal = _store[i].isReal; // передаем переменную, отвечающую за реальные бабосики
+            store.GetChild(0).GetChild(i).GetComponent<Store_pref>()._priceGame = _store[i].priceGame; // передаем игровую цену
+            store.GetChild(0).GetChild(i).GetComponent<Store_pref>()._priceReal = _store[i].priceReal; // передаем цену за рублики
+            store.GetChild(0).GetChild(i).GetChild(4).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[4];
             if (_store[i].isBought) // если товар куплен
             {
-                Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>().isBought = _store[i].isBought; // передаем параметр покупки true
-                Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
-                Store.transform.GetChild(0).GetChild(0).GetChild(i).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;// меняем кнопку на серую
-                Store.transform.GetChild(0).GetChild(0).GetChild(i).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПЛЕНО"; // пишем что-то              
+                store.GetChild(0).GetChild(i).GetComponent<Store_pref>().isBought = _store[i].isBought; // передаем параметр покупки true
+                store.GetChild(0).GetChild(i).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+                store.GetChild(0).GetChild(i).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;// меняем кнопку на серую
+                store.GetChild(0).GetChild(i).GetChild(6).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[1];//"КУПЛЕНО"; // пишем что-то              
             }
             else
             {
-                Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>().isBought = _store[i].isBought; // все то же самое, но наоборот
-                Store.transform.GetChild(0).GetChild(0).GetChild(i).GetComponent<Store_pref>().Btn.sprite = BuyBtn_green;
-                Store.transform.GetChild(0).GetChild(0).GetChild(i).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПИТЬ";
+                store.GetChild(0).GetChild(i).GetComponent<Store_pref>().isBought = _store[i].isBought; // все то же самое, но наоборот
+                store.GetChild(0).GetChild(i).GetComponent<Store_pref>().Btn.sprite = BuyBtn_green;
+                store.GetChild(0).GetChild(i).GetChild(6).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[0];//"КУПИТЬ";
             }
 
         }
-        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = _store[2].isBought;
+        store.GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = _store[2].isBought;
+        // store.GetChild(0).GetChild(2).GetChild(8).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[3];
         if (_store[2].isBought)
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().color = new Color(19f, 255f, 0f, 255f);
+            store.GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            store.GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().sprite = Btn_violet;
+            store.GetChild(0).GetChild(2).GetChild(8).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[3];
         }
         else
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().color = new Color(255f, 255f, 255f, 255f);
+            store.GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().color = new Color32(182, 182, 182, 255);
+            store.GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().sprite = BuyBtn_gray;
+            store.GetChild(0).GetChild(2).GetChild(8).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[2];
         }
     }
     //АНАЛОГИЧНО ВНИЗУ ДЛЯ АЧИВОК
@@ -159,30 +143,35 @@ public class Achievment : MonoBehaviour
 
         Header.GetComponent<Image>().sprite = Gradient_achievment;
         Header.transform.GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[2]; //"ЗАДАНИЯ";
+
         //  CurrencyOff();
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Achievment_btn/Icon_Bg/Icon").GetComponent<Image>().sprite;
-
+        //ПЕРЕВОДЫ ПАНЕЛИ АЧИВОК
+        achiev.GetChild(0).GetChild(1).GetComponent<Text>().text = LangSystem.lng.achievementText[0]; // ТОП-100 лучших
+        achiev.GetChild(1).GetChild(0).GetComponent<Text>().text = LangSystem.lng.achievementText[1]; // описание
+        achiev.GetChild(2).GetChild(0).GetComponent<Text>().text = LangSystem.lng.achievementText[2]; // ваши очки
+        achiev.GetChild(2).GetChild(2).GetChild(0).GetComponent<Text>().text = LangSystem.lng.achievementText[3]; //след.награда
+        achiev.GetChild(2).GetChild(4).GetComponent<Text>().text = LangSystem.lng.achievementText[4]; // требуется
         for (int i = 0; i < achievment.Length; i++)
         {
-            Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().icon.sprite = achievment[i].icon;// устанавливаем иконку
-            Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>()._header.text = achievment[i]._header.ToUpper();// заголовок в верхнем регистре
-            Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>()._description.text = achievment[i]._description.ToUpper();// описание в верхнем регистре
-            Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>()._award = achievment[i].award; //передаем награду в префаб
+            achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>().icon.sprite = achievment[i].icon;// устанавливаем иконку achArrHeader
+            achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>()._header.text = LangSystem.lng.achArrHeader[i].ToUpper(); //achievment[i]._header.ToUpper();// заголовок в верхнем регистре
+            achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>()._description.text = LangSystem.lng.achArrDescrip[i].ToUpper();//achievment[i]._description.ToUpper();// описание в верхнем регистре
+            achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>()._award = achievment[i].award; //передаем награду в префаб
+            achiev.GetChild(3).GetChild(i).GetChild(4).GetComponent<Text>().text = LangSystem.lng.achievementText[5]; // награда
             if (achievment[i].get)
             {
-                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().get = achievment[i].get; // передаем параметр ПОЛУЧЕНО true 
-                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.sprite = _received; // устанавливаем спрайт галочки
-                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.color = yes; // делаем ее зеленой
+                achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>().get = achievment[i].get; // передаем параметр ПОЛУЧЕНО true 
+                achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.sprite = _received; // устанавливаем спрайт галочки
+                achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.color = yes; // делаем ее зеленой
             }
             else
             {
-                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().get = achievment[i].get;
-                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.sprite = _N_received; // устанавливаем спрайт крестика
-                Achiev.transform.GetChild(0).GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.color = not; // делаем его серым
+                achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>().get = achievment[i].get;
+                achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.sprite = _N_received; // устанавливаем спрайт крестика
+                achiev.GetChild(3).GetChild(i).GetComponent<Ach_pref>().check.color = not; // делаем его серым
             }
-
         }
-
         expCount.text = g.exp.ToString();
         reward.text = "$ " + g.reward.ToString();
         rewardCost.text = g.rewardCost.ToString();
@@ -198,6 +187,7 @@ public class Achievment : MonoBehaviour
         Header.GetComponent<Image>().sprite = Gradient_casino;
         Header.transform.GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[0];//"Coin Flip";       
         Header.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Jackpot/Icon_Bg/Icon").GetComponent<Image>().sprite;
+        Casino.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(5).GetChild(0).GetComponent<Text>().text = LangSystem.lng.casino[0];
     }
     //Открытие достижения
     public void unlockAch(int id)
@@ -205,8 +195,8 @@ public class Achievment : MonoBehaviour
         achievment[id].get = true;
         g.exp += achievment[id].award;
         g.push.transform.Find("Icon").GetComponent<Image>().sprite = achievment[id].icon;
-        g.push.transform.Find("Header").GetComponent<Text>().text = achievment[id]._header;
-        g.push.transform.Find("Description").GetComponent<Text>().text = "Поздравляем! Награда получена!";
+        g.push.transform.Find("Header").GetComponent<Text>().text = LangSystem.lng.achArrHeader[id];// achievment[id]._header;//
+        g.push.transform.Find("Description").GetComponent<Text>().text = LangSystem.lng.push[3]; // "Поздравляем! Награда получена!";
         g.push.GetComponent<Animator>().SetTrigger("isShown");
         if (g.exp >= g.rewardCost)
         {
@@ -222,10 +212,11 @@ public class Achievment : MonoBehaviour
         _store[2].isBought = true;
         g.money -= _store[2].priceGame;
         g.isAutoExchangerOn = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
-        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().color = new Color(19f, 255f, 0f, 255f);
-        Store.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+        store.GetChild(0).GetChild(2).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
+        store.GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
+        store.GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Image>().sprite = Btn_violet;
+        store.GetChild(0).GetChild(2).GetChild(8).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[3];
+        store.GetChild(0).GetChild(2).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
     }
 
     //Включение-выключение автообменника
@@ -234,11 +225,14 @@ public class Achievment : MonoBehaviour
         g.isAutoExchangerOn = !g.isAutoExchangerOn;
         if (g.isAutoExchangerOn)
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Выключить";
+            store.GetChild(0).GetChild(2).GetChild(8).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[3];//"Выключить";
+            store.GetChild(0).GetChild(2).GetChild(8).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+
         }
         else
         {
-            Store.transform.GetChild(0).GetChild(0).GetChild(2).transform.Find("OffBtn/Text").GetComponent<Text>().text = "Включить";
+            store.GetChild(0).GetChild(2).GetChild(8).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[2];
+            store.GetChild(0).GetChild(2).GetChild(8).GetComponent<Image>().color = new Color32(182, 182, 182, 255); //"Включить"; //OffBtn
         }
     }
 
@@ -250,7 +244,7 @@ public class Achievment : MonoBehaviour
         g.isProfitBoosterOn = true;
         Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
         Store.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
-        Store.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПЛЕНО";
+        Store.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[1];//"КУПЛЕНО";
     }
 
     //Покупка бустера по времени
@@ -261,7 +255,12 @@ public class Achievment : MonoBehaviour
         g.isTimeBoosterOn = true;
         Store.transform.GetChild(0).GetChild(0).GetChild(1).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
         Store.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
-        Store.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(6).GetChild(0).GetComponent<Text>().text = "КУПЛЕНО";
+        Store.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(6).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[1];// "КУПЛЕНО";
+    }
+
+    public void buy8000()
+    {
+        g.money += 8000;
     }
 
 }

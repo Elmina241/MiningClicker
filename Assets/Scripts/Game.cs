@@ -1,11 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
+using System.IO;
 
 public class Game : MonoBehaviour
 {
+    int music = 0;
+    public AudioSource audM;
+    public GameObject musicSwitch;
+    //Для рекламы
+    public AdManager ad;
+    private int admob_count;
+    public const string leaderboard = "CgkI-9fq-ZEaEAIQAQ";
 
     public Sprite[] background;
-    Reward rew;
+    Rewards rew;
 
     public Text moneyText; //Деньги в $
     public float money = 0;
@@ -50,6 +61,7 @@ public class Game : MonoBehaviour
     public typeOfPart[] typesOfParts;
     public Currency[] currencies;
 
+    
 
     [Header("Имена компонентов")]
     [Space(4)]
@@ -84,9 +96,28 @@ public class Game : MonoBehaviour
 
     public int[] PriceOfRAM;
 
+    public GameObject ArrayMiners;
+
+    public void Translator()
+    {
+        int count = ArrayMiners.transform.childCount;        
+        for (int i = 0; i < count; i++)
+        {
+            ArrayMiners.transform.GetChild(i).GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().text = LangSystem.lng.game[0];
+            ArrayMiners.transform.GetChild(i).GetComponent<Computer>().updateUp();
+            //ArrayMiners.transform.GetChild(i).GetChild(0).GetChild(5).GetChild(0).GetComponent<Text>().text = LangSystem.lng.game[1];
+        }
+    }
+
     private void Awake()
     {
-        rew = gameObject.GetComponent<Reward>();
+        //Application.targetFrameRate = 60;
+        Music();
+        ArrayMiners = GameObject.Find("/Canvas/BG/ScrollRect/Miners");
+        ad = gameObject.GetComponent<AdManager>();
+        
+
+        rew = gameObject.GetComponent<Rewards>();
         money = 20000f;
 
         NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
@@ -127,8 +158,8 @@ public class Game : MonoBehaviour
 
         PriceOfRAM = new int[7] { 18, 56, 92, 132, 332, 405, 905 };
 
-    /*Объявление валют*/
-    currencies = new Currency[1];
+        /*Объявление валют*/
+        currencies = new Currency[1];
         currencies[0] = new Currency("ETH", 30000f);
 
         /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/
@@ -170,6 +201,8 @@ public class Game : MonoBehaviour
             parts[partId] = new Part(partId, NameOfRAM[i], typesOfParts[6], 12, 25, PriceOfRAM[i], (int)(PriceOfRAM[i] * 0.6f));
             partId++;
         }
+
+        
 
         if (PlayerPrefs.HasKey("unitySV"))
         {
@@ -269,14 +302,50 @@ public class Game : MonoBehaviour
 
     void Start()
     {
+        PlayGamesPlatform.Activate();
+        Social.localUser.Authenticate((bool success) => {
+            // Удачно или нет?
+        });
+        Translator();
         autoMinerButton = improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto").gameObject.GetComponent<Button>();
         upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
         upgradeProfitButton = improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade").gameObject.GetComponent<Button>();
         upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
-        levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();        
+        levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
+
+        ad.ReqInter();
+        if (!PlayerPrefs.HasKey("Admob"))
+        {
+            PlayerPrefs.SetInt("Admob", admob_count);
+        }
+        else
+        {
+            admob_count = PlayerPrefs.GetInt("Admob");
+        }
     }
 
+    public void ShowAds()
+    {
+        if (admob_count == 4)
+        {
+            ad.showInterstital();
+            print("Admob Show");
+            admob_count = 0;
+            ad.ReqInter();
+            PlayerPrefs.SetInt("Admob", admob_count);
+        }
+        else
+        {
+            admob_count += 1;
+            PlayerPrefs.SetInt("Admob", admob_count);
+            print("Admob = " + admob_count);
+        }
+    }
 
+    public void openLeaderboard()
+    {
+        Social.ShowLeaderboardUI();
+    }
     public void openCloseImprovementWin()
     {
         GameObject partsContainer = improvementWin.transform.Find("Background/Parts").gameObject;
@@ -316,6 +385,9 @@ public class Game : MonoBehaviour
 
     public void saveGame()
     {
+        Social.ReportScore((long)money, leaderboard, (bool success) => {
+            // Удачно или нет?
+        });
         sv.money = money;
         sv.farmCount = farmCount;
         sv.partCount = partCount;
@@ -449,7 +521,68 @@ public class Game : MonoBehaviour
         Application.LoadLevel(Application.loadedLevel);
     }
 
+    public void Music()
+    {
+        if (!PlayerPrefs.HasKey("Music"))
+        {
+            music = 1;
+            PlayerPrefs.SetInt("Music", music);
+            if (music == 1)
+            {
+                audM.mute = false;
+                audM.playOnAwake = true;
+                musicSwitch.GetComponent<Animator>().SetBool("switch", true);
+            }
+            else
+            {
+                audM.mute = true;
+                audM.Pause();
+                musicSwitch.GetComponent<Animator>().SetBool("switch", false);
+            }
+        }
+        else
+        {
+            music = PlayerPrefs.GetInt("Music");
+            if (music == 1)
+            {
+                audM.mute = false;
+                audM.Play(0);
+                musicSwitch.GetComponent<Animator>().SetBool("switch", true);
+                audM.Play();
+            }
+            else
+            {
+                audM.mute = true;
+                musicSwitch.GetComponent<Animator>().SetBool("switch", false);
+                audM.Stop();
+            }
+        }
+    }
+    public void SwitchM()
+    {
+        music = PlayerPrefs.GetInt("Music");
+        if (music == 0)
+        {
+            music = 1;
+            musicSwitch.GetComponent<Animator>().SetBool("switch", true);
+            PlayerPrefs.SetInt("Music", music);
+            audM.mute = false;
+            if (!audM.playOnAwake)
+            {
+                audM.Play();
+            }
+        }
+        else
+        {
+            music = 0;
+            musicSwitch.GetComponent<Animator>().SetBool("switch", false);
+            PlayerPrefs.SetInt("Music", music);
+            audM.mute = true;
+            audM.Pause();
+        }
+    }
 }
+
 
 [System.Serializable]
 public class Part
@@ -491,6 +624,7 @@ public class typeOfPart
         this.image = image;
     }
 }
+
 
 [System.Serializable]
 public class Save

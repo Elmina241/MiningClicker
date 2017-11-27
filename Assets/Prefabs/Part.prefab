@@ -180,7 +180,7 @@ GameObject:
   - 222: {fileID: 222000012744038952}
   - 114: {fileID: 114000013521695252}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextUsed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,7 @@ GameObject:
   - 222: {fileID: 222000010449937932}
   - 114: {fileID: 114000010928742404}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: TextNew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

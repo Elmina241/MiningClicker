@@ -4,6 +4,42 @@ using System.Collections;
 public class Move_switch : MonoBehaviour {
 
     public bool move;
+    public int sound = 0;
+    public int music = 0;
+    public AudioSource g;
+    public AudioSource c;
+
+
+    private void Awake()
+    {
+        if (!PlayerPrefs.HasKey("Music"))
+        {
+            PlayerPrefs.SetInt("Music", 1);
+            gameObject.GetComponent<Animator>().SetBool("switch", true);
+        }
+        else
+        {
+            music = PlayerPrefs.GetInt("Music");
+            if (gameObject.tag == "Music" && music == 0)
+            {
+                gameObject.GetComponent<Animator>().SetBool("switch", false);
+            }
+               
+        }
+        if (!PlayerPrefs.HasKey("Sound"))
+        {
+            PlayerPrefs.SetInt("Sound", 1);
+            gameObject.GetComponent<Animator>().SetBool("switch", true);
+        }
+        else
+        {
+            sound = PlayerPrefs.GetInt("Sound");
+            if(gameObject.tag == "Sound" && sound == 0)
+            {
+                gameObject.GetComponent<Animator>().SetBool("switch", false);
+            }
+        }
+    }
 
     public void Move_back()
     {
@@ -13,11 +49,15 @@ public class Move_switch : MonoBehaviour {
             move = true;
             if(gameObject.tag == "Music")
             {
-                print("Музыка отключена");
+                c.mute = false;
+                print("Музыка включена");
+                PlayerPrefs.SetInt("Music", 1);
             }
             else if(gameObject.tag == "Sound")
             {
-                print("Звуки отключены");
+                g.mute = false;
+                print("Звуки включены");
+                PlayerPrefs.SetInt("Sound", 1);
             }
         }
         else
@@ -26,11 +66,15 @@ public class Move_switch : MonoBehaviour {
             move = false;
             if (gameObject.tag == "Music")
             {
-                print("Музыка включена"); // сюда вставить AudioSource с музыкой 
+                c.mute = true;
+                print("Музыка выключена");
+                PlayerPrefs.SetInt("Music", 0);// сюда вставить AudioSource с музыкой 
             }
             else if (gameObject.tag == "Sound")
             {
-                print("Звуки включены"); // сюда вставить AudioSource со звуками
+                g.mute = true;
+                print("Звуки выключены");
+                PlayerPrefs.SetInt("Sound", 0); // сюда вставить AudioSource со звуками
             }
         }
 

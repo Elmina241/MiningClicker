@@ -2,21 +2,23 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Reward : MonoBehaviour
+public class Rewards : MonoBehaviour
 {
 
     public float _hours = 0.0f;
     public float _minutes = 0.0f;
     public float _sec = 0.0f;
-    public GameObject g; 
+    public GameObject g;
     public Game gObj;
     public Sprite spr;
     private ulong lastChestOpen;
     public string[] items;
     public ulong unixTime; //текущее время
+   
 
     private void Start()
     {
+      
         lastChestOpen = ulong.Parse(PlayerPrefs.GetString("LastChestOpen"));
         print(lastChestOpen);
         if (!IsChestReady())
@@ -48,7 +50,7 @@ public class Reward : MonoBehaviour
 
     string GetValueTime(string data, string index)
     {
-        string value = data.Substring(data.IndexOf(index)+index.Length);
+        string value = data.Substring(data.IndexOf(index) + index.Length);
         return value;
     }
 
@@ -100,8 +102,8 @@ public class Reward : MonoBehaviour
         gObj.money += rew;
         gObj.moneyText.text = "$" + gObj.money.ToString("0.#0");
         gObj.GetComponent<Game>().push.transform.Find("Icon").GetComponent<Image>().sprite = spr;
-        gObj.push.transform.Find("Header").GetComponent<Text>().text = "Ежедневная награда!";
-        gObj.push.transform.Find("Description").GetComponent<Text>().text = "Получено $" + rew.ToString();
+        gObj.push.transform.Find("Header").GetComponent<Text>().text = LangSystem.lng.push[0]; //"Ежедневная награда!";
+        gObj.push.transform.Find("Description").GetComponent<Text>().text = LangSystem.lng.push[1] + " $" + rew.ToString();
         gObj.push.GetComponent<Animator>().SetTrigger("isShown");
         StartCoroutine(GetTime());
         //GetTime();
