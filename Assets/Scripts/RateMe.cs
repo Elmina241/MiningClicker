@@ -12,7 +12,7 @@ public class RateMe : MonoBehaviour
         gameObject.transform.GetChild(0).GetChild(3).GetComponent<Text>().text = LangSystem.lng.windows[2];
         gameObject.transform.GetChild(0).GetChild(2).GetChild(2).GetChild(0).GetComponent<Text>().text = LangSystem.lng.windows[3];
         gameObject.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text = LangSystem.lng.windows[4];
-        if (!PlayerPrefs.HasKey("getrate"))
+        if (!PlayerPrefs.HasKey("getRate"))
         {
             PlayerPrefs.SetInt("getRate", 0);
         }

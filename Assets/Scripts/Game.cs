@@ -7,7 +7,7 @@ using System.IO;
 
 public class Game : MonoBehaviour
 {
-    int music = 0;
+    public int music = 0;
     public AudioSource audM;
     public GameObject musicSwitch;
     //Для рекламы
@@ -527,18 +527,11 @@ public class Game : MonoBehaviour
         {
             music = 1;
             PlayerPrefs.SetInt("Music", music);
-            if (music == 1)
-            {
-                audM.mute = false;
-                audM.playOnAwake = true;
-                musicSwitch.GetComponent<Animator>().SetBool("switch", true);
-            }
-            else
-            {
-                audM.mute = true;
-                audM.Pause();
-                musicSwitch.GetComponent<Animator>().SetBool("switch", false);
-            }
+
+            audM.mute = false;
+               
+            ///musicSwitch.GetComponent<Animator>().SetBool("switch", true);
+            
         }
         else
         {
@@ -546,14 +539,13 @@ public class Game : MonoBehaviour
             if (music == 1)
             {
                 audM.mute = false;
-                audM.Play(0);
-                musicSwitch.GetComponent<Animator>().SetBool("switch", true);
                 audM.Play();
+               // musicSwitch.GetComponent<Animator>().SetBool("switch", true);
             }
             else
             {
                 audM.mute = true;
-                musicSwitch.GetComponent<Animator>().SetBool("switch", false);
+               // musicSwitch.GetComponent<Animator>().SetBool("switch", false);
                 audM.Stop();
             }
         }
@@ -564,7 +556,7 @@ public class Game : MonoBehaviour
         if (music == 0)
         {
             music = 1;
-            musicSwitch.GetComponent<Animator>().SetBool("switch", true);
+          //  musicSwitch.GetComponent<Animator>().SetBool("switch", true);
             PlayerPrefs.SetInt("Music", music);
             audM.mute = false;
             if (!audM.playOnAwake)
@@ -575,7 +567,7 @@ public class Game : MonoBehaviour
         else
         {
             music = 0;
-            musicSwitch.GetComponent<Animator>().SetBool("switch", false);
+          //  musicSwitch.GetComponent<Animator>().SetBool("switch", false);
             PlayerPrefs.SetInt("Music", music);
             audM.mute = true;
             audM.Pause();

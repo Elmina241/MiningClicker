@@ -5770,7 +5770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16078432, g: 0.18431373, b: 0.20784314, a: 1}
+  m_Color: {r: 0.16078432, g: 0.18431373, b: 0.20784315, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5798,7 +5798,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 219845146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 47ecbc286533a7b4382d862aceabea8e, type: 2}
   m_CullingMode: 0
@@ -5819,9 +5819,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e7c3179d7428d48b3f1e848d66e375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g: {fileID: 10222908}
-  music: 0
-  move: 0
+  g: {fileID: 1210977833}
+  click: 0
+  On: {r: 0, g: 0, b: 0, a: 0}
+  Off: {r: 0, g: 0, b: 0, a: 0}
+  currentDist: 0
 --- !u!1 &221782751
 GameObject:
   m_ObjectHideFlags: 0
@@ -27503,6 +27505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4b68d7ccc709f42a92784fd4a1fafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music: 0
   audM: {fileID: 10222908}
   musicSwitch: {fileID: 219845146}
   ad: {fileID: 0}
@@ -33410,7 +33413,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -43.8, y: 0}
+  m_AnchoredPosition: {x: 43.8, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1497425848
@@ -33425,7 +33428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.71323526, g: 0.71323526, b: 0.71323526, a: 1}
+  m_Color: {r: 0, g: 0.71034503, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -33485,8 +33488,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Move_back
+      - m_Target: {fileID: 219845152}
+        m_MethodName: Switch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33495,7 +33498,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
       - m_Target: {fileID: 1210977840}
         m_MethodName: PlayOneShot
         m_Mode: 2
@@ -33507,7 +33510,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1210977833}
         m_MethodName: SwitchM
         m_Mode: 1
@@ -33518,7 +33521,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1500810498 stripped
@@ -41298,6 +41301,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1210851911}
         m_MethodName: RateMePleaseBitchExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1210851911}
+        m_MethodName: OpenGP
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
