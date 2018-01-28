@@ -98,6 +98,8 @@ public class Game : MonoBehaviour
 
     public GameObject ArrayMiners;
 
+    public GameObject RateMe;
+
     public void Translator()
     {
         int count = ArrayMiners.transform.childCount;        
@@ -107,6 +109,14 @@ public class Game : MonoBehaviour
             ArrayMiners.transform.GetChild(i).GetComponent<Computer>().updateUp();
             //ArrayMiners.transform.GetChild(i).GetChild(0).GetChild(5).GetChild(0).GetComponent<Text>().text = LangSystem.lng.game[1];
         }
+        nightResult.transform.GetChild(0).GetChild(3).GetComponent<Text>().text = LangSystem.lng.windows[0];
+        nightResult.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text = LangSystem.lng.windows[1];
+
+        RateMe.transform.GetChild(0).GetChild(3).GetComponent<Text>().text = LangSystem.lng.windows[2];
+        RateMe.transform.GetChild(0).GetChild(2).GetChild(2).GetChild(0).GetComponent<Text>().text = LangSystem.lng.windows[3];
+        RateMe.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>().text = LangSystem.lng.windows[4];
+
+
     }
 
     private void Awake()
