@@ -5820,7 +5820,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   g: {fileID: 1210977833}
-  click: 0
   On: {r: 0, g: 0, b: 0, a: 0}
   Off: {r: 0, g: 0, b: 0, a: 0}
   currentDist: 0
