@@ -5731,7 +5731,6 @@ GameObject:
   - 222: {fileID: 219845150}
   - 114: {fileID: 219845149}
   - 95: {fileID: 219845151}
-  - 114: {fileID: 219845152}
   m_Layer: 5
   m_Name: fill
   m_TagString: Music
@@ -5808,21 +5807,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &219845152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 219845146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e7c3179d7428d48b3f1e848d66e375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  g: {fileID: 1210977833}
-  On: {r: 0, g: 0, b: 0, a: 0}
-  Off: {r: 0, g: 0, b: 0, a: 0}
-  currentDist: 0
 --- !u!1 &221782751
 GameObject:
   m_ObjectHideFlags: 0
@@ -9909,8 +9893,9 @@ GameObject:
   - 114: {fileID: 421907118}
   - 222: {fileID: 421907117}
   - 114: {fileID: 421907116}
+  - 114: {fileID: 421907120}
   m_Layer: 5
-  m_Name: Settings
+  m_Name: Settings (Music.cs)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10016,6 +10001,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &421907120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 421907114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e7c3179d7428d48b3f1e848d66e375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickMusic: 0
+  clickSounds: 0
+  currentStateMusic: 1
+  currentStateSounds: 1
+  switchMusic: {fileID: 1497425845}
+  switchSounds: {fileID: 594498342}
+  startPosMusic: {x: 0, y: 0, z: 0}
+  startPosSounds: {x: 0, y: 0, z: 0}
+  endPosMusic: {x: 0, y: 0, z: 0}
+  endPosSounds: {x: 0, y: 0, z: 0}
+  switchOn: {r: 0, g: 0.6, b: 0.8235294, a: 1}
+  switchOff: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  currentDist: 0
 --- !u!1 &428650677
 GameObject:
   m_ObjectHideFlags: 0
@@ -12335,7 +12344,7 @@ GameObject:
   - 224: {fileID: 477346038}
   - 114: {fileID: 477346039}
   m_Layer: 5
-  m_Name: Group_text
+  m_Name: Group_sounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14756,7 +14765,7 @@ GameObject:
   - 114: {fileID: 594498345}
   - 114: {fileID: 594498344}
   m_Layer: 5
-  m_Name: Switch
+  m_Name: Switch_sounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14777,7 +14786,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -43.8, y: 0}
+  m_AnchoredPosition: {x: 43.8, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &594498344
@@ -14819,17 +14828,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Move_back
-        m_Mode: 1
+      - m_Target: {fileID: 421907120}
+        m_MethodName: Click
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Sounds
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
       - m_Target: {fileID: 1210977840}
         m_MethodName: PlayOneShot
         m_Mode: 2
@@ -14856,7 +14865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.71323526, g: 0.71323526, b: 0.71323526, a: 1}
+  m_Color: {r: 0.007843138, g: 0.70980394, b: 0.9921569, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -33392,7 +33401,7 @@ GameObject:
   - 114: {fileID: 1497425848}
   - 114: {fileID: 1497425850}
   m_Layer: 5
-  m_Name: Switch
+  m_Name: Switch_music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33488,15 +33497,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 219845152}
-        m_MethodName: Switch
-        m_Mode: 1
+      - m_Target: {fileID: 421907120}
+        m_MethodName: Click
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Music
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1210977840}
