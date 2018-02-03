@@ -18,6 +18,7 @@ public class Rewards : MonoBehaviour
 
     private void Start()
     {
+       
       
         lastChestOpen = ulong.Parse(PlayerPrefs.GetString("LastChestOpen"));
         print(lastChestOpen);

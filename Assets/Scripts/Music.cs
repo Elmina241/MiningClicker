@@ -17,6 +17,11 @@ public class Music : MonoBehaviour
 
     public GameObject switchMusic;
     public GameObject switchSounds;
+    public AudioSource sounds;
+    public AudioSource music;
+
+    private float sampleTime; //для сохранения музыки
+
     [SerializeField]
     Vector3 startPosMusic, startPosSounds;
     [SerializeField]// начальное положение маркера 
@@ -37,21 +42,21 @@ public class Music : MonoBehaviour
         DownloadState();
         distance = (new Vector3(43.8f, 0f, 0f) - new Vector3(-43.8f, 0f, 0f)).magnitude;
     }
-
     //В функции ниже попеременно заданы стартовые позиции маркеров и их конечные пункты для перемещения. Пока без анимаций.
     public void DownloadState()
     {
-
         if (!PlayerPrefs.HasKey("MusicState") && !PlayerPrefs.HasKey("SoundState")) // Если не существует ключ (первый запуск), то устанавливаем все по дефолту и сохраняем
         {
             PlayerPrefs.SetInt("MusicState", 1); //1, включен
             switchMusic.transform.localPosition = new Vector3(43.8f, 0f, 0f);
             currentStateMusic = true;
+           // music.mute = false;
             switchMusic.GetComponent<Image>().color = switchOn;
 
             PlayerPrefs.SetInt("SoundState", 1); //1, включен
             switchSounds.transform.localPosition = new Vector3(43.8f, 0f, 0f);
             currentStateSounds = true;
+            sounds.mute = false;
             switchSounds.GetComponent<Image>().color = switchOn;
         }
         else
@@ -66,6 +71,11 @@ public class Music : MonoBehaviour
                 endPosMusic = new Vector3(-43.8f, 0f, 0f);
                 switchMusic.transform.localPosition = startPosMusic;
                 switchMusic.GetComponent<Image>().color = switchOn;
+                if (PlayerPrefs.HasKey("SampleTimeMusic")) sampleTime = PlayerPrefs.GetFloat("SampleTimeMusic");
+                else sampleTime = 0f;
+                music.Play();
+                music.Play((ulong)sampleTime);
+               // music.mute = false;
             }
             else
             {
@@ -74,6 +84,7 @@ public class Music : MonoBehaviour
                 endPosMusic = new Vector3(43.8f, 0f, 0f);
                 switchMusic.transform.localPosition = startPosMusic;
                 switchMusic.GetComponent<Image>().color = switchOff;
+                music.mute = true;
             }
             if (currentStateSounds.GetHashCode() == 1)
             {
@@ -82,6 +93,7 @@ public class Music : MonoBehaviour
                 endPosSounds = new Vector3(-43.8f, 0f, 0f);
                 switchSounds.transform.localPosition = startPosSounds;
                 switchSounds.GetComponent<Image>().color = switchOn;
+                sounds.mute = false;
             }
             else
             {
@@ -90,42 +102,42 @@ public class Music : MonoBehaviour
                 endPosSounds = new Vector3(43.8f, 0f, 0f);
                 switchSounds.transform.localPosition = startPosSounds;
                 switchSounds.GetComponent<Image>().color = switchOff;
+                sounds.mute = true;
             }
         }
     }
-    //Действия по нажатию на свитч (нужно сделать все в одной функции) 
-    // НИФИГА НЕ СМОГ СДЕЛАТЬ:((((
+    //Действия по нажатию на свитч (нужно сделать все в одной функции)  
     public void Click(string nameButton)
     {
         if (nameButton == "Music")
         {
+            //Выключение
             if (currentStateMusic) // если включена музыка
             {
-               
                 currentStateMusic = false; // выключить
-                PlayerPrefs.SetInt("MusicState", currentStateMusic.GetHashCode());
-                startPosMusic = new Vector3(43.8f, 0f, 0f);
-                endPosMusic = new Vector3(-43.8f, 0f, 0f);
-                switchMusic.transform.localPosition = startPosMusic;
-                switchMusic.GetComponent<Image>().color = switchOff;
-                clickMusic = true;
-                //передача параметров для перемещения маркера
-            }
-            else
-            {
-                
-                currentStateMusic = true;
                 PlayerPrefs.SetInt("MusicState", currentStateMusic.GetHashCode());
                 startPosMusic = new Vector3(-43.8f, 0f, 0f);
                 endPosMusic = new Vector3(43.8f, 0f, 0f);
                 switchMusic.transform.localPosition = startPosMusic;
+                switchMusic.GetComponent<Image>().color = switchOff;
+                music.mute = true; // Выключаем музыку
+                //передача параметров для перемещения маркера
+            }
+            else
+            {
+                currentStateMusic = true;
+                PlayerPrefs.SetInt("MusicState", currentStateMusic.GetHashCode());
+                startPosMusic = new Vector3(43.8f, 0f, 0f);
+                endPosMusic = new Vector3(-43.8f, 0f, 0f);
+                switchMusic.transform.localPosition = startPosMusic;
                 switchMusic.GetComponent<Image>().color = switchOn;
-                clickMusic = true;
+                music.mute = false;// ВКЛЮЧАЕМ МУЗЫКУ
                 //передача параметров для перемещения маркера
             }
         }
         else if (nameButton == "Sounds")
         {
+            //Выключение
             if (currentStateSounds) //если включены звуки
             {
                 clickSounds = true;
@@ -135,6 +147,7 @@ public class Music : MonoBehaviour
                 endPosSounds = new Vector3(43.8f, 0f, 0f);
                 switchSounds.transform.localPosition = startPosSounds;
                 switchSounds.GetComponent<Image>().color = switchOff;
+                sounds.mute = true; // ВЫРУБАЕМ ЗВУКИ 
                 //передача параметров для перемещения маркера
             }
             else
@@ -146,18 +159,19 @@ public class Music : MonoBehaviour
                 endPosSounds = new Vector3(-43.8f, 0f, 0f);
                 switchSounds.transform.localPosition = startPosSounds;
                 switchSounds.GetComponent<Image>().color = switchOn;
+                sounds.mute = false; // ВКЛЮЧАЕМ ЗВУКИ 
                 //передача параметров
             }
         }
     }
     //Само перемещение объекта
-    private void Update()
-    {
-        if (clickMusic)
-        {
-            Move(switchMusic, startPosMusic, endPosMusic);
-        }
-    }
+    //private void Update()
+    //{
+    //    if (clickMusic)
+    //    {
+    //        Move(switchMusic, startPosMusic, endPosMusic);
+    //    }
+    //}
     private void Move(GameObject _transAnim, Vector3 _startPos, Vector3 _endPos)
     {
         currentTime += time;
@@ -172,20 +186,6 @@ public class Music : MonoBehaviour
         _transAnim.transform.localPosition = Vector3.Lerp(_startPos, _endPos, Perc);
     }
 
-        //while (clickMusic || clickSounds)
-        //{
-        //    yield return new WaitForSeconds(time);
-        //    currentTime += time;
-        //    if (currentDist >= distance)
-        //    {
-        //        clickMusic = false;
-        //        clickSounds = false;
-        //        StopCoroutine("animationMove");              
-        //    }
-        //    currentDist = 400f * currentTime;
-        //    float Perc = currentDist / distance;
-        //    _transAnim.transform.localPosition = Vector3.Lerp(_startPos, _endPos, Perc);
-        //}
-    
+
     /* Нормальный код */
 }

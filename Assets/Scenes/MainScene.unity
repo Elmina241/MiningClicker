@@ -300,8 +300,9 @@ GameObject:
   - 124: {fileID: 10222905}
   - 81: {fileID: 10222904}
   - 82: {fileID: 10222908}
+  - 114: {fileID: 10222909}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Main Camera (Music.cs)
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -449,6 +450,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &10222909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 10222902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e7c3179d7428d48b3f1e848d66e375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickMusic: 0
+  clickSounds: 0
+  currentStateMusic: 1
+  currentStateSounds: 1
+  switchMusic: {fileID: 1497425845}
+  switchSounds: {fileID: 594498342}
+  sounds: {fileID: 1210977840}
+  music: {fileID: 10222908}
+  startPosMusic: {x: 0, y: 0, z: 0}
+  startPosSounds: {x: 0, y: 0, z: 0}
+  endPosMusic: {x: 0, y: 0, z: 0}
+  endPosSounds: {x: 0, y: 0, z: 0}
+  switchOn: {r: 0, g: 0.7285714, b: 1, a: 1}
+  switchOff: {r: 0.71323526, g: 0.71323526, b: 0.71323526, a: 1}
+  currentDist: 0
 --- !u!1 &10943965
 GameObject:
   m_ObjectHideFlags: 0
@@ -9773,6 +9800,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 10222909}
+        m_MethodName: DownloadState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &418350985
@@ -9893,9 +9931,8 @@ GameObject:
   - 114: {fileID: 421907118}
   - 222: {fileID: 421907117}
   - 114: {fileID: 421907116}
-  - 114: {fileID: 421907120}
   m_Layer: 5
-  m_Name: Settings (Music.cs)
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10001,30 +10038,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &421907120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 421907114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e7c3179d7428d48b3f1e848d66e375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickMusic: 0
-  clickSounds: 0
-  currentStateMusic: 1
-  currentStateSounds: 1
-  switchMusic: {fileID: 1497425845}
-  switchSounds: {fileID: 594498342}
-  startPosMusic: {x: 0, y: 0, z: 0}
-  startPosSounds: {x: 0, y: 0, z: 0}
-  endPosMusic: {x: 0, y: 0, z: 0}
-  endPosSounds: {x: 0, y: 0, z: 0}
-  switchOn: {r: 0, g: 0.6, b: 0.8235294, a: 1}
-  switchOff: {r: 0.6, g: 0.6, b: 0.6, a: 1}
-  currentDist: 0
 --- !u!1 &428650677
 GameObject:
   m_ObjectHideFlags: 0
@@ -14828,7 +14841,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 421907120}
+      - m_Target: {fileID: 10222909}
         m_MethodName: Click
         m_Mode: 5
         m_Arguments:
@@ -33497,7 +33510,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 421907120}
+      - m_Target: {fileID: 10222909}
         m_MethodName: Click
         m_Mode: 5
         m_Arguments:
@@ -33519,7 +33532,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
       - m_Target: {fileID: 1210977833}
         m_MethodName: SwitchM
         m_Mode: 1
