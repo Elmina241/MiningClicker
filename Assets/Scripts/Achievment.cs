@@ -239,23 +239,29 @@ public class Achievment : MonoBehaviour
     //Покупка бустера по доходности
     public void buyProfitBooster()
     {
-        _store[0].isBought = true;
-        g.money -= _store[0].priceGame;
-        g.isProfitBoosterOn = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
-        Store.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
-        Store.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[1];//"КУПЛЕНО";
+        if (g.money >= _store[0].priceGame)
+        {
+            _store[0].isBought = true;
+            g.money -= _store[0].priceGame;
+            g.isProfitBoosterOn = false;
+            Store.transform.GetChild(0).GetChild(0).GetChild(0).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
+            Store.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+            Store.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[1];//"КУПЛЕНО";
+        }  
     }
 
     //Покупка бустера по времени
     public void buyTimeBooster()
     {
-        _store[1].isBought = true;
-        g.money -= _store[1].priceGame;
-        g.isTimeBoosterOn = true;
-        Store.transform.GetChild(0).GetChild(0).GetChild(1).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
-        Store.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
-        Store.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(6).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[1];// "КУПЛЕНО";
+        if (g.money >= _store[1].priceGame)
+        {
+            _store[1].isBought = true;
+            g.money -= _store[1].priceGame;
+            g.isTimeBoosterOn = false;
+            Store.transform.GetChild(0).GetChild(0).GetChild(1).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
+            Store.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+            Store.transform.GetChild(0).GetChild(0).GetChild(1).GetChild(6).GetChild(0).GetComponent<Text>().text = LangSystem.lng.storeDetails[1];// "КУПЛЕНО";
+        }
     }
 
     public void buy8000()

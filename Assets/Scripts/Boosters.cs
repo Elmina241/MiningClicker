@@ -20,8 +20,8 @@ public class Boosters : MonoBehaviour {
 
         rechargeTimeP = 5;
         rechargeTimeT = 5;
-        lastStartProfit = System.DateTime.Now;
-        lastStartTime = System.DateTime.Now;
+        lastStartProfit = new System.DateTime(System.DateTime.Now.Year, 1, 1);
+        lastStartTime = new System.DateTime(System.DateTime.Now.Year, 1, 1);
 
     }
 	
@@ -31,7 +31,14 @@ public class Boosters : MonoBehaviour {
         if (a._store[0].isBought)
         {
             if (g.isProfitBoosterOn) g.isProfitBoosterOn = (System.DateTime.Now - lastStartProfit).Seconds <= workTimeP;
-            ProfitBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP));
+            if ((System.DateTime.Now - lastStartProfit).Days > 7)
+            {
+                ProfitBoosterButton.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                ProfitBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP));
+            }
             if (!ProfitBoosterButton.GetComponent<Button>().interactable)
             {
                 ProfitBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeP + workTimeP) - (System.DateTime.Now - lastStartProfit).Seconds).ToString("0#");
@@ -47,7 +54,14 @@ public class Boosters : MonoBehaviour {
         if (a._store[1].isBought)
         {
             if (g.isTimeBoosterOn) g.isTimeBoosterOn = (System.DateTime.Now - lastStartTime).Seconds <= workTimeT;
-            TimeBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT));
+            if ((System.DateTime.Now - lastStartTime).Days > 7)
+            {
+                TimeBoosterButton.GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                TimeBoosterButton.GetComponent<Button>().interactable = ((System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT));
+            }
             if (!TimeBoosterButton.GetComponent<Button>().interactable)
             {
                 TimeBoosterButton.transform.GetChild(0).GetComponent<Text>().text = "00:" + ((rechargeTimeT + workTimeT) - (System.DateTime.Now - lastStartTime).Seconds).ToString("0#");
