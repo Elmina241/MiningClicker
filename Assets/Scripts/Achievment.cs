@@ -44,6 +44,7 @@ public class Achievment : MonoBehaviour
         achiev = Achiev.transform.GetChild(0);
         set = _settings.transform.GetChild(0);
         store = Store.transform.GetChild(0);
+        StartCoroutine(updateButtons());
     }
 
 
@@ -203,6 +204,32 @@ public class Achievment : MonoBehaviour
             g.money = g.money + g.reward;
             g.reward = (int)(g.reward * g.rewardD);
             g.rewardCost = (int)(g.rewardCost * g.rewardCostD);
+        }
+    }
+
+    //Обновление кнопок покупки
+    IEnumerator updateButtons()
+    {
+        while (true)
+        {
+            for (int i = 0; i < _store.Length; i++)
+            {
+                if (!_store[i].isBought) // если товар куплен
+                {
+                    if (g.money < _store[i].priceGame)
+                    {
+                        store.GetChild(0).GetChild(i).GetComponent<Store_pref>().Btn.sprite = BuyBtn_gray; // меняем кнопку на серую
+                        store.GetChild(0).GetChild(i).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;// меняем кнопку на серую 
+                    }
+                    else
+                    {
+                        store.GetChild(0).GetChild(i).GetComponent<Store_pref>().Btn.sprite = BuyBtn_green; // меняем кнопку на серую
+                        store.GetChild(0).GetChild(i).transform.Find("BuyBtn").GetComponent<Button>().interactable = true;// меняем кнопку на серую
+                    }
+
+                }
+            }
+            yield return new WaitForSecondsRealtime(0);
         }
     }
 

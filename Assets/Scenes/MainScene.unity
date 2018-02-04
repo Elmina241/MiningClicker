@@ -467,8 +467,8 @@ MonoBehaviour:
   currentStateSounds: 1
   switchMusic: {fileID: 1497425845}
   switchSounds: {fileID: 594498342}
-  sounds: {fileID: 1210977840}
-  music: {fileID: 10222908}
+  sounds: {fileID: 0}
+  music: {fileID: 0}
   startPosMusic: {x: 0, y: 0, z: 0}
   startPosSounds: {x: 0, y: 0, z: 0}
   endPosMusic: {x: 0, y: 0, z: 0}
@@ -10399,7 +10399,7 @@ Prefab:
     - target: {fileID: 114000010556261128, guid: c2c801c26c8196e4081abf932a45c85c,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114000012261402946, guid: c2c801c26c8196e4081abf932a45c85c,
         type: 2}
