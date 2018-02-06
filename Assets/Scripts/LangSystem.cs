@@ -75,6 +75,6 @@ public class lang
     public string[] casino = new string[3];
     public string[] improvementWins = new string[21];
     public string[] push = new string[8];
-    public string[] game = new string[5];
+    public string[] game = new string[6];
     public string[] windows = new string[5];
 }

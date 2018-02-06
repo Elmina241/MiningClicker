@@ -559,7 +559,7 @@ class Computer : MonoBehaviour
             if ((autoMiner.autoTime - autoMiner.timeBonus) < 0.57f)
             {
                 infPref.SetActive(true);
-                progressText.text = "Скорость света";
+                progressText.text = LangSystem.lng.game[5] ;//"Скорость света";
             }
             else
             {
