@@ -5789,6 +5789,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1210977842}
+        m_MethodName: incStage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &210743991
@@ -16622,6 +16633,11 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 616235484}
+--- !u!1 &617405161 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010506541478, guid: 9fa28a018428f184f95d3b9c974854e4,
+    type: 2}
+  m_PrefabInternal: {fileID: 291961369}
 --- !u!1 &619788223
 GameObject:
   m_ObjectHideFlags: 0
@@ -17414,7 +17430,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &654501444
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29332,6 +29348,7 @@ GameObject:
   - 114: {fileID: 1210977839}
   - 82: {fileID: 1210977840}
   - 114: {fileID: 1210977841}
+  - 114: {fileID: 1210977842}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -29363,6 +29380,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  learn: {fileID: 0}
   moneyText: {fileID: 1740996327}
   money: 0
   clickCounter: 0
@@ -29476,13 +29494,62 @@ MonoBehaviour:
   - Ballistix Tactical 32 Gb
   - Kingston HyperX Predator 32 Gb
   - Corsair Vengeance LPX 64 Gb
-  PriceOfCPU: 5e00000092000000f1000000f1000000200400008c0100005a050000
-  PriceOfGPU: 9d0000009d00000016010000e80100004c0300004c0300004c030000
-  PriceOfMotherboard: 3a000000620000003500000070000000b10000005b000000ce010000
-  PriceOfPower: 27000000370000004000000010010000ce00000004010000c8010000
-  PriceOfSSD: 3f000000580000009e0000009c0100001a010000de03000094020000
-  PriceOfCooling: 10000000190000002200000034000000420000005801000081000000
-  PriceOfRAM: 12000000380000008a000000c60000004c0100009501000089030000
+  PriceOfCPU:
+  - 1.32e-43
+  - 2.05e-43
+  - 3.38e-43
+  - 3.38e-43
+  - 1.48e-42
+  - 5.55e-43
+  - 1.92e-42
+  PriceOfGPU:
+  - 2.2e-43
+  - 2.2e-43
+  - 3.9e-43
+  - 6.84e-43
+  - 1.183e-42
+  - 1.183e-42
+  - 1.183e-42
+  PriceOfMotherboard:
+  - 8.1e-44
+  - 1.37e-43
+  - 7.4e-44
+  - 1.57e-43
+  - 2.48e-43
+  - 1.28e-43
+  - 6.47e-43
+  PriceOfPower:
+  - 5.5e-44
+  - 7.7e-44
+  - 9e-44
+  - 3.81e-43
+  - 2.89e-43
+  - 3.64e-43
+  - 6.39e-43
+  PriceOfSSD:
+  - 8.8e-44
+  - 1.23e-43
+  - 2.21e-43
+  - 5.77e-43
+  - 3.95e-43
+  - 1.387e-42
+  - 9.25e-43
+  PriceOfCooling:
+  - 2.2e-44
+  - 3.5e-44
+  - 4.8e-44
+  - 7.3e-44
+  - 9.2e-44
+  - 4.82e-43
+  - 1.81e-43
+  PriceOfRAM:
+  - 2.5e-44
+  - 7.8e-44
+  - 1.93e-43
+  - 2.77e-43
+  - 4.65e-43
+  - 5.68e-43
+  - 1.268e-42
   ArrayMiners: {fileID: 0}
   RateMe: {fileID: 1210851906}
 --- !u!4 &1210977834
@@ -29806,6 +29873,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d225c9886509340a3cee39a1f0f74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1210977842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1210977832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a117fab33394e4a929f11257acdf12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stage1: {fileID: 1431498955}
+  stage2: {fileID: 2101113909}
+  stage3: {fileID: 1389999264}
+  stage4: {fileID: 515082611}
+  stage5: {fileID: 1873856370}
+  stage6: {fileID: 654501443}
+  panelLearn: {fileID: 1198310061}
+  stage: 1
+  m1: {fileID: 617405161}
 --- !u!1 &1227371824
 GameObject:
   m_ObjectHideFlags: 0
@@ -33238,7 +33325,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1391683256}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1210977842}
+        m_MethodName: incStage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1391683256
@@ -38294,7 +38392,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1590024247}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1210977842}
+        m_MethodName: incStage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1210977833}
+        m_MethodName: getRewardForLearning
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1590024247
@@ -43096,7 +43216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1820717444
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45865,7 +45985,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1978738455}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1210977842}
+        m_MethodName: resetLearning
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1978738455

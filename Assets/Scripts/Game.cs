@@ -17,6 +17,7 @@ public class Game : MonoBehaviour
 
     public Sprite[] background;
     Rewards rew;
+    public Learning learn;
 
     public Text moneyText; //Деньги в $
     public float money = 0;
@@ -128,6 +129,7 @@ public class Game : MonoBehaviour
         
 
         rew = gameObject.GetComponent<Rewards>();
+        learn = gameObject.GetComponent<Learning>();
         money = 20000f;
 
         NameOfCooling = new string[7] { "Arctic Cooling Alpine 64 PLUS", "Xilence M403", "CoolerMaster Hyper 103",
@@ -218,6 +220,7 @@ public class Game : MonoBehaviour
         {
             sv = JsonUtility.FromJson<Save>(PlayerPrefs.GetString("unitySV"));
             money = sv.money;
+            learn.stage = sv.learningStage;
             sumMoney = sv.sumMoney;
             clickCounter = sv.clickCounter;
             reward = sv.reward;
@@ -308,6 +311,11 @@ public class Game : MonoBehaviour
             money = money + nightMoney;
             if (isNight) showNightMining(nightMoney);
         }
+        autoMinerButton = improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto").gameObject.GetComponent<Button>();
+        upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
+        upgradeProfitButton = improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade").gameObject.GetComponent<Button>();
+        upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
+        levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
     }
 
     void Start()
@@ -317,11 +325,7 @@ public class Game : MonoBehaviour
             // Удачно или нет?
         });
         Translator();
-        autoMinerButton = improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto").gameObject.GetComponent<Button>();
-        upgradeTimeButton = improvementWin.transform.Find("Background/UpgradeGroup/TimeUpgrade").gameObject.GetComponent<Button>();
-        upgradeProfitButton = improvementWin.transform.Find("Background/UpgradeGroup/ProfitUpgrade").gameObject.GetComponent<Button>();
-        upgradePointsText = improvementWin.transform.Find("Background/PointGroup/UpgradePoints").gameObject.GetComponent<Text>();
-        levelText = improvementWin.transform.Find("Background/Header/LevelText").gameObject.GetComponent<Text>();
+        
 
         ad.ReqInter();
         if (!PlayerPrefs.HasKey("Admob"))
@@ -405,6 +409,7 @@ public class Game : MonoBehaviour
         sv.reward = reward;
         sv.rewardCost = rewardCost;
         sv.isAutoExchangerOn = isAutoExchangerOn;
+        sv.learningStage = learn.stage;
 
         sv.date[0] = System.DateTime.Now.Year;
         sv.date[1] = System.DateTime.Now.Month;
@@ -560,6 +565,12 @@ public class Game : MonoBehaviour
             }
         }
     }
+
+    public void getRewardForLearning()
+    {
+        money = money + 300;
+    }
+
     public void SwitchM()
     {
         music = PlayerPrefs.GetInt("Music");
@@ -663,6 +674,7 @@ public class Save
     public int rewardCost;
     public float[] sumCur;
     public bool isAutoExchangerOn;
+    public int learningStage;
 
     public string[] partsOfComp;
     public string achievments;

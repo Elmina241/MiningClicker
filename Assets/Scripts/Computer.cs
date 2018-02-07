@@ -118,12 +118,17 @@ class Computer : MonoBehaviour
         gameObject.transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().text = LangSystem.lng.game[0];
     }
 
+    private void Awake()
+    {
+        impr = g.improvementWin.transform.GetChild(1);
+    }
+
     void Start()
     {
-        print(UnityEditor.EditorUtility.InstanceIDToObject(GetInstanceID())); 
-      
+        print(UnityEditor.EditorUtility.InstanceIDToObject(GetInstanceID()));
+
         //Translator();
-        impr = g.improvementWin.transform.GetChild(1);
+        
         clickParent.transform.localScale = new Vector2(1, 1);
 
         for (int i = 0; i < clickTextPool.Length; i++)
@@ -314,6 +319,10 @@ class Computer : MonoBehaviour
             if (maxClick > 1) maxClick--;
             progressCounter2 = progressCounter2 % upgradeCost;
             upgradePoints++;
+            if (upgradePoints == 1 && g.learn.stage == 2)
+            {
+                g.learn.incStage();
+            }
             upgradeCost = (int)(upgradeCost * upgradeCoef);
             updateUp();
         }
@@ -478,6 +487,10 @@ class Computer : MonoBehaviour
         g.offMinerButton.interactable = (g.money >= offMinerCost) && !isBoughtOff;
         changeBuyButtons();
         checkInteractable();
+        if (g.learn.stage == 5)
+        {
+            g.learn.incStage();
+        }
     }
 
     //Покупка автопочинки
@@ -1029,6 +1042,10 @@ class Computer : MonoBehaviour
         impr.GetChild(6).GetChild(0).GetChild(0).GetChild(1).GetComponent<Text>().text = LangSystem.lng.improvementWins[12]; //Описание
         //-------------------------------------------//
         g.improvementWin.SetActive(!g.improvementWin.activeSelf);
+        if (g.learn.stage == 4)
+        {
+            g.learn.incStage();
+        }
     }
 
     //мощность компьютера в процентах
