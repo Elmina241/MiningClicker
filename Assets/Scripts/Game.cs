@@ -82,19 +82,19 @@ public class Game : MonoBehaviour
     [Space(4)]
     [Header("Цены компонентов")]
 
-    public int[] PriceOfCPU; // в $
+    public float[] PriceOfCPU; // в $
 
-    public int[] PriceOfGPU;
+    public float[] PriceOfGPU;
 
-    public int[] PriceOfMotherboard;
+    public float[] PriceOfMotherboard;
 
-    public int[] PriceOfPower;
+    public float[] PriceOfPower;
 
-    public int[] PriceOfSSD;
+    public float[] PriceOfSSD;
 
-    public int[] PriceOfCooling;
+    public float[] PriceOfCooling;
 
-    public int[] PriceOfRAM;
+    public float[] PriceOfRAM;
 
     public GameObject ArrayMiners;
 
@@ -154,19 +154,19 @@ public class Game : MonoBehaviour
         NameOfRAM = new string[7] { "Kingston ValueRAM 2 Gb", "Ballistix Elite 4 Gb", "AData XPG V2 4 Gb",
         "Kingston HyperX FURY 8 Gb", "Ballistix Tactical 32 Gb", "Kingston HyperX Predator 32 Gb", "Corsair Vengeance LPX 64 Gb" };
 
-        PriceOfCPU = new int[7] { 94, 146, 241, 241, 1056, 396, 1370 }; // в $
+        PriceOfCPU = new float[7] { 94, 146, 241, 241, 1056, 396, 1370 }; // в $
 
-        PriceOfGPU = new int[7] { 157, 157, 278, 488, 844, 844, 844 };
+        PriceOfGPU = new float[7] { 157, 157, 278, 488, 844, 844, 84 };
 
-        PriceOfMotherboard = new int[7] { 58, 98, 53, 112, 177, 91, 462 };
+        PriceOfMotherboard = new float[7] { 58, 98, 53, 112, 177, 91, 462 };
 
-        PriceOfPower = new int[7] { 39, 55, 64, 272, 206, 260, 456 };
+        PriceOfPower = new float[7] { 39, 55, 64, 272, 206, 260, 456 };
 
-        PriceOfSSD = new int[7] { 63, 88, 158, 412, 282, 990, 660 };
+        PriceOfSSD = new float[7] { 63, 88, 158, 412, 282, 990, 660 };
 
-        PriceOfCooling = new int[7] { 16, 25, 34, 52, 66, 344, 129 };
+        PriceOfCooling = new float[7] { 16, 25, 34, 52, 66, 344, 129 };
 
-        PriceOfRAM = new int[7] { 18, 56, 92, 132, 332, 405, 905 };
+        PriceOfRAM = new float[7] { 18, 56, 92, 132, 332, 405, 905 };
 
         /*Объявление валют*/
         currencies = new Currency[1];
@@ -196,19 +196,19 @@ public class Game : MonoBehaviour
         int partId = 0;
         for (int i = 0; i < 7; i++)
         {
-            parts[partId] = new Part(partId, NameOfCPU[i], typesOfParts[0], 12, 25, PriceOfCPU[i], (int)(PriceOfCPU[i] * 0.6f));
+            parts[partId] = new Part(partId, NameOfCPU[i], typesOfParts[0], 12, 25, PriceOfCPU[i], (PriceOfCPU[i] * 0.6f));
             partId++;
-            parts[partId] = new Part(partId, NameOfGPU[i], typesOfParts[1], 12, 25, PriceOfGPU[i], (int)(PriceOfGPU[i] * 0.6f));
+            parts[partId] = new Part(partId, NameOfGPU[i], typesOfParts[1], 12, 25, PriceOfGPU[i], (PriceOfGPU[i] * 0.6f));
             partId++;
-            parts[partId] = new Part(partId, NameOfPower[i], typesOfParts[2], 12, 25, PriceOfPower[i], (int)(PriceOfPower[i] * 0.6f));
+            parts[partId] = new Part(partId, NameOfPower[i], typesOfParts[2], 12, 25, PriceOfPower[i], (PriceOfPower[i] * 0.6f));
             partId++;
-            parts[partId] = new Part(partId, NameOfMotherboard[i], typesOfParts[3], 12, 25, PriceOfMotherboard[i], (int)(PriceOfMotherboard[i] * 0.6f));
+            parts[partId] = new Part(partId, NameOfMotherboard[i], typesOfParts[3], 12, 25, PriceOfMotherboard[i], (PriceOfMotherboard[i] * 0.6f));
             partId++;
-            parts[partId] = new Part(partId, NameOfSSD[i], typesOfParts[4], 12, 25, PriceOfSSD[i], (int)(PriceOfSSD[i] * 0.6f));
+            parts[partId] = new Part(partId, NameOfSSD[i], typesOfParts[4], 12, 25, PriceOfSSD[i], (PriceOfSSD[i] * 0.6f));
             partId++;
-            parts[partId] = new Part(partId, NameOfCooling[i], typesOfParts[5], 12, 25, PriceOfCooling[i], (int)(PriceOfCooling[i] * 0.6f));
+            parts[partId] = new Part(partId, NameOfCooling[i], typesOfParts[5], 12, 25, PriceOfCooling[i], (PriceOfCooling[i] * 0.6f));
             partId++;
-            parts[partId] = new Part(partId, NameOfRAM[i], typesOfParts[6], 12, 25, PriceOfRAM[i], (int)(PriceOfRAM[i] * 0.6f));
+            parts[partId] = new Part(partId, NameOfRAM[i], typesOfParts[6], 12, 25, PriceOfRAM[i], (PriceOfRAM[i] * 0.6f));
             partId++;
         }
 
@@ -377,7 +377,7 @@ public class Game : MonoBehaviour
     public int getCurrent()
     {
         GameObject miners = GameObject.FindWithTag("Miners").gameObject;
-        if (farmCount == 0)
+        if (farmCount < 2)
         {
             int res = 0;
             while (res < miners.transform.childCount && !miners.transform.GetChild(res).GetComponent<Computer>().isReady) res++;
@@ -595,12 +595,12 @@ public class Part
     public string partName; // Имя компонента (AMD RADEON RX480 4GB)
     public float reliabilityNew; // Вероятность поломки каждые 100 заполнений прогресс-бара. 0-10% для Новых, 0-25% для Б/У
     public float reliabilityUsed;
-    public int costNew; // Цена нового компонента
-    public int costUsed; // Цена Б/У компонента
+    public float costNew; // Цена нового компонента
+    public float costUsed; // Цена Б/У компонента
 
     /*!-- JSON-сериализация --*/
 
-    public Part(int id, string name, typeOfPart type, float reliabilityNew, float reliabilityUsed, int costNew, int costUsed)
+    public Part(int id, string name, typeOfPart type, float reliabilityNew, float reliabilityUsed, float costNew, float costUsed)
     {
         this.id = id;
         partName = name;

@@ -2862,6 +2862,16 @@ Prefab:
       propertyPath: coef
       value: 5000
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: autoMiner.autoCost
+      value: 9e+9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: offMinerCost
+      value: 1.5e+10
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012509147228, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
     - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -4130,6 +4140,16 @@ Prefab:
         type: 2}
       propertyPath: coef
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: autoMiner.autoCost
+      value: 3.5e+10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: offMinerCost
+      value: 7.2e+10
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -7794,6 +7814,16 @@ Prefab:
       propertyPath: coef
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: autoMiner.autoCost
+      value: 8000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: offMinerCost
+      value: 13000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
   m_IsPrefabParent: 0
@@ -8199,6 +8229,16 @@ Prefab:
         type: 2}
       propertyPath: coef
       value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: autoMiner.autoCost
+      value: 200000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: offMinerCost
+      value: 480000000
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -12432,6 +12472,16 @@ Prefab:
         type: 2}
       propertyPath: coef
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: autoMiner.autoCost
+      value: 30000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: offMinerCost
+      value: 45000000
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -27276,6 +27326,16 @@ Prefab:
       propertyPath: coef
       value: 420
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: autoMiner.autoCost
+      value: 800000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: offMinerCost
+      value: 1.2e+9
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000010248541612, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -29044,6 +29104,16 @@ Prefab:
         type: 2}
       propertyPath: coef
       value: 850
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: autoMiner.autoCost
+      value: 9e+9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: offMinerCost
+      value: 1.5e+10
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012509147228, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}
@@ -32649,7 +32719,7 @@ Prefab:
     - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
         type: 2}
       propertyPath: autoMiner.autoCost
-      value: 80
+      value: 120000
       objectReference: {fileID: 0}
     - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
         type: 2}
@@ -32928,6 +32998,11 @@ Prefab:
         type: 2}
       propertyPath: coef
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013195987836, guid: 9fa28a018428f184f95d3b9c974854e4,
+        type: 2}
+      propertyPath: offMinerCost
+      value: 280000
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012509147228, guid: 9fa28a018428f184f95d3b9c974854e4, type: 2}

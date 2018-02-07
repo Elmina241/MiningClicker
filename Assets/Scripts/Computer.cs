@@ -85,7 +85,7 @@ class Computer : MonoBehaviour
     public AutoMiner autoMiner;
 
     /*Оффлайн автомайнер*/
-    int offMinerCost = 150;
+    public float offMinerCost = 150;
     public bool isBoughtOff;
     public float offProfit = 0.00001f;
     public float offProfitBonus = 50;
@@ -186,6 +186,53 @@ class Computer : MonoBehaviour
         return converted;
     }
 
+    public string formatMoney(float money)
+    {
+        string res = "";
+        if (money > 1000000000 && money < 999999999999) // млрд
+        {
+            res = "$" + ((money / 1000000000)).ToString("0.#0") + " " + LangSystem.lng.game[4];
+        }
+        else if (money > 1000000 && money < 999999999)// млн
+        {
+            res = "$" + ((money / 1000000)).ToString("0.#0") + " " + LangSystem.lng.game[3];
+        }
+        else if (money > 10000 && money <= 999999) //тыс
+        {
+            res = "$" + conversionFunction(money);
+        }
+        else if (money <= 99999)
+        {
+            //res = "$" + money.ToString("0.#0");
+            res = "$" + conversionFunction(money);
+        }
+        return res;
+    }
+
+    //Форматирование денег для стоимости запчастей
+    public string formatMoneyP(float money)
+    {
+        string res = "";
+        if (money > 1000000000 && money < 999999999999) // млрд
+        {
+            res = "$" + ((int)(money / 1000000000)) + " " + LangSystem.lng.game[4];
+        }
+        else if (money > 1000000 && money < 999999999)// млн
+        {
+            res = "$" + ((int)(money / 1000000)) + " " + LangSystem.lng.game[3];
+        }
+        else if (money > 10000 && money <= 999999) //тыс
+        {
+            res = "$" + conversionFunction(money);
+        }
+        else if (money <= 99999)
+        {
+            //res = "$" + money.ToString("0.#0");
+            res = "$" + conversionFunction(money);
+        }
+        return res;
+    }
+
     public void Update()
     {
         currencyText.text = currency.ToString("#0.###0");
@@ -282,9 +329,9 @@ class Computer : MonoBehaviour
                     // p.isBought = rnd.Next(1, 100) > p.curReliability;
                     p.isBought = Random.Range(1, 100) > p.curReliability;
                     p.isBroken = !p.isBought;
-                    if (p.isBroken && isBoughtAutoRepair && (g.money >= g.parts[p.id].costNew))
+                    if (p.isBroken && isBoughtAutoRepair && (g.money >= g.parts[p.id].costNew * coef))
                     {
-                        g.money -= g.parts[p.id].costNew;
+                        g.money -= g.parts[p.id].costNew * coef;
                         p.curReliability = g.parts[p.id].reliabilityNew;
                         p.isBought = true;
                         p.isBroken = false;
@@ -430,6 +477,7 @@ class Computer : MonoBehaviour
         g.improvementWin.transform.Find("Background/AutoMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
         g.offMinerButton.interactable = (g.money >= offMinerCost) && !isBoughtOff;
         changeBuyButtons();
+        checkInteractable();
     }
 
     //Покупка автопочинки
@@ -441,6 +489,7 @@ class Computer : MonoBehaviour
         g.moneyText.text = "$" + g.money.ToString("0.#0");
         g.improvementWin.transform.Find("Background/AutoRepair/GameObject/checkmark").GetComponent<check>().setOn();
         g.improvementWin.transform.Find("Background/AutoRepair/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
+        checkInteractable();
     }
 
     public void BuyOffMiner()
@@ -454,6 +503,7 @@ class Computer : MonoBehaviour
         g.improvementWin.transform.Find("Background/NightMiner/GameObject/BuyAuto/Text_buy").GetComponent<Text>().text = "";
         g.autoMinerButton.interactable = (g.money >= autoMiner.autoCost) && !autoMiner.isBoughtAuto;
         changeBuyButtons();
+        checkInteractable();
     }
 
     public void checkInteractable()
@@ -525,9 +575,9 @@ class Computer : MonoBehaviour
                         System.Random rnd = new System.Random();
                         p.isBought = rnd.Next(1, 100) > p.curReliability;
                         p.isBroken = !p.isBought;
-                        if (p.isBroken && isBoughtAutoRepair && (g.money >= g.parts[p.id].costNew))
+                        if (p.isBroken && isBoughtAutoRepair && (g.money >= g.parts[p.id].costNew * coef))
                         {
-                            g.money -= g.parts[p.id].costNew;
+                            g.money -= g.parts[p.id].costNew * coef;
                             p.curReliability = g.parts[p.id].reliabilityNew;
                             p.isBought = true;
                             p.isBroken = false;
@@ -916,9 +966,10 @@ class Computer : MonoBehaviour
         g.autoRepairButton.onClick.AddListener(BuyAutoRepair);
 
 
-        g.improvementWin.transform.Find("Background/AutoMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + autoMiner.autoCost.ToString();
-        g.improvementWin.transform.Find("Background/NightMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + offMinerCost.ToString();
-        g.improvementWin.transform.Find("Background/AutoRepair/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + autoRepairCost.ToString();
+        //g.improvementWin.transform.Find("Background/AutoMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = "$" + autoMiner.autoCost.ToString();
+        g.improvementWin.transform.Find("Background/AutoMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = formatMoney(autoMiner.autoCost);
+        g.improvementWin.transform.Find("Background/NightMiner/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = formatMoney(offMinerCost);
+        g.improvementWin.transform.Find("Background/AutoRepair/GameObject/Icon_Autominer/Text").GetComponent<Text>().text = formatMoney(autoRepairCost);
 
         g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = backgr;
         // g.improvementWin.transform.Find("Background/Header/icon").GetComponent<Image>().sprite = transform.Find("MenuButton").GetComponent<Image>().sprite;
@@ -943,8 +994,10 @@ class Computer : MonoBehaviour
             A.transform.SetParent(partsContainer.transform, false);
             A.transform.Find("nameText").GetComponent<Text>().text = g.parts[compParts[i].id].partName;
             A.transform.Find("Image").GetComponent<Image>().sprite = g.parts[compParts[i].id].type.image;
-            A.transform.Find("BuyNew/Text").GetComponent<Text>().text = "$" + g.parts[compParts[i].id].costNew + " | " + g.parts[compParts[i].id].reliabilityNew + "%";
-            A.transform.Find("BuyUsed/Text").GetComponent<Text>().text = "$" + g.parts[compParts[i].id].costUsed + " | " + g.parts[compParts[i].id].reliabilityUsed + "%";
+            /*A.transform.Find("BuyNew/Text").GetComponent<Text>().text = "$" + g.parts[compParts[i].id].costNew + " | " + g.parts[compParts[i].id].reliabilityNew + "%";
+            A.transform.Find("BuyUsed/Text").GetComponent<Text>().text = "$" + g.parts[compParts[i].id].costUsed + " | " + g.parts[compParts[i].id].reliabilityUsed + "%";*/
+            A.transform.Find("BuyNew/Text").GetComponent<Text>().text = formatMoneyP(g.parts[compParts[i].id].costNew * coef) + " | " + g.parts[compParts[i].id].reliabilityNew + "%";
+            A.transform.Find("BuyUsed/Text").GetComponent<Text>().text = formatMoneyP(g.parts[compParts[i].id].costUsed * coef) + " | " + g.parts[compParts[i].id].reliabilityUsed + "%";
             A.transform.Find("BuyNew").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, true, A); });
             A.transform.Find("BuyUsed").GetComponent<Button>().onClick.AddListener(delegate { BuyPart(temp, false, A); });
             A.transform.Find("TextUsed").GetComponent<Text>().text = LangSystem.lng.improvementWins[19];
@@ -1053,12 +1106,12 @@ class Computer : MonoBehaviour
     {
         if (isNew)
         {
-            g.money -= g.parts[compParts[id].id].costNew;
+            g.money -= g.parts[compParts[id].id].costNew * coef;
             compParts[id].curReliability = g.parts[compParts[id].id].reliabilityNew;
         }
         else
         {
-            g.money -= g.parts[compParts[id].id].costUsed;
+            g.money -= g.parts[compParts[id].id].costUsed * coef;
             compParts[id].curReliability = g.parts[compParts[id].id].reliabilityUsed;
         }
         compParts[id].isBought = true;
@@ -1114,8 +1167,8 @@ class Computer : MonoBehaviour
         {
             if (!compParts[i].isBought)
             {
-                partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costNew <= g.money);
-                partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costUsed <= g.money);
+                partsContainer.transform.GetChild(i).Find("BuyNew").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costNew * coef <= g.money);
+                partsContainer.transform.GetChild(i).Find("BuyUsed").GetComponent<Button>().interactable = (g.parts[compParts[i].id].costUsed * coef <= g.money);
                 partsContainer.transform.GetChild(i).Find("Ckecmark").GetComponent<check>().setOff();
                 if (compParts[i].isBroken)
                 {

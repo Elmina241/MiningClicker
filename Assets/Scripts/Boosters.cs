@@ -77,11 +77,13 @@ public class Boosters : MonoBehaviour {
 
     public bool checkProfitBooster()
     {
-        return (System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP);
+        if ((System.DateTime.Now - lastStartProfit).Days > 7) return true;
+        else return (System.DateTime.Now - lastStartProfit).Seconds > (rechargeTimeP + workTimeP);
     }
     public bool checkTimeBooster()
     {
-        return (System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT);
+        if ((System.DateTime.Now - lastStartTime).Days > 7) return true;
+        else return (System.DateTime.Now - lastStartTime).Seconds > (rechargeTimeT + workTimeT);
     }
 
     public void startProfitBooster()
