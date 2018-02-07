@@ -5,6 +5,17 @@ using System.Collections;
 
 class Computer : MonoBehaviour
 {
+    // Коэффициенты:
+    // 10000
+    // 10000
+    // 10000
+    // 10000
+    // 10000
+    // 5000
+    // 10000
+
+
+    public float coef;
     [Header("Фон")]
     public Sprite backgr;
     [Header("ОУ на майнере")]
@@ -42,7 +53,7 @@ class Computer : MonoBehaviour
     //процент от времени заполнения автомайнера при полном наборе видеокарт
     public int fullGPU = 40;
 
-    public int cost = 1; // цена компьютера
+    public float cost = 1f; // цена компьютера
     public string nameComp = "Ноутбук"; // Имя компьютера
     public bool isReady; // готов ли компьютер к работе (все ли компоненты куплены)
     public bool isFarm; // ферма?
@@ -109,6 +120,8 @@ class Computer : MonoBehaviour
 
     void Start()
     {
+        print(UnityEditor.EditorUtility.InstanceIDToObject(GetInstanceID())); 
+      
         //Translator();
         impr = g.improvementWin.transform.GetChild(1);
         clickParent.transform.localScale = new Vector2(1, 1);
@@ -137,7 +150,7 @@ class Computer : MonoBehaviour
         this.bonusButton = transform.Find("BonusPanel/BonusButton").gameObject.GetComponent<Button>();
         this.buyComp = transform.Find("BuyComp").gameObject.GetComponent<Button>();
         this.partsContainer = g.improvementWin.transform.Find("Background/Parts").gameObject;
-        buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = "$" + cost;
+        buyComp.transform.Find("Text").gameObject.GetComponent<Text>().text = "$" + conver(cost*coef);
         bonusButton.onClick.AddListener(GetBonus);
         buyComp.gameObject.SetActive(!isResearched);
         buyComp.onClick.AddListener(ResearchComp);
@@ -160,7 +173,12 @@ class Computer : MonoBehaviour
         //autoMiner = new AutoMiner(1, "AutoMiner", 5, bonus);
         updateUp();
     }
-
+    private string conver(float number)
+    {
+        string converted = number.ToString("#,###,##0");
+        converted = converted.Replace(",", " ");
+        return converted;
+    }
     private string conversionFunction(float number)
     {
         string converted = number.ToString("#,##0");
@@ -997,6 +1015,7 @@ class Computer : MonoBehaviour
         return eff;
     }
 
+    
 
     public void ResearchComp()
     {
@@ -1008,7 +1027,7 @@ class Computer : MonoBehaviour
             {
                 g.money -= cost;
                 buyComp.gameObject.SetActive(false);
-                g.moneyText.text = "$" + g.money.ToString("0.#0");
+                g.moneyText.text = "$" +  g.money.ToString("0.#0");
                 isResearched = true;
             }
             else
@@ -1118,7 +1137,7 @@ class Computer : MonoBehaviour
 [System.Serializable]
 class AutoMiner
 {
-    public int autoCost; // Цена покупки автомайнера
+    public float autoCost; // Цена покупки автомайнера
     public string autoName; // Имя автомайнера
     public bool isBoughtAuto; // Куплен ли автомайнер?
     public float autoTime; // Время заполенения прогресс-бара. Уменьшается за счет timeUpgrade
@@ -1126,7 +1145,7 @@ class AutoMiner
     public float autoProfit; // Доход автомайнера. Изначально = bonus. В дальнейшем autoProfit = bonus + profitUpgrade
     public float timeBonus;
 
-    public AutoMiner(int cost, string name, float time, float profit)
+    public AutoMiner(float cost, string name, float time, float profit)
     {
         this.autoCost = cost;
         this.autoName = name;
