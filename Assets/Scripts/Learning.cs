@@ -17,11 +17,6 @@ public class Learning : MonoBehaviour {
         if (stage < 7) showStage();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
     public void showStage()
     {
         stage1.SetActive(false);

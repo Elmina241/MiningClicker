@@ -67,7 +67,7 @@ class Computer : MonoBehaviour
     int expD = 50; // кол-во опыта за клик по кнопке
     int expU = 15; // кол-во опыта за улучшение доходности
     public int upgradeCost = 200; //максимальное число EXP. Начало с 200
-    float upgradeCoef = 1.16f; // коеф. сложности upgradeCost, для ноута - 1,12. 
+    float upgradeCoef = 1.16f; // коэф. сложности upgradeCost, для ноута - 1,12. 
     public int upgradePoints = 0; // кол-во очков улучшений (ОУ)
     //удалить 
     public int efficiency = 100;
@@ -992,11 +992,13 @@ class Computer : MonoBehaviour
         {
             g.improvementWin.transform.Find("Background/Description_parts/Text").GetComponent<Text>().text = "";
             g.autoRepairButton.gameObject.transform.parent.parent.gameObject.SetActive(false);
-            g.improvementWin.transform.GetChild(1).GetChild(7).gameObject.SetActive(false);
+            g.improvementWin.transform.GetChild(1).GetChild(8).gameObject.SetActive(false);
+            g.improvementWin.transform.GetChild(1).GetChild(7).gameObject.SetActive(false); //описание
         }
         else
         {
             g.autoRepairButton.gameObject.transform.parent.parent.gameObject.SetActive(true);
+            g.improvementWin.transform.GetChild(1).GetChild(8).gameObject.SetActive(true);
             g.improvementWin.transform.GetChild(1).GetChild(7).gameObject.SetActive(true);
             g.improvementWin.transform.Find("Background/Description_parts/Text").GetComponent<Text>().text = LangSystem.lng.improvementWins[18]; //"Компоненты компьютера";
         }

@@ -172,7 +172,7 @@ public class Game : MonoBehaviour
 
         /*Объявление валют*/
         currencies = new Currency[1];
-        currencies[0] = new Currency("ETH", 30000f);
+        currencies[0] = new Currency("BTC", 30000f);
 
         /*Объявление типов компонентов. ID в массиве должно совпадать с Id типа!!!!! НЕ МЕНЯТЬ ID GPU!!!!!*/
         typesOfParts = new typeOfPart[7];

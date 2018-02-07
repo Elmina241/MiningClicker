@@ -71,7 +71,7 @@ public class Achievment : MonoBehaviour
         set.GetChild(2).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[1];//перевод музыки
         set.GetChild(3).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[2];//перевод языка
         set.GetChild(4).GetChild(1).GetComponent<Text>().text = LangSystem.lng.windows[3]; // Оценить игру
-        set.GetChild(5).GetChild(1).GetChild(0).GetComponent<Text>().text = LangSystem.lng.settingsParam[3]; // Мы в вк
+        set.GetChild(6).GetChild(1).GetChild(0).GetComponent<Text>().text = LangSystem.lng.settingsParam[3]; // Мы в вк
 
 
 
