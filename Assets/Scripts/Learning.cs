@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Learning : MonoBehaviour {
@@ -12,10 +13,17 @@ public class Learning : MonoBehaviour {
     public GameObject panelLearn;
     public int stage = 1;
     public GameObject m1;
+    public GameObject button;
     // Use this for initialization
     void Start () {
         if (stage < 7) showStage();
 	}
+
+    public void startLearning()
+    {
+        stage = 1;
+        showStage();
+    }
 	
     public void showStage()
     {
@@ -55,7 +63,7 @@ public class Learning : MonoBehaviour {
 
     public void resetLearning()
     {
-        stage = 7;
+        stage = 8;
         showStage();
     }
 
@@ -63,6 +71,13 @@ public class Learning : MonoBehaviour {
     {
         stage++;
         showStage();
+    }
+
+    public void blockButton()
+    {
+        Button b = button.GetComponent<Button>();
+        b.interactable = !(stage == 7);
+        
     }
 
 }

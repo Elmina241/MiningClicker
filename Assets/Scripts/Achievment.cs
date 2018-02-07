@@ -73,7 +73,7 @@ public class Achievment : MonoBehaviour
         set.GetChild(4).GetChild(1).GetComponent<Text>().text = LangSystem.lng.windows[3]; // Оценить игру
         set.GetChild(6).GetChild(1).GetChild(0).GetComponent<Text>().text = LangSystem.lng.settingsParam[3]; // Мы в вк
 
-
+        g.learn.blockButton();
 
         set.GetChild(0).GetComponent<Image>().sprite = Gradient_settings;
         set.GetChild(0).GetChild(2).GetChild(0).GetComponent<Image>().sprite = GameObject.Find("/Canvas/Panel_Down/Settings_btn/Icon_Bg/Icon").GetComponent<Image>().sprite; // тырим иконку
