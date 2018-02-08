@@ -16,7 +16,9 @@ public class CoinFlip : MonoBehaviour
     public GameObject dollarAnim;
     public GameObject Layer;
 
-
+    public int shifty_count = 0;
+    public int bet_count = 0;
+    public int rnd;
 
     public float _bet;
 
@@ -28,10 +30,13 @@ public class CoinFlip : MonoBehaviour
         // _resultPlay.text = "";
         sld.value = 0;
         btn.interactable = true;
-        Layer.GetComponent<Animator>().SetBool("win", false);
+        Layer.GetComponent<Animator>().SetBool("win", false);        
     }
 
-
+    private void Start()
+    {
+        shifty_count = Random.Range(5, 7);
+    }
     public void BetRange()
     {
         _betText.text = "$" + (conversionFunction(gameObject.GetComponent<Game>().money * sld.value)).ToString();
@@ -71,6 +76,8 @@ public class CoinFlip : MonoBehaviour
 
     private void Result(int ch, int rand)
     {
+        
+        
         if (ch != rand)
         {
             _choose = 0;
@@ -115,12 +122,30 @@ public class CoinFlip : MonoBehaviour
     public void Play()
     {
         _bet = (gameObject.GetComponent<Game>().money * sld.value);
-
+        bet_count += 1;
         Debug.Log(_bet);
         if (_bet != 0.0f && _choose != 0)
         {
             btn.interactable = false;
-            int rnd = Random.Range(1, 3);
+            if (bet_count == shifty_count)
+            {
+                if (_choose == 1)
+                {
+                    rnd = 2;
+                    bet_count = 0;
+                    shifty_count = Random.Range(5, 7);
+                }
+                else
+                {
+                    rnd = 1;
+                    bet_count = 0;
+                    shifty_count = Random.Range(5, 7);
+                }
+            }
+            else
+            {
+                rnd = Random.Range(1, 3);
+            }
             Debug.Log(rnd);
             switch (rnd)
             {

@@ -10,9 +10,7 @@ public class Game : MonoBehaviour
     public int music = 0;
     public AudioSource audM;
     public GameObject musicSwitch;
-    //Для рекламы
-    public AdManager ad;
-    private int admob_count;
+   
     public const string leaderboard = "CgkI-9fq-ZEaEAIQAQ";
 
     public Sprite[] background;
@@ -125,9 +123,6 @@ public class Game : MonoBehaviour
         //Application.targetFrameRate = 60;
         Music();
         ArrayMiners = GameObject.Find("/Canvas/BG/ScrollRect/Miners");
-        ad = gameObject.GetComponent<AdManager>();
-        
-
         rew = gameObject.GetComponent<Rewards>();
         learn = gameObject.GetComponent<Learning>();
         money = 20000f;
@@ -325,36 +320,9 @@ public class Game : MonoBehaviour
             // Удачно или нет?
         });
         Translator();
-        
-
-        ad.ReqInter();
-        if (!PlayerPrefs.HasKey("Admob"))
-        {
-            PlayerPrefs.SetInt("Admob", admob_count);
-        }
-        else
-        {
-            admob_count = PlayerPrefs.GetInt("Admob");
-        }
     }
 
-    public void ShowAds()
-    {
-        if (admob_count == 4)
-        {
-            ad.showInterstital();
-            print("Admob Show");
-            admob_count = 0;
-            ad.ReqInter();
-            PlayerPrefs.SetInt("Admob", admob_count);
-        }
-        else
-        {
-            admob_count += 1;
-            PlayerPrefs.SetInt("Admob", admob_count);
-            print("Admob = " + admob_count);
-        }
-    }
+  
 
     public void openLeaderboard()
     {

@@ -66,6 +66,15 @@ public class Achievment : MonoBehaviour
         Store.SetActive(false);
         Achiev.SetActive(false);
         //ЛОКАЛИЗАЦИЯ
+        Learning learn = GetComponent<Learning>();
+        if (learn.stage != 7)
+        {
+            set.GetChild(5).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[4];
+        }
+        else
+        {
+            set.GetChild(5).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[5];
+        }
         set.GetChild(0).GetChild(1).GetComponent<Text>().text = LangSystem.lng.panelName[3];
         set.GetChild(1).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[0];//перевод звуков
         set.GetChild(2).GetChild(1).GetComponent<Text>().text = LangSystem.lng.settingsParam[1];//перевод музыки

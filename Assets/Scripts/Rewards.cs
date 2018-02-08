@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class Rewards : MonoBehaviour
 {
+    public AdManager ad;
+    public int _waitSeconds = 30;
 
     public float _hours = 0.0f;
     public float _minutes = 0.0f;
@@ -14,18 +16,49 @@ public class Rewards : MonoBehaviour
     private ulong lastChestOpen;
     public string[] items;
     public ulong unixTime; //текущее время
-   
+
+    IEnumerator Ads()
+    {
+        while (_waitSeconds > 0)
+        {
+            _waitSeconds--;
+            yield return new WaitForSeconds(1f);
+            if (_waitSeconds == 0)
+            {
+                ShowAds();
+            }
+        }
+    }
+    public void ShowAds()
+    {
+       // ad.showInterstital();
+        print("Admob Show");
+        _waitSeconds = 30;
+       // ad.ReqInter();
+    }
+    
 
     private void Start()
     {
-       
-      
+       // ad.ReqInter();
+       // ad.showInterstital();
+
         lastChestOpen = ulong.Parse(PlayerPrefs.GetString("LastChestOpen"));
         print(lastChestOpen);
         if (!IsChestReady())
         {
             g.SetActive(false);
         }
+        StartCoroutine(Ads()); //таймер на рекламу.
+        
+        //if (!PlayerPrefs.HasKey("Admob"))
+        //{
+        //    PlayerPrefs.SetInt("Admob", admob_count);
+        //}
+        //else
+        //{
+        //    admob_count = PlayerPrefs.GetInt("Admob");
+        //}
     }
 
     private void Update()
@@ -37,6 +70,7 @@ public class Rewards : MonoBehaviour
                 g.SetActive(true);
             }
         }
+
     }
     //// КОД НИЖЕ ПАРСИТ В UNIX-ФОРМАТЕ ВРЕМЯ С СЕРВЕРА
     public IEnumerator GetTime()
@@ -57,6 +91,8 @@ public class Rewards : MonoBehaviour
 
     public void ChestClick()
     {
+       // ad.ReqInter();
+       // ad.showInterstital();
         //награда
         int rew = 0;
         switch (gObj.getCurrent())
@@ -118,10 +154,12 @@ public class Rewards : MonoBehaviour
     {
         StartCoroutine(GetTime());
         //GetTime();
-        ulong diff = (unixTime - lastChestOpen); // разница между текущим и прошлым текущимы
+        ulong diff = (unixTime - lastChestOpen); // разница между текущим и прошлым текущим
         ulong m = diff / 10000000; // перевод в секунды
         float secondsLeft = ((_hours * 3600.0f) + (_minutes * 60.0f) + _sec) - m; // секунд осталось
         //print(secondsLeft);
         return (secondsLeft < 0);
     }
+
+
 }

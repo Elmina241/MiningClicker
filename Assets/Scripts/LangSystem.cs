@@ -65,7 +65,7 @@ public class LangSystem : MonoBehaviour
 public class lang
 {
     public string[] panelName = new string[5];
-    public string[] settingsParam = new string[4];
+    public string[] settingsParam = new string[6];
     public string[] achievementText = new string[6];
     public string[] achArrHeader = new string[9];
     public string[] achArrDescrip = new string[9];
@@ -77,4 +77,5 @@ public class lang
     public string[] push = new string[8];
     public string[] game = new string[6];
     public string[] windows = new string[5];
+    public string[] learning = new string[10];
 }

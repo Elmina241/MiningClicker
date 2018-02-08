@@ -125,10 +125,8 @@ class Computer : MonoBehaviour
 
     void Start()
     {
-        print(UnityEditor.EditorUtility.InstanceIDToObject(GetInstanceID()));
 
         //Translator();
-        
         clickParent.transform.localScale = new Vector2(1, 1);
 
         for (int i = 0; i < clickTextPool.Length; i++)
