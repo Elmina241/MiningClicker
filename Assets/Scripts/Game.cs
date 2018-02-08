@@ -318,6 +318,11 @@ public class Game : MonoBehaviour
         PlayGamesPlatform.Activate();
         Social.localUser.Authenticate((bool success) => {
             // Удачно или нет?
+            if (success)
+            {
+               // tt.text = Social.localUser.id;
+               // test.text = Social.localUser.userName;
+            }
         });
         Translator();
     }

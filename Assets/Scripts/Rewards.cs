@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Rewards : MonoBehaviour
 {
     public AdManager ad;
-    public int _waitSeconds = 30;
+    public int _waitSeconds = 240;
 
     public float _hours = 0.0f;
     public float _minutes = 0.0f;
@@ -33,7 +33,7 @@ public class Rewards : MonoBehaviour
     {
        // ad.showInterstital();
         print("Admob Show");
-        _waitSeconds = 30;
+        _waitSeconds = 240;
        // ad.ReqInter();
     }
     
