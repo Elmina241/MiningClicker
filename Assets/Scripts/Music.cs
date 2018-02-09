@@ -45,12 +45,13 @@ public class Music : MonoBehaviour
     //В функции ниже попеременно заданы стартовые позиции маркеров и их конечные пункты для перемещения. Пока без анимаций.
     public void DownloadState()
     {
+        music.Play();
         if (!PlayerPrefs.HasKey("MusicState") && !PlayerPrefs.HasKey("SoundState")) // Если не существует ключ (первый запуск), то устанавливаем все по дефолту и сохраняем
         {
             PlayerPrefs.SetInt("MusicState", 1); //1, включен
             switchMusic.transform.localPosition = new Vector3(43.8f, 0f, 0f);
             currentStateMusic = true;
-           // music.mute = false;
+            music.mute = false;
             switchMusic.GetComponent<Image>().color = switchOn;
 
             PlayerPrefs.SetInt("SoundState", 1); //1, включен
@@ -115,6 +116,7 @@ public class Music : MonoBehaviour
             if (currentStateMusic) // если включена музыка
             {
                 currentStateMusic = false; // выключить
+                clickMusic = true;
                 PlayerPrefs.SetInt("MusicState", currentStateMusic.GetHashCode());
                 startPosMusic = new Vector3(-43.8f, 0f, 0f);
                 endPosMusic = new Vector3(43.8f, 0f, 0f);
@@ -126,6 +128,7 @@ public class Music : MonoBehaviour
             else
             {
                 currentStateMusic = true;
+                clickMusic = true;
                 PlayerPrefs.SetInt("MusicState", currentStateMusic.GetHashCode());
                 startPosMusic = new Vector3(43.8f, 0f, 0f);
                 endPosMusic = new Vector3(-43.8f, 0f, 0f);

@@ -29891,7 +29891,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4b68d7ccc709f42a92784fd4a1fafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tt: {fileID: 468896548}
   music: 0
   audM: {fileID: 10222908}
   musicSwitch: {fileID: 219845146}
@@ -30251,8 +30250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a3b72f9bd2a9047be2743793f2bd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ad: {fileID: 1210977841}
-  _waitSeconds: 10
+  ad: {fileID: 0}
+  _waitSeconds: 240
   _hours: 0
   _minutes: 0
   _sec: 60
@@ -36536,17 +36535,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1210977833}
-        m_MethodName: SwitchM
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1500810498 stripped

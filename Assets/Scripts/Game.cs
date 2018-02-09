@@ -121,7 +121,7 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         //Application.targetFrameRate = 60;
-        Music();
+        //Music();
         ArrayMiners = GameObject.Find("/Canvas/BG/ScrollRect/Miners");
         rew = gameObject.GetComponent<Rewards>();
         learn = gameObject.GetComponent<Learning>();

@@ -317,7 +317,7 @@ class Computer : MonoBehaviour
             if (maxClick > 1) maxClick--;
             progressCounter2 = progressCounter2 % upgradeCost;
             upgradePoints++;
-            if (upgradePoints == 1 && g.learn.stage == 2)
+            if (g.learn.stage == 2)
             {
                 g.learn.incStage();
             }
@@ -488,6 +488,10 @@ class Computer : MonoBehaviour
         if (g.learn.stage == 5)
         {
             g.learn.incStage();
+        }
+        else if (g.learn.stage < 5 || g.learn.stage == 8)
+        {
+            g.learn.stage = 7;
         }
     }
 
