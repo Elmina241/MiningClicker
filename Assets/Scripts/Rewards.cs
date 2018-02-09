@@ -40,9 +40,9 @@ public class Rewards : MonoBehaviour
 
     private void Start()
     {
-       // ad.ReqInter();
-       // ad.showInterstital();
-
+        // ad.ReqInter();
+        // ad.showInterstital();
+        StartCoroutine(GetTime());
         lastChestOpen = ulong.Parse(PlayerPrefs.GetString("LastChestOpen"));
         print(lastChestOpen);
         if (!IsChestReady())
