@@ -325,6 +325,7 @@ public class Game : MonoBehaviour
             }
         });
         Translator();
+        
     }
 
   

@@ -41,6 +41,7 @@ public class Achievment : MonoBehaviour
     ////////////////////////////////////////////////
     private void Start()
     {
+
         achiev = Achiev.transform.GetChild(0);
         set = _settings.transform.GetChild(0);
         store = Store.transform.GetChild(0);

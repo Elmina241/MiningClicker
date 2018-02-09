@@ -160,7 +160,7 @@ class Computer : MonoBehaviour
         transform.Find("ProgressPanel/nameText").gameObject.GetComponent<Text>().text = nameComp;
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString() + "xp";
         p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
-        bonusText.text = "$" + (bonusCost).ToString("0.#0");
+        bonusText.text = BonusMoney(bonusCost); //
         if (isReady)
         {
             if (autoMiner.isBoughtAuto)
@@ -188,17 +188,39 @@ class Computer : MonoBehaviour
         converted = converted.Replace(",", " ");
         return converted;
     }
+    public string BonusMoney(float money)
+    {
+        string res = "";
+        if (money > 1000000000 && money < 999999999999) // млрд
+        {
+            res = "$" + ((money / 1000000000)).ToString("#") + " " + LangSystem.lng.game[4];
+        }
+        else if (money > 1000000 && money < 999999999)// млн
+        {
+            res = "$" + ((money / 1000000)).ToString("#") + " " + LangSystem.lng.game[3];
+        }
+        else if (money > 10000 && money <= 999999) //тыс
+        {
+            res = "$" + conversionFunction(money);
+        }
+        else if (money <= 99999)
+        {
+            //res = "$" + money.ToString("0.#0");
+            res = "$" + conversionFunction(money);
+        }
+        return res;
+    }
 
     public string formatMoney(float money)
     {
         string res = "";
         if (money > 1000000000 && money < 999999999999) // млрд
         {
-            res = "$" + ((money / 1000000000)).ToString("0.#0") + " " + LangSystem.lng.game[4];
+            res = "$" + ((money / 1000000000)).ToString("#") + " " + LangSystem.lng.game[4];
         }
         else if (money > 1000000 && money < 999999999)// млн
         {
-            res = "$" + ((money / 1000000)).ToString("0.#0") + " " + LangSystem.lng.game[3];
+            res = "$" + ((money / 1000000)).ToString("#") + " " + LangSystem.lng.game[3];
         }
         else if (money > 10000 && money <= 999999) //тыс
         {
@@ -245,11 +267,11 @@ class Computer : MonoBehaviour
         progressText.text = progressCounter1.ToString() + "%";
         if (g.money > 1000000000 && g.money < 999999999999) // млрд
         {
-            g.moneyText.text = "$" + ((g.money / 1000000000)).ToString("0.#0") + " " + LangSystem.lng.game[4];
+            g.moneyText.text = "$" + ((g.money / 1000000000)).ToString("#") + " " + LangSystem.lng.game[4];
         }
         else if (g.money > 1000000 && g.money < 999999999)// млн
         {
-            g.moneyText.text = "$" + ((g.money / 1000000)).ToString("0.#0") + " " + LangSystem.lng.game[3];
+            g.moneyText.text = "$" + ((g.money / 1000000)).ToString("#") + " " + LangSystem.lng.game[3];
         }
         else if (g.money > 10000 && g.money <= 999999) //тыс
         {
@@ -257,7 +279,7 @@ class Computer : MonoBehaviour
         }
         else if (g.money <= 99999)
         {
-            g.moneyText.text = "$" + g.money.ToString("0.#0");
+            g.moneyText.text = "$" + g.money.ToString("#");
         }
     }
 
@@ -445,12 +467,12 @@ class Computer : MonoBehaviour
         expText.text = progressCounter2.ToString() + "/" + upgradeCost.ToString() + "xp";
         p2.fillAmount = (float)progressCounter2 / (float)upgradeCost;
         g.money = g.money - bonusCost;
-        g.moneyText.text = "$" + g.money.ToString("0.#0");
+        g.moneyText.text = "$" + g.money.ToString("0");
         bonusCost = bonusCost * bonusCostD;
         autoMiner.autoProfit = autoMiner.autoProfit - bonus;
         bonus = bonus * bonusD;
         autoMiner.autoProfit = autoMiner.autoProfit + bonus;
-        bonusText.text = "$" + (bonusCost).ToString("0.#0");
+        bonusText.text =  BonusMoney(bonusCost);
         //Вылетающие бонусы
         pointSt = transform.GetChild(0).transform.GetChild(UnityEngine.Random.Range(0, 3)).position;
         GameObject expPr = (GameObject)Instantiate(plusXP, pointSt, Quaternion.identity);
