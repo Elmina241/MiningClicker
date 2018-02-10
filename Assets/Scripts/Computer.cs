@@ -279,7 +279,7 @@ class Computer : MonoBehaviour
         }
         else if (g.money <= 99999)
         {
-            g.moneyText.text = "$" + g.money.ToString("#");
+            g.moneyText.text = "$" + conversionFunction(g.money);
         }
     }
 
