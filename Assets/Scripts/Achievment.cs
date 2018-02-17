@@ -247,7 +247,7 @@ public class Achievment : MonoBehaviour
     public void buyAutoExchanger()
     {
         _store[2].isBought = true;
-        g.money -= _store[2].priceGame;
+        //g.money -= _store[2].priceGame;
         g.isAutoExchangerOn = true;
         store.GetChild(0).GetChild(2).transform.Find("BuyBtn").GetComponent<Button>().interactable = false;
         store.GetChild(0).GetChild(2).transform.Find("OffBtn").GetComponent<Button>().interactable = true;
@@ -301,9 +301,13 @@ public class Achievment : MonoBehaviour
         }
     }
 
-    public void buy8000()
+    public void buy12000()
     {
-        g.money += 8000;
+        g.money += 12000;
     }
 
+    public void NoAds()
+    {
+
+    }
 }
