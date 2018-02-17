@@ -4776,7 +4776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &153755312
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30334,7 +30334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a3b72f9bd2a9047be2743793f2bd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ad: {fileID: 1210977841}
+  ad: {fileID: 0}
   _waitSeconds: 240
   _hours: 0
   _minutes: 0
@@ -30505,8 +30505,8 @@ MonoBehaviour:
   panelLearn: {fileID: 1198310061}
   stage: 1
   m1: {fileID: 617405161}
-  button: {fileID: 32667740}
-  block: {fileID: 1580983989}
+  button: {fileID: 0}
+  block: {fileID: 0}
 --- !u!1 &1227371824
 GameObject:
   m_ObjectHideFlags: 0
